@@ -122,6 +122,122 @@ def remove_all_files_and_dirs_in_folder(folder_path):
         except Exception as e:
             print(f"Error removing {item}: {e}")
 
+def run_comfyui_server(self, port=8188):
+        cmd = f"python main.py --dont-print-server --listen --port {port}"
+        subprocess.Popen(cmd, shell=True)
+
+def workflow_run(workflow_data, task_id, user_id, seed, port=8189):
+        # send requests to local headless ComfyUI server (on port 8189)
+        server_address = f"127.0.0.1:{port}"
+        ws = connect_to_local_server(server_address)
+        images = get_images(ws, workflow_data, server_address)
+        # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
+
+        background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
+        background_thread.start()
+        
+        remove_all_files_and_dirs_in_folder("/root/input")
+        return
+
+def create_sketch2img_workflow(item, is_edit = False):
+    preprocessor_map = {
+      "control_v11p_sd15_canny_fp16.safetensors": "CannyEdgePreprocessor",
+      "control_v11p_sd15_depth_fp16.safetensors": "DepthAnythingPreprocessor",
+      "control_v11p_sd15_lineart_fp16.safetensors": "LineArtPreprocessor",
+      "control_v11p_sd15_mlsd_fp16.safetensors": "M-LSDPreprocessor",
+      "control_v11p_sd15_openpose_fp16.safetensors": "OpenposePreprocessor",
+      "control_v11p_sd15_scribble_fp16.safetensors": "Scribble_XDoG_Preprocessor",
+      "control_v11p_sd15_seg_fp16.safetensors": "SAMPreprocessor",
+      "control_v11u_sd15_tile_fp16.safetensors": "TilePreprocessor",
+    }
+    workflow_data = json.loads(
+        (pathlib.Path(__file__).parent / ("workflow_api_inpaint.json" if is_edit else "workflow_api.json")).read_text()
+    )
+
+    if item.get("input_image_url") is not None:
+        download_to_comfyui(item["input_image_url"], "input")
+        workflow_data["219"]["inputs"]["strength"] = item["control_strength"]
+        workflow_data["143"]["inputs"]["image"] = item["input_image_url"].split("/")[-1]
+        workflow_data["216"]["inputs"]["control_net_name"] = item["control_net_name"]
+        workflow_data["183"]["inputs"]["preprocessor"] = preprocessor_map[item["control_net_name"]]
+    else:
+        workflow_data["142"]["inputs"]["strength"] = 0
+
+    
+
+    # insert the prompt
+    workflow_data["137"]["inputs"]["text"] = item["prompt"]
+    workflow_data["140"]["inputs"]["text"] = item["negative_prompt"]
+    
+    if item.get("loras") is not None and len(item["loras"]) > 0:
+        load_loras(item["loras"])
+        print("lora_loaded")
+        for index, lora in enumerate(item["loras"]):
+            # download_to_comfyui(lora["download_url"], "models/loras", lora["name"])
+            workflow_data["159"]["inputs"][f"lora_0{index+1}"] = lora["name"]
+            workflow_data["159"]["inputs"][f"strength_0{index+1}"] = lora["weight"]
+        workflow_data["137"]["inputs"]["text_clip"] = item["lora_triggers"]
+
+    if is_edit == False:
+        workflow_data["134"]["inputs"]["height"] = item["height"]
+        workflow_data["134"]["inputs"]["width"] = item["width"]
+    else:
+        workflow_data["219"]["inputs"]["image_gen_height"] = item["height"]
+        workflow_data["219"]["inputs"]["image_gen_width"] = item["width"]
+
+        download_to_comfyui(item["mask"], "input")
+        workflow_data["216"]["inputs"]["image"] = item["mask"].split("/")[-1]
+        download_to_comfyui(item["image"], "input")
+        workflow_data["250"]["inputs"]["image"] = item["image"].split("/")[-1]
+
+    workflow_data["134"]["inputs"]["batch_size"] = item["batch_size"]
+    
+
+    
+
+    workflow_data["135"]["inputs"]["noise_seed"] = item["seed"]
+
+    return workflow_data
+
+def create_upscale_workflow(item):
+    download_to_comfyui(item["input_image_url"], "input")
+    
+    workflow_data = json.loads(
+        (pathlib.Path(__file__).parent / "workflow_api_upscale.json").read_text()
+    )
+
+    # insert the prompt
+    workflow_data["99"]["inputs"]["text"] = item["prompt"]
+    workflow_data["97"]["inputs"]["image"] = item["input_image_url"].split("/")[-1]
+    workflow_data["96"]["inputs"]["denoise"] = item["denoising_strength"]
+
+    return workflow_data
+def run_task( task, port=8189):
+    try:
+        item = task
+
+        supabase.table("Tasks").update({
+            "status": "processing",
+        }).eq("task_id", item['task_id']).execute()
+
+        # download input images to the container
+        if item["type"] == "upscale":
+            workflow_data = create_upscale_workflow(item=item)
+        else:
+            workflow_data = create_sketch2img_workflow(item=item, is_edit=item["type"] == "edit")
+        
+        if item["seed"] == 0:
+            item["seed"] = random.randint(1,4294967294)
+        
+        print("ready to run")
+        workflow_run(workflow_data, item["task_id"], item["user_id"], item["seed"], port)
+    except Exception as e:
+        print(e)
+        if item:
+            supabase.table("Tasks").update({
+                "status": "failed",
+                "finished_at": datetime.datetime.utcnow().isoformat()
+            }).eq("task_id", item['task_id']).execute()
 # ## Running ComfyUI interactively and as an API on Modal
 #
 # Below, we use Modal's class syntax to run our customized ComfyUI environment and workflow on Modal.
@@ -177,132 +293,19 @@ class ComfyUI:
         for m in models:
             download_to_comfyui(m["url"], m["path"])
 
-    def run_comfyui_server(self, port=8188):
-        cmd = f"python main.py --dont-print-server --listen --port {port}"
-        subprocess.Popen(cmd, shell=True)
+    
 
     @modal.enter()
     def prepare_comfyui(self):
         # runs on a different port as to not conflict with the UI instance
-        self.run_comfyui_server(port=8189)
+        run_comfyui_server(port=8189)
 
     # @modal.web_server(8188, startup_timeout=30)
     # def ui(self):
     #     self._run_comfyui_server()
 
     
-    def workflow_run(self, workflow_data, task_id, user_id, seed, port=8189):
-            # send requests to local headless ComfyUI server (on port 8189)
-            server_address = f"127.0.0.1:{port}"
-            ws = connect_to_local_server(server_address)
-            images = get_images(ws, workflow_data, server_address)
-            # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
-
-            background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
-            background_thread.start()
-            
-            remove_all_files_and_dirs_in_folder("/root/input")
-            return
-
-    def create_sketch2img_workflow(self, item, is_edit = False):
-        preprocessor_map = {
-          "control_v11p_sd15_canny_fp16.safetensors": "CannyEdgePreprocessor",
-          "control_v11p_sd15_depth_fp16.safetensors": "DepthAnythingPreprocessor",
-          "control_v11p_sd15_lineart_fp16.safetensors": "LineArtPreprocessor",
-          "control_v11p_sd15_mlsd_fp16.safetensors": "M-LSDPreprocessor",
-          "control_v11p_sd15_openpose_fp16.safetensors": "OpenposePreprocessor",
-          "control_v11p_sd15_scribble_fp16.safetensors": "Scribble_XDoG_Preprocessor",
-          "control_v11p_sd15_seg_fp16.safetensors": "SAMPreprocessor",
-          "control_v11u_sd15_tile_fp16.safetensors": "TilePreprocessor",
-        }
-        workflow_data = json.loads(
-            (pathlib.Path(__file__).parent / ("workflow_api_inpaint.json" if is_edit else "workflow_api.json")).read_text()
-        )
-
-        if item.get("input_image_url") is not None:
-            download_to_comfyui(item["input_image_url"], "input")
-            workflow_data["219"]["inputs"]["strength"] = item["control_strength"]
-            workflow_data["143"]["inputs"]["image"] = item["input_image_url"].split("/")[-1]
-            workflow_data["216"]["inputs"]["control_net_name"] = item["control_net_name"]
-            workflow_data["183"]["inputs"]["preprocessor"] = preprocessor_map[item["control_net_name"]]
-        else:
-            workflow_data["142"]["inputs"]["strength"] = 0
-
-        
-
-        # insert the prompt
-        workflow_data["137"]["inputs"]["text"] = item["prompt"]
-        workflow_data["140"]["inputs"]["text"] = item["negative_prompt"]
-        
-        if item.get("loras") is not None and len(item["loras"]) > 0:
-            load_loras(item["loras"])
-            print("lora_loaded")
-            for index, lora in enumerate(item["loras"]):
-                # download_to_comfyui(lora["download_url"], "models/loras", lora["name"])
-                workflow_data["159"]["inputs"][f"lora_0{index+1}"] = lora["name"]
-                workflow_data["159"]["inputs"][f"strength_0{index+1}"] = lora["weight"]
-            workflow_data["137"]["inputs"]["text_clip"] = item["lora_triggers"]
-
-        if is_edit == False:
-            workflow_data["134"]["inputs"]["height"] = item["height"]
-            workflow_data["134"]["inputs"]["width"] = item["width"]
-        else:
-            workflow_data["219"]["inputs"]["image_gen_height"] = item["height"]
-            workflow_data["219"]["inputs"]["image_gen_width"] = item["width"]
-
-            download_to_comfyui(item["mask"], "input")
-            workflow_data["216"]["inputs"]["image"] = item["mask"].split("/")[-1]
-            download_to_comfyui(item["image"], "input")
-            workflow_data["250"]["inputs"]["image"] = item["image"].split("/")[-1]
-
-        workflow_data["134"]["inputs"]["batch_size"] = item["batch_size"]
-        
-
-        
-
-        workflow_data["135"]["inputs"]["noise_seed"] = item["seed"]
-
-        return workflow_data
     
-    def create_upscale_workflow(self, item):
-        download_to_comfyui(item["input_image_url"], "input")
-        
-        workflow_data = json.loads(
-            (pathlib.Path(__file__).parent / "workflow_api_upscale.json").read_text()
-        )
-
-        # insert the prompt
-        workflow_data["99"]["inputs"]["text"] = item["prompt"]
-        workflow_data["97"]["inputs"]["image"] = item["input_image_url"].split("/")[-1]
-        workflow_data["96"]["inputs"]["denoise"] = item["denoising_strength"]
-
-        return workflow_data
-    def run_task(self, task, port=8189):
-        try:
-            item = task
-
-            supabase.table("Tasks").update({
-                "status": "processing",
-            }).eq("task_id", item['task_id']).execute()
-
-            # download input images to the container
-            if item["type"] == "upscale":
-                workflow_data = self.create_upscale_workflow(item=item)
-            else:
-                workflow_data = self.create_sketch2img_workflow(item=item, is_edit=item["type"] == "edit")
-            
-            if item["seed"] == 0:
-                item["seed"] = random.randint(1,4294967294)
-            
-            print("ready to run")
-            self.workflow_run(workflow_data, item["task_id"], item["user_id"], item["seed"], port)
-        except Exception as e:
-            print(e)
-            if item:
-                supabase.table("Tasks").update({
-                    "status": "failed",
-                    "finished_at": datetime.datetime.utcnow().isoformat()
-                }).eq("task_id", item['task_id']).execute()
     @modal.wsgi_app()
     def flask_app(self):
         from flask import Flask, request, Response
@@ -316,7 +319,7 @@ class ComfyUI:
             item = None
             try:
                 item = request.json
-                self.run_task(item)
+                run_task(item)
             except Exception as e:
                 print(e)
             return Response(status=200)
