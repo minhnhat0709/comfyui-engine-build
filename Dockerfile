@@ -20,7 +20,7 @@ COPY . /root
 
 WORKDIR /root
 
-RUN python -c "from comfyapp import run_comfyui_server; download_models();"
+RUN python -c "from comfyapp import download_files; download_files();"
 
 RUN chmod +x start.sh
 ENTRYPOINT ["start.sh"]
