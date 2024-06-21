@@ -1,0 +1,585 @@
+{
+  "114": {
+    "inputs": {
+      "b1": 1.1,
+      "b2": 1.1500000000000001,
+      "s1": 0.85,
+      "s2": 0.35000000000000003,
+      "model": [
+        "159",
+        0
+      ]
+    },
+    "class_type": "FreeU_V2",
+    "_meta": {
+      "title": "FreeU_V2"
+    }
+  },
+  "116": {
+    "inputs": {
+      "name": "ella-sd1.5-tsc-t5xl.safetensors"
+    },
+    "class_type": "ELLALoader",
+    "_meta": {
+      "title": "Load ELLA Model"
+    }
+  },
+  "118": {
+    "inputs": {
+      "ckpt_name": "realisticVisionV60B1_v51HyperVAE.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "125": {
+    "inputs": {
+      "name": "models--google--flan-t5-xl--text_encoder",
+      "max_length": 0,
+      "dtype": "auto"
+    },
+    "class_type": "T5TextEncoderLoader #ELLA",
+    "_meta": {
+      "title": "Load T5 TextEncoder #ELLA"
+    }
+  },
+  "134": {
+    "inputs": {
+      "width": 1048,
+      "height": 816,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "135": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 411940315366065,
+      "steps": 6,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "exponential",
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "219",
+        0
+      ],
+      "negative": [
+        "219",
+        1
+      ],
+      "latent_image": [
+        "134",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced)"
+    }
+  },
+  "136": {
+    "inputs": {
+      "samples": [
+        "135",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "137": {
+    "inputs": {
+      "text": "A elegant blue house, morning fresh vibe, grass yard, tree background",
+      "text_clip": "masterpiece, best quality",
+      "ella": [
+        "139",
+        0
+      ],
+      "text_encoder": [
+        "125",
+        0
+      ],
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "EllaTextEncode",
+    "_meta": {
+      "title": "ELLA Text Encode"
+    }
+  },
+  "139": {
+    "inputs": {
+      "scheduler": "exponential",
+      "steps": 6,
+      "denoise": 1,
+      "model": [
+        "159",
+        0
+      ],
+      "ella": [
+        "116",
+        0
+      ]
+    },
+    "class_type": "SetEllaTimesteps",
+    "_meta": {
+      "title": "Set ELLA Timesteps"
+    }
+  },
+  "140": {
+    "inputs": {
+      "text": "old, damaged architecture, dirty walls, pale color",
+      "text_clip": "embedding:UnrealisticDream, ",
+      "ella": [
+        "139",
+        0
+      ],
+      "text_encoder": [
+        "125",
+        0
+      ],
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "EllaTextEncode",
+    "_meta": {
+      "title": "ELLA Text Encode"
+    }
+  },
+  "141": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "142": {
+    "inputs": {
+      "strength": 1.37,
+      "start_percent": 0.035,
+      "end_percent": 0.9,
+      "control_net": [
+        "141",
+        0
+      ]
+    },
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "Apply ControlNet (Advanced)"
+    }
+  },
+  "143": {
+    "inputs": {
+      "image": "controlnet.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "145": {
+    "inputs": {
+      "sharpen_radius": 1,
+      "sigma": 0.4,
+      "alpha": 0.30000000000000004,
+      "image": [
+        "136",
+        0
+      ]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "ImageSharpen"
+    }
+  },
+  "146": {
+    "inputs": {
+      "text": "A modern architecture, midday sunshine, swimming pool, fresh vibe, street, building",
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "147": {
+    "inputs": {
+      "text": "embedding:UnrealisticDream, ",
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "159": {
+    "inputs": {
+      "lora_01": "None",
+      "strength_01": 0.5,
+      "lora_02": "None",
+      "strength_02": 0.73,
+      "lora_03": "None",
+      "strength_03": 0.34,
+      "lora_04": "None",
+      "strength_04": 1,
+      "model": [
+        "118",
+        0
+      ],
+      "clip": [
+        "118",
+        1
+      ]
+    },
+    "class_type": "Lora Loader Stack (rgthree)",
+    "_meta": {
+      "title": "Lora Loader Stack (rgthree)"
+    }
+  },
+  "183": {
+    "inputs": {
+      "preprocessor": "M-LSDPreprocessor",
+      "resolution": 1024,
+      "image": [
+        "143",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "186": {
+    "inputs": {
+      "images": [
+        "183",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "200": {
+    "inputs": {
+      "upscale_by": 1.5,
+      "seed": 361860812792162,
+      "steps": 4,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.25,
+      "mode_type": "Linear",
+      "tile_width": 512,
+      "tile_height": 512,
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": true,
+      "tiled_decode": false,
+      "image": [
+        "145",
+        0
+      ],
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "upscale_model": [
+        "201",
+        0
+      ]
+    },
+    "class_type": "UltimateSDUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale"
+    }
+  },
+  "201": {
+    "inputs": {
+      "model_name": "4x_NMKD-Siax_200k.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "202": {
+    "inputs": {
+      "control_net_name": "control_canny-fp16.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "209": {
+    "inputs": {
+      "images": [
+        "136",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "210": {
+    "inputs": {
+      "upscale_by": 1,
+      "seed": 181987526050778,
+      "steps": 4,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.2,
+      "mode_type": "Linear",
+      "tile_width": 1024,
+      "tile_height": 1024,
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": true,
+      "tiled_decode": false,
+      "image": [
+        "200",
+        0
+      ],
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "upscale_model": [
+        "201",
+        0
+      ]
+    },
+    "class_type": "UltimateSDUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale"
+    }
+  },
+  "211": {
+    "inputs": {
+      "images": [
+        "227",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "212": {
+    "inputs": {
+      "images": [
+        "200",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "213": {
+    "inputs": {
+      "sharpen_radius": 3,
+      "sigma": 0.25,
+      "alpha": 0.1,
+      "image": [
+        "210",
+        0
+      ]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "ImageSharpen"
+    }
+  },
+  "216": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_mlsd_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoaderAdvanced",
+    "_meta": {
+      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
+    }
+  },
+  "219": {
+    "inputs": {
+      "strength": 0.9,
+      "start_percent": 0,
+      "end_percent": 0.9,
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "control_net": [
+        "216",
+        0
+      ],
+      "image": [
+        "183",
+        0
+      ],
+      "timestep_kf": [
+        "224",
+        1
+      ],
+      "weights_override": [
+        "224",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "220": {
+    "inputs": {
+      "weight_00": 0.09941396206337118,
+      "weight_01": 0.12050177219802567,
+      "weight_02": 0.14606275417942507,
+      "weight_03": 0.17704576264172736,
+      "weight_04": 0.214600924414215,
+      "weight_05": 0.26012233262329093,
+      "weight_06": 0.3152997971191405,
+      "weight_07": 0.3821815722656249,
+      "weight_08": 0.4632503906249999,
+      "weight_09": 0.561515625,
+      "weight_10": 0.6806249999999999,
+      "weight_11": 0.825,
+      "weight_12": 1,
+      "flip_weights": false,
+      "uncond_multiplier": 0
+    },
+    "class_type": "SoftControlNetWeights",
+    "_meta": {
+      "title": "ControlNet Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "224": {
+    "inputs": {
+      "base_multiplier": 0.8250000000000001,
+      "flip_weights": false,
+      "uncond_multiplier": 0.3
+    },
+    "class_type": "ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "225": {
+    "inputs": {
+      "source": [
+        "136",
+        0
+      ],
+      "target": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "Runtime44ColorMatch",
+    "_meta": {
+      "title": "Runtime44 Color Match"
+    }
+  },
+  "227": {
+    "inputs": {
+      "strength": 0.25,
+      "image": [
+        "225",
+        0
+      ]
+    },
+    "class_type": "MMakerColorEnhance",
+    "_meta": {
+      "title": "Color Enhance"
+    }
+  },
+  "229": {
+    "inputs": {
+      "images": [
+        "227",
+        0
+      ]
+    },
+    "class_type": "SaveImageWebsocket",
+    "_meta": {
+      "title": "SaveImageWebsocket"
+    }
+  }
+}

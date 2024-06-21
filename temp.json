@@ -1,0 +1,467 @@
+{
+  "114": {
+    "inputs": {
+      "b1": 1.1,
+      "b2": 1.1500000000000001,
+      "s1": 0.85,
+      "s2": 0.35000000000000003,
+      "model": [
+        "159",
+        0
+      ]
+    },
+    "class_type": "FreeU_V2",
+    "_meta": {
+      "title": "FreeU_V2"
+    }
+  },
+  "116": {
+    "inputs": {
+      "name": "ella-sd1.5-tsc-t5xl.safetensors"
+    },
+    "class_type": "ELLALoader",
+    "_meta": {
+      "title": "Load ELLA Model"
+    }
+  },
+  "118": {
+    "inputs": {
+      "ckpt_name": "realisticVisionV60B1_v51HyperVAE.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "125": {
+    "inputs": {
+      "name": "models--google--flan-t5-xl--text_encoder",
+      "max_length": 0,
+      "dtype": "auto"
+    },
+    "class_type": "T5TextEncoderLoader #ELLA",
+    "_meta": {
+      "title": "Load T5 TextEncoder #ELLA"
+    }
+  },
+  "134": {
+    "inputs": {
+      "width": 1040,
+      "height": 800,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "135": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 129926484764838,
+      "steps": 6,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "exponential",
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "142",
+        0
+      ],
+      "negative": [
+        "142",
+        1
+      ],
+      "latent_image": [
+        "134",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced)"
+    }
+  },
+  "136": {
+    "inputs": {
+      "samples": [
+        "135",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "137": {
+    "inputs": {
+      "text": "A modern villa, tree, morning sunshine, yellow paint",
+      "text_clip": "",
+      "ella": [
+        "139",
+        0
+      ],
+      "text_encoder": [
+        "125",
+        0
+      ],
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "EllaTextEncode",
+    "_meta": {
+      "title": "ELLA Text Encode"
+    }
+  },
+  "139": {
+    "inputs": {
+      "scheduler": "sgm_uniform",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "159",
+        0
+      ],
+      "ella": [
+        "116",
+        0
+      ]
+    },
+    "class_type": "SetEllaTimesteps",
+    "_meta": {
+      "title": "Set ELLA Timesteps"
+    }
+  },
+  "140": {
+    "inputs": {
+      "text": "",
+      "text_clip": "embedding:UnrealisticDream, ",
+      "ella": [
+        "139",
+        0
+      ],
+      "text_encoder": [
+        "125",
+        0
+      ],
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "EllaTextEncode",
+    "_meta": {
+      "title": "ELLA Text Encode"
+    }
+  },
+  "141": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "142": {
+    "inputs": {
+      "strength": 0.85,
+      "start_percent": 0,
+      "end_percent": 0.9,
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "control_net": [
+        "141",
+        0
+      ],
+      "image": [
+        "183",
+        0
+      ]
+    },
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "Apply ControlNet (Advanced)"
+    }
+  },
+  "143": {
+    "inputs": {
+      "image": "controlnet.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "145": {
+    "inputs": {
+      "sharpen_radius": 2,
+      "sigma": 0.4,
+      "alpha": 0.30000000000000004,
+      "image": [
+        "136",
+        0
+      ]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "ImageSharpen"
+    }
+  },
+  "146": {
+    "inputs": {
+      "text": "A modern villa, tree, morning sunshine, yellow  ",
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "147": {
+    "inputs": {
+      "text": "embedding:UnrealisticDream, ",
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "159": {
+    "inputs": {
+      "lora_01": "None",
+      "strength_01": 1,
+      "lora_02": "None",
+      "strength_02": 0.73,
+      "lora_03": "None",
+      "strength_03": 0.34,
+      "lora_04": "None",
+      "strength_04": 1,
+      "model": [
+        "118",
+        0
+      ],
+      "clip": [
+        "118",
+        1
+      ]
+    },
+    "class_type": "Lora Loader Stack (rgthree)",
+    "_meta": {
+      "title": "Lora Loader Stack (rgthree)"
+    }
+  },
+  "183": {
+    "inputs": {
+      "preprocessor": "LineArtPreprocessor",
+      "resolution": 512,
+      "image": [
+        "143",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "186": {
+    "inputs": {
+      "images": [
+        "183",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "200": {
+    "inputs": {
+      "upscale_by": 1.5,
+      "seed": 503538973517577,
+      "steps": 4,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.25,
+      "mode_type": "Linear",
+      "tile_width": 640,
+      "tile_height": 640,
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": true,
+      "tiled_decode": false,
+      "image": [
+        "205",
+        0
+      ],
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "upscale_model": [
+        "201",
+        0
+      ]
+    },
+    "class_type": "UltimateSDUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale"
+    }
+  },
+  "201": {
+    "inputs": {
+      "model_name": "4x_NMKD-Siax_200k.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "202": {
+    "inputs": {
+      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "205": {
+    "inputs": {
+      "strength": 0.4,
+      "image": [
+        "145",
+        0
+      ]
+    },
+    "class_type": "MMakerColorEnhance",
+    "_meta": {
+      "title": "Color Enhance"
+    }
+  },
+  "210": {
+    "inputs": {
+      "upscale_by": 1,
+      "seed": 420573960388508,
+      "steps": 4,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.2,
+      "mode_type": "Linear",
+      "tile_width": 1024,
+      "tile_height": 1024,
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": true,
+      "tiled_decode": false,
+      "image": [
+        "200",
+        0
+      ],
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "upscale_model": [
+        "201",
+        0
+      ]
+    },
+    "class_type": "UltimateSDUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale"
+    }
+  },
+  "213": {
+    "inputs": {
+      "sharpen_radius": 1,
+      "sigma": 0.4,
+      "alpha": 0.30000000000000004,
+      "image": [
+        "210",
+        0
+      ]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "ImageSharpen"
+    }
+  },
+  "214": {
+    "inputs": {
+      "images": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "SaveImageWebsocket",
+    "_meta": {
+      "title": "SaveImageWebsocket"
+    }
+  }
+}

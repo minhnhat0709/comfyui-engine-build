@@ -1,0 +1,146 @@
+[
+  {
+      "url": "https://huggingface.co/SG161222/Realistic_Vision_V5.1_noVAE/resolve/main/Realistic_Vision_V5.1_fp16-no-ema.safetensors",
+      "path": "models/checkpoints"
+  },
+  {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/realisticVisionV60B1_v51HyperVAE.safetensors",
+    "path": "models/checkpoints"
+  },
+  {
+    "url": "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SD15-8steps-CFG-lora.safetensors",
+    "path": "models/loras"
+  },
+  {
+    "url": "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SD15-4steps-lora.safetensors",
+    "path": "models/loras"
+  },
+  {
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11f1e_sd15_tile_fp16.safetensors",
+    "path": "models/controlnet"
+  }, 
+  {
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_lineart_fp16.safetensors",
+    "path": "models/controlnet"
+  },
+  {
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_canny_fp16.safetensors",
+    "path": "models/controlnet"
+  },
+  {
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_depth_fp16.safetensors",
+    "path": "models/controlnet"
+  },
+  {
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_mlsd_fp16.safetensors",
+    "path": "models/controlnet"
+  },
+  {
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_openpose_fp16.safetensors",
+    "path": "models/controlnet"
+  },
+  {
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_scribble_fp16.safetensors",
+    "path": "models/controlnet"
+  },
+  {
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_seg_fp16.safetensors",
+    "path": "models/controlnet"
+  },
+  {
+    "url": "https://huggingface.co/Kim2091/UltraSharp/resolve/main/4x-UltraSharp.pth",
+    "path": "models/upscale_models"
+  },
+  {
+    "url": "https://huggingface.co/uwg/upscaler/resolve/main/ESRGAN/4x_NMKD-Siax_200k.pth",
+    "path": "models/upscale_models"
+  },
+  {
+    "url": "https://huggingface.co/QQGYLab/ELLA/resolve/main/ella-sd1.5-tsc-t5xl.safetensors",
+    "path": "models/ella"
+  },
+  {
+    "url": "https://huggingface.co/QQGYLab/ELLA/resolve/main/models--google--flan-t5-xl--text_encoder/model.safetensors",
+    "path": "models/ella_encoder/models--google--flan-t5-xl--text_encoder"
+  },
+  {
+    "url": "https://huggingface.co/QQGYLab/ELLA/resolve/main/models--google--flan-t5-xl--text_encoder/spiece.model",
+    "path": "models/ella_encoder/models--google--flan-t5-xl--text_encoder"
+  },
+  {
+      "url": "https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/hylarucoder/ComfyUI-Eagle-PNGInfo.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/TencentQQGYLab/ComfyUI-ELLA.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/0xbitches/ComfyUI-LCM.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/theUpsider/ComfyUI-Logic.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/ltdrdata/ComfyUI-Manager.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/JettHu/ComfyUI-TCD.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/shiimizu/ComfyUI-TiledDiffusion.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/cubiq/ComfyUI_essentials.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/cubiq/ComfyUI_IPAdapter_plus.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/jags111/efficiency-nodes-comfyui.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://github.com/rgthree/rgthree-comfy.git",
+      "path": "custom_nodes"
+  },
+  {
+      "url": "https://git.mmaker.moe/mmaker/sd-webui-color-enhance.git",
+      "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/Fannovel16/comfyui_controlnet_aux.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/minhnhat0709/comfyui_r44_nodes.git",
+    "path": "custom_nodes"
+  }
+]
