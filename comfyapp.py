@@ -163,9 +163,9 @@ class ComfyUI:
         subprocess.Popen(cmd, shell=True)
 
     @modal.enter()
-    def prepare_comfyui(self):
+    def prepare_comfyui(self, port=8189):
         # runs on a different port as to not conflict with the UI instance
-        self._run_comfyui_server(port=8189)
+        self._run_comfyui_server(port=port)
 
     # @modal.web_server(8188, startup_timeout=30)
     # def ui(self):
@@ -195,9 +195,9 @@ class ComfyUI:
     #     eliai.image_uploading(images=images, seed=1, task_id=item["task_id"], user_id=item["user_id"])
     #     return 
 
-    def workflow_run(self, workflow_data, task_id, user_id, seed):
+    def workflow_run(self, workflow_data, task_id, user_id, seed, port=8189):
             # send requests to local headless ComfyUI server (on port 8189)
-            server_address = "127.0.0.1:8189"
+            server_address = f"127.0.0.1:{port}"
             ws = connect_to_local_server(server_address)
             images = get_images(ws, workflow_data, server_address)
             eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
@@ -274,7 +274,7 @@ class ComfyUI:
         workflow_data["96"]["inputs"]["denoise"] = item["denoising_strength"]
 
         return workflow_data
-    def run_task(self, task):
+    def run_task(self, task, port=8189):
         try:
             item = task
 
@@ -290,7 +290,7 @@ class ComfyUI:
             
             if item["seed"] == 0:
                 item["seed"] = random.randint(1,4294967294)
-            self.workflow_run(workflow_data, item["task_id"], item["user_id"], item["seed"])
+            self.workflow_run(workflow_data, item["task_id"], item["user_id"], item["seed"], port)
         except Exception as e:
             print(e)
             if item:

@@ -3,10 +3,14 @@ import os
 from comfyapp import ComfyUI
 import redis
 import time
+import sys
 
 def main():
   comfyUI = ComfyUI()
-  comfyUI.prepare_comfyui()
+
+  # get the port from the first command line
+  port = sys.argv[1]
+  comfyUI.prepare_comfyui(port)
   time.sleep(15)
 
   redis_uri = os.environ.get('REDIS_URI')
@@ -19,7 +23,7 @@ def main():
 
       if task:
         task = json.loads(task)
-        comfyUI.run_task(task)
+        comfyUI.run_task(task, port)
     except Exception as e:
       print(e)
 
