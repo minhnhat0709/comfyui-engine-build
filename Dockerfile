@@ -17,9 +17,12 @@ RUN pip install httpx tqdm websocket-client boto3 supabase flask cupy-cuda12x re
 
 COPY . /root
 
+WORKDIR /root
+
 RUN python -c "from comfyapp import ComfyUI; comfyUI = ComfyUI(); comfyUI.download_models()"
 
-ENTRYPOINT ["python", "/root/queue_processing.py"]
+RUN chmod +x start.sh
+ENTRYPOINT ["start.sh"]
 
 
 

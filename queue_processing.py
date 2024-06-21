@@ -14,11 +14,12 @@ def main():
   time.sleep(15)
 
   redis_uri = os.environ.get('REDIS_URI')
+  taskQueue = os.environ.get('TASK_QUEUE')
   while True:
     time.sleep(15)
     try:
       redis_client = redis.from_url(redis_uri, decode_responses=True)
-      task = redis_client.rpop('taskQueue')
+      task = redis_client.rpop(taskQueue)
       redis_client.close()
 
       if task:
