@@ -1,6 +1,6 @@
 FROM pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime as base
 
-RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
+RUN apt-get update && apt-get install -y lsof ffmpeg libsm6 libxext6 -y
 RUN apt-get install git -y
 
 RUN cd /root && git init . && \
@@ -23,7 +23,7 @@ WORKDIR /root
 # RUN python -c "from comfyapp import download_files; download_files();"
 
 RUN chmod +x start.sh
-ENTRYPOINT ["start.sh"]
+ENTRYPOINT ["./start.sh"]
 
 
 

@@ -8,6 +8,14 @@
     "path": "models/checkpoints"
   },
   {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/UnrealisticDream.pt",
+    "path": "models/embeddings"
+  },
+  {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/add_detail.safetensors",
+    "path": "models/loras"
+  },
+  {
     "url": "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SD15-8steps-CFG-lora.safetensors",
     "path": "models/loras"
   },
