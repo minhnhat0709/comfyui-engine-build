@@ -8,6 +8,8 @@ import boto3
 from supabase import Client, create_client
 import os
 
+from PIL import Image
+
 url: str = os.environ.get('SUPABASE_ENDPOINT') or "https://rtfoijxfymuizzxzbnld.supabase.co"
 key: str = os.environ.get('SUPABASE_KEY') or "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0Zm9panhmeW11aXp6eHpibmxkIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTY1Nzc4MTQsImV4cCI6MjAxMjE1MzgxNH0.ChbqzCyTnUkrZ8VMie8y9fpu0xXB07fdSxVrNF9_psE"
 supabase: Client = create_client(url, key)
@@ -18,13 +20,29 @@ s3client = boto3.client('s3', endpoint_url= os.environ.get('AWS_ENDPOINT') or 'h
 bucket_name = os.environ.get('BUCKET_NAME') or "eliai-server"
 server_domain = os.environ.get('STORAGE_DOMAIN') or "https://eliai-server.eliai.vn/"
 
+def png_bytes_to_jpg_bytes(png_bytes):
+    # Load the PNG image from bytes
+    png_image = Image.open(io.BytesIO(png_bytes))
+    
+    # Convert the image to RGB mode (JPEG does not support transparency)
+    rgb_image = png_image.convert('RGB')
+    
+    # Save the image to a BytesIO object in JPEG format
+    jpg_bytes_io = io.BytesIO()
+    rgb_image.save(jpg_bytes_io, format='JPEG')
+    
+    # Get the JPEG bytes
+    jpg_bytes = jpg_bytes_io.getvalue()
+    
+    return jpg_bytes
 
-def s3Storage_base64_upload(base64_image: bytes, task_id: str, index: int):
+def s3Storage_base64_upload(image_bytes: bytes, task_id: str, index: int):
     # image_binary = base64.b64decode(base64_image)
     object_key = f"images/{task_id}/{task_id}_{index}.jpg"
 
+    bytes = png_bytes_to_jpg_bytes(image_bytes)
     s3client.upload_fileobj(
-      Fileobj=io.BytesIO(base64_image),
+      Fileobj=io.BytesIO(bytes),
       Bucket=bucket_name,
       Key=object_key,
       ExtraArgs={'ACL': 'public-read'}  # Optional: Set ACL to make the image public

@@ -10,7 +10,7 @@ def main():
 
   # get the port from the first command line
   port = sys.argv[1]
-  comfyUI.prepare_comfyui(port)
+  comfyUI.run_comfyui_server(port)
   time.sleep(15)
 
   redis_uri = os.environ.get('REDIS_URI')

@@ -52,15 +52,20 @@
 # You can add custom checkpoints and plugins to this environment by editing the `model.json` file in this directory.
 
 import datetime
+import glob
 import json
+import os
 import pathlib
 import random
+import shutil
 import subprocess
+import threading
 from typing import Dict
 
 import modal
 import eliai
 from eliai import supabase
+from lora_manager import load_loras
 
 comfyui_commit_sha = "1900e5119f70d6db0677fe91194050be3c4476c4"
 
@@ -83,7 +88,7 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
         "GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA",
         "mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder",
     )
-    .pip_install("httpx", "tqdm", "websocket-client", "boto3", "supabase", "flask", "cupy-cuda12x", force_build=False)  # add web dependencies
+    .pip_install("httpx", "tqdm", "websocket-client", "boto3", "supabase", "flask", "cupy-cuda12x", "Pillow", force_build=False)  # add web dependencies
     .copy_local_file(  # copy over the ComfyUI model definition JSON and helper Python module
         pathlib.Path(__file__).parent / "model.json", "/root/model.json"
     )
@@ -102,6 +107,20 @@ app = modal.App(name="example-comfyui")
 with comfyui_image.imports():
     from helpers import connect_to_local_server, download_to_comfyui, get_images
 
+def remove_all_files_and_dirs_in_folder(folder_path):
+    # Get a list of all files and directories in the folder
+    items = glob.glob(os.path.join(folder_path, '*'))
+    
+    for item in items:
+        try:
+            if os.path.isfile(item) and item != "/root/input/controlnet.jpg":
+                os.remove(item)
+                print(f"Removed file {item}")
+            elif os.path.isdir(item):
+                shutil.rmtree(item)
+                print(f"Removed directory {item}")
+        except Exception as e:
+            print(f"Error removing {item}: {e}")
 
 # ## Running ComfyUI interactively and as an API on Modal
 #
@@ -158,49 +177,31 @@ class ComfyUI:
         for m in models:
             download_to_comfyui(m["url"], m["path"])
 
-    def _run_comfyui_server(self, port=8188):
+    def run_comfyui_server(self, port=8188):
         cmd = f"python main.py --dont-print-server --listen --port {port}"
         subprocess.Popen(cmd, shell=True)
 
     @modal.enter()
-    def prepare_comfyui(self, port=8189):
+    def prepare_comfyui(self):
         # runs on a different port as to not conflict with the UI instance
-        self._run_comfyui_server(port=port)
+        self.run_comfyui_server(port=8189)
 
     # @modal.web_server(8188, startup_timeout=30)
     # def ui(self):
     #     self._run_comfyui_server()
 
-    # @modal.web_endpoint(method="POST")
-    # def api(self, item: Dict):
-
-    #     # download input images to the container
-    #     download_to_comfyui(item["input_image_url"], "input")
-    #     download_to_comfyui(item["lora"]["url"], "models/loras")
-    #     workflow_data = json.loads(
-    #         (pathlib.Path(__file__).parent / "workflow_api.json").read_text()
-    #     )
-
-    #     # insert the prompt
-    #     workflow_data["137"]["inputs"]["text"] = item["prompt"]
-    #     workflow_data["159"]["inputs"]["lora_02"] = item["lora"]["file_name"]
-    #     workflow_data["159"]["inputs"]["strength_02"] = item["lora"]["weight"]
-    #     workflow_data["134"]["inputs"]["height"] = item["height"]
-    #     workflow_data["134"]["inputs"]["width"] = item["width"]
-
-    #     # send requests to local headless ComfyUI server (on port 8189)
-    #     server_address = "127.0.0.1:8189"
-    #     ws = connect_to_local_server(server_address)
-    #     images = get_images(ws, workflow_data, server_address)
-    #     eliai.image_uploading(images=images, seed=1, task_id=item["task_id"], user_id=item["user_id"])
-    #     return 
-
+    
     def workflow_run(self, workflow_data, task_id, user_id, seed, port=8189):
             # send requests to local headless ComfyUI server (on port 8189)
             server_address = f"127.0.0.1:{port}"
             ws = connect_to_local_server(server_address)
             images = get_images(ws, workflow_data, server_address)
-            eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
+            # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
+
+            background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
+            background_thread.start()
+            
+            remove_all_files_and_dirs_in_folder("/root/input")
             return
 
     def create_sketch2img_workflow(self, item, is_edit = False):
@@ -234,8 +235,10 @@ class ComfyUI:
         workflow_data["140"]["inputs"]["text"] = item["negative_prompt"]
         
         if item.get("loras") is not None and len(item["loras"]) > 0:
+            load_loras(item["loras"])
+            print("lora_loaded")
             for index, lora in enumerate(item["loras"]):
-                download_to_comfyui(lora["download_url"], "models/loras", lora["name"])
+                # download_to_comfyui(lora["download_url"], "models/loras", lora["name"])
                 workflow_data["159"]["inputs"][f"lora_0{index+1}"] = lora["name"]
                 workflow_data["159"]["inputs"][f"strength_0{index+1}"] = lora["weight"]
             workflow_data["137"]["inputs"]["text_clip"] = item["lora_triggers"]
@@ -290,6 +293,8 @@ class ComfyUI:
             
             if item["seed"] == 0:
                 item["seed"] = random.randint(1,4294967294)
+            
+            print("ready to run")
             self.workflow_run(workflow_data, item["task_id"], item["user_id"], item["seed"], port)
         except Exception as e:
             print(e)

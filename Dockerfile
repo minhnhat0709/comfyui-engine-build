@@ -10,7 +10,7 @@ RUN cd /root && git init . && \
 RUN GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA && \
     mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder
 
-RUN pip install httpx tqdm websocket-client boto3 supabase flask cupy-cuda12x redis
+RUN pip install httpx tqdm websocket-client boto3 supabase flask cupy-cuda12x redis Pillow
 
 # COPY model.json /root/model.json
 # COPY helpers.py /root/helpers.py
