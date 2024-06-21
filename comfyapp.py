@@ -122,7 +122,7 @@ def remove_all_files_and_dirs_in_folder(folder_path):
         except Exception as e:
             print(f"Error removing {item}: {e}")
 
-def run_comfyui_server(self, port=8188):
+def run_comfyui_server( port=8188):
         cmd = f"python main.py --dont-print-server --listen --port {port}"
         subprocess.Popen(cmd, shell=True)
 
