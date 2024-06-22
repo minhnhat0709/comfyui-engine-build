@@ -238,12 +238,16 @@ def run_task( task, port=8189):
                 "status": "failed",
                 "finished_at": datetime.datetime.utcnow().isoformat()
             }).eq("task_id", item['task_id']).execute()
-def download_files(nodes_only = False):
+def download_files(filter=["node","model"]):
     models = json.loads(
         (pathlib.Path(__file__).parent / "model.json").read_text()
     )
     for m in models:
-        download_to_comfyui(m["url"], m["path"], nodes_only)
+        if m["url"].endswith(".git") and "node" not in filter:
+            continue
+        if not m["url"].endswith(".git") and "model" not in filter:
+            continue
+        download_to_comfyui(m["url"], m["path"])
 # ## Running ComfyUI interactively and as an API on Modal
 #
 # Below, we use Modal's class syntax to run our customized ComfyUI environment and workflow on Modal.
