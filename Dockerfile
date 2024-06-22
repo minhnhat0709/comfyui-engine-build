@@ -17,6 +17,7 @@ RUN pip install modal httpx tqdm websocket-client boto3 supabase flask cupy-cuda
 # COPY helpers.py /root/helpers.py
 
 COPY . /root
+COPY ./controlnet.jpg /root/input/controlnet.jpg
 
 WORKDIR /root
 
