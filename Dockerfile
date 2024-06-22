@@ -20,7 +20,7 @@ COPY . /root
 
 WORKDIR /root
 
-RUN python -c "from comfyapp import download_files; download_files(filter="node");"
+RUN python -c "from comfyapp import download_files; download_files(filter='node');"
 
 RUN chmod +x start.sh
 ENTRYPOINT ["./start.sh"]
