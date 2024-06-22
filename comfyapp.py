@@ -238,12 +238,12 @@ def run_task( task, port=8189):
                 "status": "failed",
                 "finished_at": datetime.datetime.utcnow().isoformat()
             }).eq("task_id", item['task_id']).execute()
-def download_files():
+def download_files(nodes_only = False):
     models = json.loads(
         (pathlib.Path(__file__).parent / "model.json").read_text()
     )
     for m in models:
-        download_to_comfyui(m["url"], m["path"])
+        download_to_comfyui(m["url"], m["path"], nodes_only)
 # ## Running ComfyUI interactively and as an API on Modal
 #
 # Below, we use Modal's class syntax to run our customized ComfyUI environment and workflow on Modal.

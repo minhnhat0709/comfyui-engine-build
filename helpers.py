@@ -13,7 +13,7 @@ import uuid
 client_id = str(uuid.uuid4())
 
 
-def download_to_comfyui(url, path, fileName = None):
+def download_to_comfyui(url, path, fileName = None, nodes_only = False):
     import httpx
     from tqdm import tqdm
 
@@ -27,7 +27,7 @@ def download_to_comfyui(url, path, fileName = None):
     if url.endswith(".git"):
         download_custom_node(url, model_directory)
 
-    else:
+    elif nodes_only == False:
         with httpx.stream("GET", url, follow_redirects=True) as stream:
             total = int(stream.headers["Content-Length"])
             with open(local_filepath, "wb") as f, tqdm(
