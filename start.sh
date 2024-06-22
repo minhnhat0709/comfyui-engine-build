@@ -1,4 +1,4 @@
-python -c "from comfyapp import download_files; download_files(filter=["model"]);"
+python -c "from comfyapp import download_files; download_files(filter="model");"
 
 while true; do
 	if ! lsof -i:5001 -sTCP:LISTEN > /dev/null

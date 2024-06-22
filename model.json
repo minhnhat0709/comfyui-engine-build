@@ -1,9 +1,5 @@
 [
   {
-      "url": "https://huggingface.co/SG161222/Realistic_Vision_V5.1_noVAE/resolve/main/Realistic_Vision_V5.1_fp16-no-ema.safetensors",
-      "path": "models/checkpoints"
-  },
-  {
     "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/realisticVisionV60B1_v51HyperVAE.safetensors",
     "path": "models/checkpoints"
   },

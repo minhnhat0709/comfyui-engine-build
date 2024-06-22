@@ -238,7 +238,7 @@ def run_task( task, port=8189):
                 "status": "failed",
                 "finished_at": datetime.datetime.utcnow().isoformat()
             }).eq("task_id", item['task_id']).execute()
-def download_files(filter=["node","model"]):
+def download_files(filter="node, model"):
     models = json.loads(
         (pathlib.Path(__file__).parent / "model.json").read_text()
     )
