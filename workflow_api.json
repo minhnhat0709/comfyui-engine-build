@@ -379,7 +379,7 @@
       "seed": 181987526050778,
       "steps": 4,
       "cfg": 2,
-      "sampler_name": "dpmpp_sde",
+      "sampler_name": "dpmpp_2m",
       "scheduler": "sgm_uniform",
       "denoise": 0.2,
       "mode_type": "Linear",

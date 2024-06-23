@@ -220,14 +220,16 @@ def run_task( task, port=8189):
             "status": "processing",
         }).eq("task_id", item['task_id']).execute()
 
+        if item["seed"] == 0:
+            item["seed"] = random.randint(1,4294967294)
+        
         # download input images to the container
         if item["type"] == "upscale":
             workflow_data = create_upscale_workflow(item=item)
         else:
             workflow_data = create_sketch2img_workflow(item=item, is_edit=item["type"] == "edit")
         
-        if item["seed"] == 0:
-            item["seed"] = random.randint(1,4294967294)
+        
         
         print("ready to run")
         workflow_run(workflow_data, item["task_id"], item["user_id"], item["seed"], port)
@@ -284,11 +286,11 @@ def download_files(filter="node, model"):
             "/root/workflow_api_inpaint.json",
         ),
         modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "models" / "add_detail.safetensors",
+            pathlib.Path(__file__).parent / "models/loras" / "add_detail.safetensors",
             "/root/models/loras/add_detail.safetensors",
         ),
         modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "models" / "UnrealisticDream.pt",
+            pathlib.Path(__file__).parent / "models/embeddings" / "UnrealisticDream.pt",
             "/root/models/embeddings/UnrealisticDream.pt",
         )
     ],
