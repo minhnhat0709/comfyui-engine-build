@@ -2,12 +2,12 @@
   "96": {
     "inputs": {
       "upscale_by": 2.5,
-      "seed": 916678023962674,
+      "seed": 1102086656211767,
       "steps": 6,
       "cfg": 2.5,
       "sampler_name": "dpmpp_2m",
       "scheduler": "karras",
-      "denoise": 0.5,
+      "denoise": 0.45,
       "mode_type": "Chess",
       "tile_width": 640,
       "tile_height": 640,
@@ -21,7 +21,7 @@
       "force_uniform_tiles": true,
       "tiled_decode": false,
       "image": [
-        "165",
+        "97",
         0
       ],
       "model": [
@@ -29,11 +29,11 @@
         0
       ],
       "positive": [
-        "105",
+        "186",
         0
       ],
       "negative": [
-        "105",
+        "186",
         1
       ],
       "vae": [
@@ -97,7 +97,7 @@
   },
   "101": {
     "inputs": {
-      "model_name": "4x-UltraSharp.pth"
+      "model_name": "4x_NMKD-Siax_200k.pth"
     },
     "class_type": "UpscaleModelLoader",
     "_meta": {
@@ -119,10 +119,10 @@
   "103": {
     "inputs": {
       "sharpen_radius": 1,
-      "sigma": 0.4,
-      "alpha": 0.3,
+      "sigma": 0.3,
+      "alpha": 0.2,
       "image": [
-        "182",
+        "191",
         0
       ]
     },
@@ -145,20 +145,8 @@
       "strength": 0.9,
       "start_percent": 0,
       "end_percent": 0.9,
-      "positive": [
-        "99",
-        0
-      ],
-      "negative": [
-        "100",
-        0
-      ],
       "control_net": [
         "104",
-        0
-      ],
-      "image": [
-        "165",
         0
       ]
     },
@@ -167,28 +155,9 @@
       "title": "Apply ControlNet (Advanced)"
     }
   },
-  "165": {
-    "inputs": {
-      "sharpen_radius": 2,
-      "sigma": 0.35000000000000003,
-      "alpha": 0.25,
-      "image": [
-        "97",
-        0
-      ]
-    },
-    "class_type": "ImageSharpen",
-    "_meta": {
-      "title": "ImageSharpen"
-    }
-  },
   "182": {
     "inputs": {
-      "strength": 1,
-      "image": [
-        "96",
-        0
-      ]
+      "strength": 1
     },
     "class_type": "MMakerColorEnhance",
     "_meta": {
@@ -205,6 +174,89 @@
     "class_type": "SaveImageWebsocket",
     "_meta": {
       "title": "SaveImageWebsocket"
+    }
+  },
+  "186": {
+    "inputs": {
+      "strength": 0.9,
+      "start_percent": 0,
+      "end_percent": 0.9,
+      "positive": [
+        "99",
+        0
+      ],
+      "negative": [
+        "100",
+        0
+      ],
+      "control_net": [
+        "188",
+        0
+      ],
+      "image": [
+        "97",
+        0
+      ],
+      "timestep_kf": [
+        "189",
+        1
+      ],
+      "weights_override": [
+        "189",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "188": {
+    "inputs": {
+      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoaderAdvanced",
+    "_meta": {
+      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
+    }
+  },
+  "189": {
+    "inputs": {
+      "base_multiplier": 0.825,
+      "flip_weights": false,
+      "uncond_multiplier": 0.5
+    },
+    "class_type": "ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "191": {
+    "inputs": {
+      "source": [
+        "97",
+        0
+      ],
+      "target": [
+        "96",
+        0
+      ]
+    },
+    "class_type": "Runtime44ColorMatch",
+    "_meta": {
+      "title": "Runtime44 Color Match"
+    }
+  },
+  "192": {
+    "inputs": {
+      "images": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
     }
   }
 }
