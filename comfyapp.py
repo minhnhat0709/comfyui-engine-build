@@ -161,7 +161,7 @@ def create_sketch2img_workflow(item, is_edit = False):
         workflow_data["216"]["inputs"]["control_net_name"] = item["control_net_name"]
         workflow_data["183"]["inputs"]["preprocessor"] = preprocessor_map[item["control_net_name"]]
     else:
-        workflow_data["142"]["inputs"]["strength"] = 0
+        workflow_data["219"]["inputs"]["strength"] = 0
 
     
 
@@ -181,21 +181,27 @@ def create_sketch2img_workflow(item, is_edit = False):
     if is_edit == False:
         workflow_data["134"]["inputs"]["height"] = item["height"]
         workflow_data["134"]["inputs"]["width"] = item["width"]
+        workflow_data["135"]["inputs"]["noise_seed"] = item["seed"]
     else:
-        workflow_data["219"]["inputs"]["image_gen_height"] = item["height"]
-        workflow_data["219"]["inputs"]["image_gen_width"] = item["width"]
+        workflow_data["232"]["inputs"]["image_gen_height"] = item["height"]
+        workflow_data["232"]["inputs"]["image_gen_width"] = item["width"]
+
+        workflow_data["230"]["inputs"]["denoise"] = item["denoise"]
+        workflow_data["230"]["inputs"]["seed"] = item["seed"]
+
 
         download_to_comfyui(item["mask"], "input")
-        workflow_data["216"]["inputs"]["image"] = item["mask"].split("/")[-1]
+        workflow_data["231"]["inputs"]["image"] = item["mask"].split("/")[-1]
         download_to_comfyui(item["image"], "input")
-        workflow_data["250"]["inputs"]["image"] = item["image"].split("/")[-1]
+        workflow_data["234"]["inputs"]["image"] = item["image"].split("/")[-1]
+        
 
     workflow_data["134"]["inputs"]["batch_size"] = item["batch_size"]
     
 
     
 
-    workflow_data["135"]["inputs"]["noise_seed"] = item["seed"]
+    
 
     return workflow_data
 

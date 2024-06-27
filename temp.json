@@ -1,66 +1,30 @@
 {
-  "96": {
+  "114": {
     "inputs": {
-      "upscale_by": 2.5,
-      "seed": 916678023962674,
-      "steps": 6,
-      "cfg": 2.5,
-      "sampler_name": "dpmpp_2m",
-      "scheduler": "karras",
-      "denoise": 0.5,
-      "mode_type": "Chess",
-      "tile_width": 640,
-      "tile_height": 640,
-      "mask_blur": 8,
-      "tile_padding": 32,
-      "seam_fix_mode": "None",
-      "seam_fix_denoise": 0.6,
-      "seam_fix_width": 64,
-      "seam_fix_mask_blur": 8,
-      "seam_fix_padding": 16,
-      "force_uniform_tiles": true,
-      "tiled_decode": false,
-      "image": [
-        "165",
-        0
-      ],
+      "b1": 1.1,
+      "b2": 1.1500000000000001,
+      "s1": 0.85,
+      "s2": 0.35000000000000003,
       "model": [
-        "98",
-        0
-      ],
-      "positive": [
-        "105",
-        0
-      ],
-      "negative": [
-        "105",
-        1
-      ],
-      "vae": [
-        "98",
-        2
-      ],
-      "upscale_model": [
-        "101",
+        "159",
         0
       ]
     },
-    "class_type": "UltimateSDUpscale",
+    "class_type": "FreeU_V2",
     "_meta": {
-      "title": "Ultimate SD Upscale"
+      "title": "FreeU_V2"
     }
   },
-  "97": {
+  "116": {
     "inputs": {
-      "image": "download.jpg",
-      "upload": "image"
+      "name": "ella-sd1.5-tsc-t5xl.safetensors"
     },
-    "class_type": "LoadImage",
+    "class_type": "ELLALoader",
     "_meta": {
-      "title": "Load Image"
+      "title": "Load ELLA Model"
     }
   },
-  "98": {
+  "118": {
     "inputs": {
       "ckpt_name": "realisticVisionV60B1_v51HyperVAE.safetensors"
     },
@@ -69,96 +33,168 @@
       "title": "Load Checkpoint"
     }
   },
-  "99": {
+  "125": {
     "inputs": {
-      "text": "A modern villa, black and white tone, tree, morning softlight",
-      "clip": [
-        "98",
+      "name": "models--google--flan-t5-xl--text_encoder",
+      "max_length": 0,
+      "dtype": "auto"
+    },
+    "class_type": "T5TextEncoderLoader #ELLA",
+    "_meta": {
+      "title": "Load T5 TextEncoder #ELLA"
+    }
+  },
+  "134": {
+    "inputs": {
+      "width": 1040,
+      "height": 800,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "135": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 7234385850674,
+      "steps": 6,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "exponential",
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "142",
+        0
+      ],
+      "negative": [
+        "142",
         1
-      ]
-    },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP Text Encode (Prompt)"
-    }
-  },
-  "100": {
-    "inputs": {
-      "text": "embedding:UnrealisticDream, ",
-      "clip": [
-        "98",
-        1
-      ]
-    },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP Text Encode (Prompt)"
-    }
-  },
-  "101": {
-    "inputs": {
-      "model_name": "4x-UltraSharp.pth"
-    },
-    "class_type": "UpscaleModelLoader",
-    "_meta": {
-      "title": "Load Upscale Model"
-    }
-  },
-  "102": {
-    "inputs": {
-      "images": [
-        "103",
+      ],
+      "latent_image": [
+        "217",
         0
       ]
     },
-    "class_type": "PreviewImage",
+    "class_type": "KSamplerAdvanced",
     "_meta": {
-      "title": "Preview Image"
+      "title": "KSampler (Advanced)"
     }
   },
-  "103": {
+  "136": {
     "inputs": {
-      "sharpen_radius": 1,
-      "sigma": 0.4,
-      "alpha": 0.3,
-      "image": [
-        "182",
+      "samples": [
+        "135",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "137": {
+    "inputs": {
+      "text": "large glass door",
+      "text_clip": "",
+      "ella": [
+        "139",
+        0
+      ],
+      "text_encoder": [
+        "125",
+        0
+      ],
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "EllaTextEncode",
+    "_meta": {
+      "title": "ELLA Text Encode"
+    }
+  },
+  "139": {
+    "inputs": {
+      "scheduler": "sgm_uniform",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "159",
+        0
+      ],
+      "ella": [
+        "116",
         0
       ]
     },
-    "class_type": "ImageSharpen",
+    "class_type": "SetEllaTimesteps",
     "_meta": {
-      "title": "ImageSharpen"
+      "title": "Set ELLA Timesteps"
     }
   },
-  "104": {
+  "140": {
     "inputs": {
-      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
+      "text": "",
+      "text_clip": "embedding:UnrealisticDream, ",
+      "ella": [
+        "139",
+        0
+      ],
+      "text_encoder": [
+        "125",
+        0
+      ],
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "EllaTextEncode",
+    "_meta": {
+      "title": "ELLA Text Encode"
+    }
+  },
+  "141": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors"
     },
     "class_type": "ControlNetLoader",
     "_meta": {
       "title": "Load ControlNet Model"
     }
   },
-  "105": {
+  "142": {
     "inputs": {
-      "strength": 0.9,
+      "strength": 0,
       "start_percent": 0,
       "end_percent": 0.9,
       "positive": [
-        "99",
+        "137",
         0
       ],
       "negative": [
-        "100",
+        "140",
         0
       ],
       "control_net": [
-        "104",
+        "141",
         0
       ],
       "image": [
-        "165",
+        "183",
         0
       ]
     },
@@ -167,13 +203,23 @@
       "title": "Apply ControlNet (Advanced)"
     }
   },
-  "165": {
+  "143": {
+    "inputs": {
+      "image": "controlnet.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "145": {
     "inputs": {
       "sharpen_radius": 2,
-      "sigma": 0.35000000000000003,
-      "alpha": 0.25,
+      "sigma": 0.4,
+      "alpha": 0.3,
       "image": [
-        "97",
+        "136",
         0
       ]
     },
@@ -182,11 +228,147 @@
       "title": "ImageSharpen"
     }
   },
-  "182": {
+  "146": {
     "inputs": {
-      "strength": 1,
+      "text": "A modern villa, tree, morning sunshine, yellow  ",
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "147": {
+    "inputs": {
+      "text": "embedding:UnrealisticDream, ",
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "159": {
+    "inputs": {
+      "lora_01": "None",
+      "strength_01": 1,
+      "lora_02": "None",
+      "strength_02": 0.73,
+      "lora_03": "None",
+      "strength_03": 0.34,
+      "lora_04": "None",
+      "strength_04": 1,
+      "model": [
+        "118",
+        0
+      ],
+      "clip": [
+        "118",
+        1
+      ]
+    },
+    "class_type": "Lora Loader Stack (rgthree)",
+    "_meta": {
+      "title": "Lora Loader Stack (rgthree)"
+    }
+  },
+  "183": {
+    "inputs": {
+      "preprocessor": "LineArtPreprocessor",
+      "resolution": 512,
       "image": [
-        "96",
+        "143",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "186": {
+    "inputs": {
+      "images": [
+        "183",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "200": {
+    "inputs": {
+      "upscale_by": 1.5,
+      "seed": 225980798926575,
+      "steps": 4,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.15,
+      "mode_type": "Linear",
+      "tile_width": 640,
+      "tile_height": 640,
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": true,
+      "tiled_decode": false,
+      "image": [
+        "205",
+        0
+      ],
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "upscale_model": [
+        "201",
+        0
+      ]
+    },
+    "class_type": "UltimateSDUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale"
+    }
+  },
+  "201": {
+    "inputs": {
+      "model_name": "4x-UltraSharp.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "205": {
+    "inputs": {
+      "strength": 0.4,
+      "image": [
+        "145",
         0
       ]
     },
@@ -195,16 +377,151 @@
       "title": "Color Enhance"
     }
   },
-  "184": {
+  "210": {
+    "inputs": {
+      "upscale_by": 1,
+      "seed": 940112258761522,
+      "steps": 4,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.2,
+      "mode_type": "Linear",
+      "tile_width": 1024,
+      "tile_height": 1024,
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": true,
+      "tiled_decode": false,
+      "image": [
+        "200",
+        0
+      ],
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "upscale_model": [
+        "201",
+        0
+      ]
+    },
+    "class_type": "UltimateSDUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale"
+    }
+  },
+  "213": {
+    "inputs": {
+      "sharpen_radius": 1,
+      "sigma": 0.4,
+      "alpha": 0.3,
+      "image": [
+        "200",
+        0
+      ]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "ImageSharpen"
+    }
+  },
+  "214": {
     "inputs": {
       "images": [
-        "103",
+        "213",
         0
       ]
     },
     "class_type": "SaveImageWebsocket",
     "_meta": {
       "title": "SaveImageWebsocket"
+    }
+  },
+  "216": {
+    "inputs": {
+      "image": "controlnet.jpg",
+      "channel": "alpha",
+      "upload": "image"
+    },
+    "class_type": "LoadImageMask",
+    "_meta": {
+      "title": "Load Image (as Mask)"
+    }
+  },
+  "217": {
+    "inputs": {
+      "grow_mask_by": 6,
+      "pixels": [
+        "219",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "mask": [
+        "223",
+        0
+      ]
+    },
+    "class_type": "VAEEncodeForInpaint",
+    "_meta": {
+      "title": "VAE Encode (for Inpainting)"
+    }
+  },
+  "250": {
+    "inputs": {
+      "image": "controlnet.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "219": {
+    "inputs": {
+      "image_gen_width": 1024,
+      "image_gen_height": 800,
+      "resize_mode": "Just Resize",
+      "hint_image": [
+        "250",
+        0
+      ]
+    },
+    "class_type": "HintImageEnchance",
+    "_meta": {
+      "title": "Enchance And Resize Hint Images"
+    }
+  },
+  "223": {
+    "inputs": {
+      "mask": [
+        "216",
+        0
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
     }
   }
 }

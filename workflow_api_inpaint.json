@@ -46,8 +46,8 @@
   },
   "134": {
     "inputs": {
-      "width": 1040,
-      "height": 800,
+      "width": 1048,
+      "height": 816,
       "batch_size": 1
     },
     "class_type": "EmptyLatentImage",
@@ -58,30 +58,14 @@
   "135": {
     "inputs": {
       "add_noise": "enable",
-      "noise_seed": 7234385850674,
+      "noise_seed": 411940315366068,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
       "scheduler": "exponential",
       "start_at_step": 0,
       "end_at_step": 10000,
-      "return_with_leftover_noise": "disable",
-      "model": [
-        "114",
-        0
-      ],
-      "positive": [
-        "142",
-        0
-      ],
-      "negative": [
-        "142",
-        1
-      ],
-      "latent_image": [
-        "217",
-        0
-      ]
+      "return_with_leftover_noise": "disable"
     },
     "class_type": "KSamplerAdvanced",
     "_meta": {
@@ -91,7 +75,7 @@
   "136": {
     "inputs": {
       "samples": [
-        "135",
+        "230",
         0
       ],
       "vae": [
@@ -106,8 +90,8 @@
   },
   "137": {
     "inputs": {
-      "text": "large glass door",
-      "text_clip": "",
+      "text": "A elegant blue house, morning fresh vibe, grass yard, tree background",
+      "text_clip": "masterpiece, best quality",
       "ella": [
         "139",
         0
@@ -128,8 +112,8 @@
   },
   "139": {
     "inputs": {
-      "scheduler": "sgm_uniform",
-      "steps": 8,
+      "scheduler": "exponential",
+      "steps": 6,
       "denoise": 1,
       "model": [
         "159",
@@ -147,7 +131,7 @@
   },
   "140": {
     "inputs": {
-      "text": "",
+      "text": "old, damaged architecture, dirty walls, pale color",
       "text_clip": "embedding:UnrealisticDream, ",
       "ella": [
         "139",
@@ -178,23 +162,11 @@
   },
   "142": {
     "inputs": {
-      "strength": 0,
-      "start_percent": 0,
+      "strength": 1.37,
+      "start_percent": 0.035,
       "end_percent": 0.9,
-      "positive": [
-        "137",
-        0
-      ],
-      "negative": [
-        "140",
-        0
-      ],
       "control_net": [
         "141",
-        0
-      ],
-      "image": [
-        "183",
         0
       ]
     },
@@ -215,7 +187,7 @@
   },
   "145": {
     "inputs": {
-      "sharpen_radius": 2,
+      "sharpen_radius": 1,
       "sigma": 0.4,
       "alpha": 0.3,
       "image": [
@@ -230,7 +202,7 @@
   },
   "146": {
     "inputs": {
-      "text": "A modern villa, tree, morning sunshine, yellow  ",
+      "text": "A modern architecture, midday sunshine, swimming pool, fresh vibe, street, building",
       "clip": [
         "159",
         1
@@ -257,7 +229,7 @@
   "159": {
     "inputs": {
       "lora_01": "None",
-      "strength_01": 1,
+      "strength_01": 0.5,
       "lora_02": "None",
       "strength_02": 0.73,
       "lora_03": "None",
@@ -280,8 +252,8 @@
   },
   "183": {
     "inputs": {
-      "preprocessor": "LineArtPreprocessor",
-      "resolution": 512,
+      "preprocessor": "M-LSDPreprocessor",
+      "resolution": 1024,
       "image": [
         "143",
         0
@@ -307,15 +279,15 @@
   "200": {
     "inputs": {
       "upscale_by": 1.5,
-      "seed": 225980798926575,
+      "seed": 361860812792162,
       "steps": 4,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
       "scheduler": "sgm_uniform",
-      "denoise": 0.15,
+      "denoise": 0.25,
       "mode_type": "Linear",
-      "tile_width": 640,
-      "tile_height": 640,
+      "tile_width": 512,
+      "tile_height": 512,
       "mask_blur": 8,
       "tile_padding": 32,
       "seam_fix_mode": "None",
@@ -326,7 +298,7 @@
       "force_uniform_tiles": true,
       "tiled_decode": false,
       "image": [
-        "205",
+        "145",
         0
       ],
       "model": [
@@ -357,33 +329,41 @@
   },
   "201": {
     "inputs": {
-      "model_name": "4x-UltraSharp.pth"
+      "model_name": "4x_NMKD-Siax_200k.pth"
     },
     "class_type": "UpscaleModelLoader",
     "_meta": {
       "title": "Load Upscale Model"
     }
   },
-  "205": {
+  "202": {
     "inputs": {
-      "strength": 0.4,
-      "image": [
-        "145",
+      "control_net_name": "control_canny-fp16.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "209": {
+    "inputs": {
+      "images": [
+        "136",
         0
       ]
     },
-    "class_type": "MMakerColorEnhance",
+    "class_type": "PreviewImage",
     "_meta": {
-      "title": "Color Enhance"
+      "title": "Preview Image"
     }
   },
   "210": {
     "inputs": {
       "upscale_by": 1,
-      "seed": 940112258761522,
+      "seed": 181987526050778,
       "steps": 4,
       "cfg": 2,
-      "sampler_name": "dpmpp_sde",
+      "sampler_name": "dpmpp_2m",
       "scheduler": "sgm_uniform",
       "denoise": 0.2,
       "mode_type": "Linear",
@@ -428,13 +408,37 @@
       "title": "Ultimate SD Upscale"
     }
   },
+  "211": {
+    "inputs": {
+      "images": [
+        "227",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "212": {
+    "inputs": {
+      "images": [
+        "200",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
   "213": {
     "inputs": {
-      "sharpen_radius": 1,
-      "sigma": 0.4,
-      "alpha": 0.3,
+      "sharpen_radius": 3,
+      "sigma": 0.25,
+      "alpha": 0.1,
       "image": [
-        "200",
+        "210",
         0
       ]
     },
@@ -443,10 +447,94 @@
       "title": "ImageSharpen"
     }
   },
-  "214": {
+  "216": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_mlsd_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoaderAdvanced",
+    "_meta": {
+      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
+    }
+  },
+  "219": {
+    "inputs": {
+      "strength": 0.9,
+      "start_percent": 0,
+      "end_percent": 0.9,
+      "positive": [
+        "235",
+        0
+      ],
+      "negative": [
+        "235",
+        1
+      ],
+      "control_net": [
+        "216",
+        0
+      ],
+      "image": [
+        "183",
+        0
+      ],
+      "timestep_kf": [
+        "224",
+        1
+      ],
+      "weights_override": [
+        "224",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "224": {
+    "inputs": {
+      "base_multiplier": 0.808,
+      "flip_weights": false,
+      "uncond_multiplier": 0.3
+    },
+    "class_type": "ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "225": {
+    "inputs": {
+      "source": [
+        "136",
+        0
+      ],
+      "target": [
+        "213",
+        0
+      ]
+    },
+    "class_type": "Runtime44ColorMatch",
+    "_meta": {
+      "title": "Runtime44 Color Match"
+    }
+  },
+  "227": {
+    "inputs": {
+      "strength": 0.25,
+      "image": [
+        "225",
+        0
+      ]
+    },
+    "class_type": "MMakerColorEnhance",
+    "_meta": {
+      "title": "Color Enhance"
+    }
+  },
+  "229": {
     "inputs": {
       "images": [
-        "213",
+        "227",
         0
       ]
     },
@@ -455,9 +543,39 @@
       "title": "SaveImageWebsocket"
     }
   },
-  "216": {
+  "230": {
     "inputs": {
-      "image": "controlnet.jpg",
+      "seed": 0,
+      "steps": 6,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "exponential",
+      "denoise": 1,
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "219",
+        0
+      ],
+      "negative": [
+        "219",
+        1
+      ],
+      "latent_image": [
+        "235",
+        2
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "231": {
+    "inputs": {
+      "image": "download.png",
       "channel": "alpha",
       "upload": "image"
     },
@@ -466,44 +584,13 @@
       "title": "Load Image (as Mask)"
     }
   },
-  "217": {
-    "inputs": {
-      "grow_mask_by": 6,
-      "pixels": [
-        "219",
-        0
-      ],
-      "vae": [
-        "118",
-        2
-      ],
-      "mask": [
-        "223",
-        0
-      ]
-    },
-    "class_type": "VAEEncodeForInpaint",
-    "_meta": {
-      "title": "VAE Encode (for Inpainting)"
-    }
-  },
-  "250": {
-    "inputs": {
-      "image": "controlnet.jpg",
-      "upload": "image"
-    },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "Load Image"
-    }
-  },
-  "219": {
+  "232": {
     "inputs": {
       "image_gen_width": 1024,
       "image_gen_height": 800,
       "resize_mode": "Just Resize",
       "hint_image": [
-        "250",
+        "234",
         0
       ]
     },
@@ -512,16 +599,54 @@
       "title": "Enchance And Resize Hint Images"
     }
   },
-  "223": {
+  "233": {
     "inputs": {
       "mask": [
-        "216",
+        "231",
         0
       ]
     },
     "class_type": "InvertMask",
     "_meta": {
       "title": "InvertMask"
+    }
+  },
+  "234": {
+    "inputs": {
+      "image": "example.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "235": {
+    "inputs": {
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "pixels": [
+        "232",
+        0
+      ],
+      "mask": [
+        "233",
+        0
+      ]
+    },
+    "class_type": "InpaintModelConditioning",
+    "_meta": {
+      "title": "InpaintModelConditioning"
     }
   }
 }
