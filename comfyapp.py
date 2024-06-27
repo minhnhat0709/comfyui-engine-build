@@ -121,6 +121,13 @@ def remove_all_files_and_dirs_in_folder(folder_path):
                 print(f"Removed directory {item}")
         except Exception as e:
             print(f"Error removing {item}: {e}")
+def remove_temp_file(list_file_name):
+    for item in list_file_name:
+        try:
+            os.remove("/root/input/" + item)
+            print(f"Removed file {item}")
+        except FileNotFoundError:
+            print(f"File {item} not found. Skipping.")
 
 def run_comfyui_server( port=8188):
         cmd = f"python main.py --dont-print-server --listen --port {port}"
@@ -136,7 +143,8 @@ def workflow_run(workflow_data, task_id, user_id, seed, port=8189):
         background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
         background_thread.start()
         
-        remove_all_files_and_dirs_in_folder("/root/input")
+        # remove_all_files_and_dirs_in_folder("/root/input")
+        
         return
 
 def create_sketch2img_workflow(item, is_edit = False):
@@ -239,6 +247,7 @@ def run_task( task, port=8189):
         
         print("ready to run")
         workflow_run(workflow_data, item["task_id"], item["user_id"], item["seed"], port)
+        remove_temp_file([item.get("input_image_url", ""), item.get("mask", ""), item.get("image", "")])
     except Exception as e:
         print(e)
         if item:
