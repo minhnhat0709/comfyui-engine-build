@@ -13,7 +13,7 @@ import uuid
 client_id = str(uuid.uuid4())
 
 
-def download_to_comfyui(url, path, fileName = None):
+def download_to_comfyui(url, path, fileName = None, git_sha = None):
     import httpx
     from tqdm import tqdm
 
@@ -25,7 +25,7 @@ def download_to_comfyui(url, path, fileName = None):
     print(f"downloading {url} ... to {model_directory}")
 
     if url.endswith(".git"):
-        download_custom_node(url, model_directory)
+        download_custom_node(url, model_directory, git_sha=git_sha)
 
     else:
         with httpx.stream("GET", url, follow_redirects=True) as stream:
@@ -42,12 +42,17 @@ def download_to_comfyui(url, path, fileName = None):
                     num_bytes_downloaded = stream.num_bytes_downloaded
 
 
-def download_custom_node(url, path):
+def download_custom_node(url, path, git_sha = None):
     subprocess.run(["git", "clone", url, "--recursive"], cwd=path)
+    
+   
 
     # Pip install requirements.txt if it exists in the custom node
     repo_name = url.split("/")[-1].split(".")[0]
     repo_path = f"{path}/{repo_name}"
+
+    if git_sha:
+        subprocess.run(["git", "reset", "--hard", git_sha], cwd=repo_path)
     if os.path.isfile(f"{repo_path}/requirements.txt"):
         print("Installing custom node requirements...")
         subprocess.run(
