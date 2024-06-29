@@ -135,13 +135,17 @@ def run_comfyui_server( port=8188):
 
 def workflow_run(workflow_data, task_id, user_id, seed, port=8189):
         # send requests to local headless ComfyUI server (on port 8189)
-        server_address = f"127.0.0.1:{port}"
-        ws = connect_to_local_server(server_address)
-        images = get_images(ws, workflow_data, server_address)
-        # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
+        try:
+            
+            server_address = f"127.0.0.1:{port}"
+            ws = connect_to_local_server(server_address)
+            images = get_images(ws, workflow_data, server_address)
+            # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
 
-        background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
-        background_thread.start()
+            background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
+            background_thread.start()
+        except Exception as e:
+            raise e
         
         # remove_all_files_and_dirs_in_folder("/root/input")
         

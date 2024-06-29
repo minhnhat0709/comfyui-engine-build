@@ -85,27 +85,34 @@ def get_images(ws, workflow_json, server_address):
     prompt_id = queue_prompt(workflow_json, server_address)["prompt_id"]
     output_images = []
     current_node = ""
+
+    error_count = 0
     while True:
-        out = ws.recv()
-        if isinstance(out, str):
-            message = json.loads(out)
-            print(message)
-            if message["type"] == "executing":
-                data = message["data"]
-                if data["prompt_id"] == prompt_id:
-                    if data["node"] is None:
-                        break  # Execution is done
-                    else:
-                        current_node = data["node"]
-        else:
-            if workflow_json.get(current_node):
-                if (
-                    workflow_json.get(current_node).get("class_type")
-                    == "SaveImageWebsocket"
-                ):
-                    output_images.append(
-                        out[8:]
-                    )  # parse out header of the image byte string
+        try:
+            out = ws.recv()
+            if isinstance(out, str):
+                message = json.loads(out)
+                print(message)
+                if message["type"] == "executing":
+                    data = message["data"]
+                    if data["prompt_id"] == prompt_id:
+                        if data["node"] is None:
+                            break  # Execution is done
+                        else:
+                            current_node = data["node"]
+            else:
+                if workflow_json.get(current_node):
+                    if (
+                        workflow_json.get(current_node).get("class_type")
+                        == "SaveImageWebsocket"
+                    ):
+                        output_images.append(
+                            out[8:]
+                        )  # parse out header of the image byte string
+        except Exception as e:
+            error_count += 1
+            if error_count > 10:
+                raise e
 
     return output_images
 
