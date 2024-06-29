@@ -268,7 +268,7 @@ def download_files(filter="node, model"):
             continue
         if not m["url"].endswith(".git") and "model" not in filter:
             continue
-        download_to_comfyui(m["url"], m["path"], m.get("git_sha", None))
+        download_to_comfyui(m["url"], m["path"],git_sha=m.get("git_sha", None))
 # ## Running ComfyUI interactively and as an API on Modal
 #
 # Below, we use Modal's class syntax to run our customized ComfyUI environment and workflow on Modal.
