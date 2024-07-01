@@ -194,12 +194,14 @@ def create_sketch2img_workflow(item, is_edit = False):
         workflow_data["134"]["inputs"]["height"] = item["height"]
         workflow_data["134"]["inputs"]["width"] = item["width"]
         workflow_data["135"]["inputs"]["noise_seed"] = item["seed"]
+        workflow_data["134"]["inputs"]["batch_size"] = item["batch_size"]
     else:
         workflow_data["232"]["inputs"]["image_gen_height"] = item["height"]
         workflow_data["232"]["inputs"]["image_gen_width"] = item["width"]
 
         workflow_data["230"]["inputs"]["denoise"] = item["denoise"]
         workflow_data["230"]["inputs"]["seed"] = item["seed"]
+        workflow_data["236"]["inputs"]["amount"] = item["batch_size"]
 
 
         download_to_comfyui(item["mask"], "input")
@@ -208,7 +210,7 @@ def create_sketch2img_workflow(item, is_edit = False):
         workflow_data["234"]["inputs"]["image"] = item["image"].split("/")[-1]
         
 
-    workflow_data["134"]["inputs"]["batch_size"] = item["batch_size"]
+    
     
 
     

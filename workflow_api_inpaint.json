@@ -564,8 +564,8 @@
         1
       ],
       "latent_image": [
-        "235",
-        2
+        "236",
+        0
       ]
     },
     "class_type": "KSampler",
@@ -647,6 +647,19 @@
     "class_type": "InpaintModelConditioning",
     "_meta": {
       "title": "InpaintModelConditioning"
+    }
+  },
+  "236": {
+    "inputs": {
+      "amount": 1,
+      "samples": [
+        "235",
+        2
+      ]
+    },
+    "class_type": "RepeatLatentBatch",
+    "_meta": {
+      "title": "Repeat Latent Batch"
     }
   }
 }
