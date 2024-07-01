@@ -16,8 +16,10 @@ RUN pip install modal httpx tqdm websocket-client boto3 supabase flask cupy-cuda
 # COPY model.json /root/model.json
 # COPY helpers.py /root/helpers.py
 
-COPY . /root
+COPY . /root/custom_nodes/eliai
 COPY ./controlnet.jpg /root/input/controlnet.jpg
+
+RUN mv /root/custom_nodes/eliai/queue_processing.py /root/custom_nodes/eliai/prestartup_script.py
 
 WORKDIR /root
 
