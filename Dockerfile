@@ -16,8 +16,7 @@ RUN pip install modal httpx tqdm websocket-client boto3 supabase flask cupy-cuda
 # COPY model.json /root/model.json
 # COPY helpers.py /root/helpers.py
 
-WORKDIR /root
-RUN python -c "from comfyapp import download_files; download_files(filter='node');"
+
 
 COPY . /root/custom_nodes/eliai
 COPY ./controlnet.jpg /root/input/controlnet.jpg
@@ -25,10 +24,12 @@ COPY ./controlnet.jpg /root/input/controlnet.jpg
 RUN mv /root/custom_nodes/eliai/queue_processing.py /root/custom_nodes/eliai/prestartup_script.py
 
 
+WORKDIR /root
+RUN cd /root/custom_nodes/eliai && python -c "from comfyapp import download_files; download_files(filter='node');"
 
-
-RUN chmod +x start.sh
-ENTRYPOINT ["./start.sh"]
+COPY start.sh /root/start.sh
+RUN chmod +x /root/start.sh
+ENTRYPOINT ["/root/start.sh"]
 
 
 
