@@ -28,6 +28,8 @@ def download_to_comfyui(url, path, fileName = None, git_sha = None):
         download_custom_node(url, model_directory, git_sha=git_sha)
 
     else:
+        if os.path.exists(local_filepath):
+            return
         with httpx.stream("GET", url, follow_redirects=True) as stream:
             total = int(stream.headers["Content-Length"])
             with open(local_filepath, "wb") as f, tqdm(

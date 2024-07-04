@@ -58,14 +58,30 @@
   "135": {
     "inputs": {
       "add_noise": "enable",
-      "noise_seed": 447992756273149,
+      "noise_seed": 413978191858749,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
       "scheduler": "exponential",
       "start_at_step": 0,
       "end_at_step": 10000,
-      "return_with_leftover_noise": "disable"
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "219",
+        0
+      ],
+      "negative": [
+        "219",
+        1
+      ],
+      "latent_image": [
+        "134",
+        0
+      ]
     },
     "class_type": "KSamplerAdvanced",
     "_meta": {
@@ -75,7 +91,7 @@
   "136": {
     "inputs": {
       "samples": [
-        "230",
+        "135",
         0
       ],
       "vae": [
@@ -90,7 +106,7 @@
   },
   "137": {
     "inputs": {
-      "text": "A elegant blue house, morning fresh vibe, grass yard, tree background",
+      "text": "A elegant yellow house, morning fresh vibe, grass yard, tree background",
       "text_clip": "masterpiece, best quality",
       "ella": [
         "139",
@@ -153,7 +169,7 @@
   },
   "141": {
     "inputs": {
-      "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors"
+      "control_net_name": null
     },
     "class_type": "ControlNetLoader",
     "_meta": {
@@ -202,7 +218,7 @@
   },
   "146": {
     "inputs": {
-      "text": "A modern architecture, midday sunshine, swimming pool, fresh vibe, street, building",
+      "text": "A modern Yellow architecture, midday sunshine, swimming pool, fresh vibe, street, building",
       "clip": [
         "159",
         1
@@ -252,7 +268,7 @@
   },
   "183": {
     "inputs": {
-      "preprocessor": "M-LSDPreprocessor",
+      "preprocessor": "LineArtPreprocessor",
       "resolution": 1024,
       "image": [
         "143",
@@ -276,6 +292,57 @@
       "title": "Preview Image"
     }
   },
+  "200": {
+    "inputs": {
+      "upscale_by": 1.5,
+      "seed": 678054284815568,
+      "steps": 4,
+      "cfg": 2,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.25,
+      "mode_type": "Linear",
+      "tile_width": 640,
+      "tile_height": 640,
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": true,
+      "tiled_decode": false,
+      "image": [
+        "145",
+        0
+      ],
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "upscale_model": [
+        "201",
+        0
+      ]
+    },
+    "class_type": "UltimateSDUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale"
+    }
+  },
   "201": {
     "inputs": {
       "model_name": "4x_NMKD-Siax_200k.pth"
@@ -287,7 +354,7 @@
   },
   "202": {
     "inputs": {
-      "control_net_name": "control_canny-fp16.safetensors"
+      "control_net_name": null
     },
     "class_type": "ControlNetLoader",
     "_meta": {
@@ -306,6 +373,57 @@
       "title": "Preview Image"
     }
   },
+  "210": {
+    "inputs": {
+      "upscale_by": 1,
+      "seed": 68503895589554,
+      "steps": 4,
+      "cfg": 2,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "sgm_uniform",
+      "denoise": 0.2,
+      "mode_type": "Linear",
+      "tile_width": 840,
+      "tile_height": 840,
+      "mask_blur": 8,
+      "tile_padding": 32,
+      "seam_fix_mode": "None",
+      "seam_fix_denoise": 1,
+      "seam_fix_width": 64,
+      "seam_fix_mask_blur": 8,
+      "seam_fix_padding": 16,
+      "force_uniform_tiles": false,
+      "tiled_decode": false,
+      "image": [
+        "200",
+        0
+      ],
+      "model": [
+        "114",
+        0
+      ],
+      "positive": [
+        "137",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ],
+      "upscale_model": [
+        "201",
+        0
+      ]
+    },
+    "class_type": "UltimateSDUpscale",
+    "_meta": {
+      "title": "Ultimate SD Upscale"
+    }
+  },
   "211": {
     "inputs": {
       "images": [
@@ -321,7 +439,7 @@
   "212": {
     "inputs": {
       "images": [
-        "145",
+        "200",
         0
       ]
     },
@@ -336,7 +454,7 @@
       "sigma": 0.25,
       "alpha": 0.1,
       "image": [
-        "145",
+        "210",
         0
       ]
     },
@@ -347,7 +465,7 @@
   },
   "216": {
     "inputs": {
-      "control_net_name": "control_v11p_sd15_mlsd_fp16.safetensors"
+      "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors"
     },
     "class_type": "ControlNetLoaderAdvanced",
     "_meta": {
@@ -360,12 +478,12 @@
       "start_percent": 0,
       "end_percent": 0.9,
       "positive": [
-        "235",
+        "137",
         0
       ],
       "negative": [
-        "235",
-        1
+        "140",
+        0
       ],
       "control_net": [
         "216",
@@ -389,9 +507,32 @@
       "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
     }
   },
+  "220": {
+    "inputs": {
+      "weight_00": 0.099,
+      "weight_01": 0.121,
+      "weight_02": 0.146,
+      "weight_03": 0.177,
+      "weight_04": 0.215,
+      "weight_05": 0.26,
+      "weight_06": 0.315,
+      "weight_07": 0.382,
+      "weight_08": 0.463,
+      "weight_09": 0.562,
+      "weight_10": 0.681,
+      "weight_11": 0.8250000000000001,
+      "weight_12": 1,
+      "flip_weights": false,
+      "uncond_multiplier": 0
+    },
+    "class_type": "SoftControlNetWeights",
+    "_meta": {
+      "title": "ControlNet Soft Weights 🛂🅐🅒🅝"
+    }
+  },
   "224": {
     "inputs": {
-      "base_multiplier": 0.808,
+      "base_multiplier": 0.8250000000000001,
       "flip_weights": false,
       "uncond_multiplier": 0.3
     },
@@ -439,125 +580,6 @@
     "class_type": "SaveImageWebsocket",
     "_meta": {
       "title": "SaveImageWebsocket"
-    }
-  },
-  "230": {
-    "inputs": {
-      "seed": 344761599154522,
-      "steps": 6,
-      "cfg": 2,
-      "sampler_name": "dpmpp_sde",
-      "scheduler": "exponential",
-      "denoise": 1,
-      "model": [
-        "114",
-        0
-      ],
-      "positive": [
-        "219",
-        0
-      ],
-      "negative": [
-        "219",
-        1
-      ],
-      "latent_image": [
-        "243",
-        0
-      ]
-    },
-    "class_type": "KSampler",
-    "_meta": {
-      "title": "KSampler"
-    }
-  },
-  "231": {
-    "inputs": {
-      "image": "controlnet.jpg",
-      "channel": "alpha",
-      "upload": "image"
-    },
-    "class_type": "LoadImageMask",
-    "_meta": {
-      "title": "Load Image (as Mask)"
-    }
-  },
-  "232": {
-    "inputs": {
-      "image_gen_width": 512,
-      "image_gen_height": 512,
-      "resize_mode": "Just Resize",
-      "hint_image": [
-        "234",
-        0
-      ]
-    },
-    "class_type": "HintImageEnchance",
-    "_meta": {
-      "title": "Enchance And Resize Hint Images"
-    }
-  },
-  "233": {
-    "inputs": {
-      "mask": [
-        "231",
-        0
-      ]
-    },
-    "class_type": "InvertMask",
-    "_meta": {
-      "title": "InvertMask"
-    }
-  },
-  "234": {
-    "inputs": {
-      "image": "controlnet.jpg",
-      "upload": "image"
-    },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "Load Image"
-    }
-  },
-  "235": {
-    "inputs": {
-      "positive": [
-        "137",
-        0
-      ],
-      "negative": [
-        "140",
-        0
-      ],
-      "vae": [
-        "118",
-        2
-      ],
-      "pixels": [
-        "232",
-        0
-      ],
-      "mask": [
-        "233",
-        0
-      ]
-    },
-    "class_type": "InpaintModelConditioning",
-    "_meta": {
-      "title": "InpaintModelConditioning"
-    }
-  },
-  "243": {
-    "inputs": {
-      "amount": 1,
-      "samples": [
-        "235",
-        2
-      ]
-    },
-    "class_type": "RepeatLatentBatch",
-    "_meta": {
-      "title": "Repeat Latent Batch"
     }
   }
 }
