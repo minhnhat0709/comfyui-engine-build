@@ -1,9 +1,9 @@
 #!/bin/bash
 python -c "from comfyapp import download_files; download_files(filter='model');"
 
-wget -O workflow_api.json https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/workflow/workflow_api.json
-wget -O workflow_api_upscale.json https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/workflow/workflow_api_upscale.json
-wget -O workflow_api_inpaint.json https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/workflow/workflow_api_inpaint.json
+wget -O workflow_api.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api.json
+wget -O workflow_api_upscale.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_upscale.json
+wget -O workflow_api_inpaint.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_inpaint.json
 wget -O comfyapp.py https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/comfyapp.py
 
 while true; do
