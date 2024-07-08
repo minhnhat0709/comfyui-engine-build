@@ -2,9 +2,9 @@
   "96": {
     "inputs": {
       "upscale_by": 2.5,
-      "seed": 597600009150577,
+      "seed": 315541764159994,
       "steps": 6,
-      "cfg": 3,
+      "cfg": 2,
       "sampler_name": "dpmpp_2m",
       "scheduler": "karras",
       "denoise": 0.5,
@@ -52,7 +52,7 @@
   },
   "97": {
     "inputs": {
-      "image": "ef8d3572-09d0-48db-8a2c-82f04233a951.jpeg",
+      "image": "z5611928542868_47766294f59dcdd7cc2e0373420aef8c (1).jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -71,7 +71,7 @@
   },
   "99": {
     "inputs": {
-      "text": "A modern villa, black and white tone, tree, morning softlight",
+      "text": "A modern kitchen, chair and table, windows",
       "clip": [
         "98",
         1
@@ -118,7 +118,7 @@
   },
   "103": {
     "inputs": {
-      "sharpen_radius": 2,
+      "sharpen_radius": 1,
       "sigma": 0.3,
       "alpha": 0.2,
       "image": [
@@ -238,7 +238,7 @@
         0
       ],
       "target": [
-        "200",
+        "96",
         0
       ]
     },
@@ -250,7 +250,7 @@
   "194": {
     "inputs": {
       "add_noise": "enable",
-      "noise_seed": 112475789317670,
+      "noise_seed": 579835676429304,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
@@ -353,7 +353,7 @@
   "208": {
     "inputs": {
       "pyrUp_iters": 3,
-      "resolution": 2496,
+      "resolution": 2048,
       "image": [
         "97",
         0
@@ -378,7 +378,7 @@
   },
   "210": {
     "inputs": {
-      "seed": 384244522777882,
+      "seed": 686630166495472,
       "steps": 6,
       "cfg": 1.47,
       "sampler_name": "dpmpp_2m",
@@ -419,10 +419,6 @@
   "212": {
     "inputs": {
       "tile_size": 768,
-      "pixels": [
-        "96",
-        0
-      ],
       "vae": [
         "98",
         2
