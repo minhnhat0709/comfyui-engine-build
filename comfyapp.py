@@ -75,7 +75,7 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
         force_build=False
     )
     .apt_install("git")
-    .run_commands("apt-get update && apt-get install ffmpeg libsm6 libxext6 -y")
+    .run_commands("apt-get update && apt-get install ffmpeg libsm6 libxext6 git-lfs -y")
     # .run_commands("pip uninstall torch && pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu121")
     .run_commands(  # install ComfyUI
         "cd /root && git init .",
@@ -85,8 +85,11 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
         force_build=False
     )
     .run_commands(
-        "GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA",
+        "git-lfs install",
+        "git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA",
         "mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder",
+        "mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors",
+        force_build=False
     )
     .pip_install("httpx", "tqdm", "websocket-client", "boto3", "supabase", "flask", "cupy-cuda12x", "Pillow", force_build=False)  # add web dependencies
     .copy_local_file(  # copy over the ComfyUI model definition JSON and helper Python module

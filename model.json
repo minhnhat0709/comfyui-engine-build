@@ -4,6 +4,10 @@
     "path": "models/checkpoints"
   },
   {
+    "url": "https://huggingface.co/Lykon/AbsoluteReality/resolve/main/AbsoluteReality_1.8.1_pruned.safetensors",
+    "path": "models/checkpoints"
+  },
+  {
     "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/UnrealisticDream.pt",
     "path": "models/embeddings"
   },
@@ -58,18 +62,6 @@
   {
     "url": "https://huggingface.co/uwg/upscaler/resolve/main/ESRGAN/4x_NMKD-Siax_200k.pth",
     "path": "models/upscale_models"
-  },
-  {
-    "url": "https://huggingface.co/QQGYLab/ELLA/resolve/main/ella-sd1.5-tsc-t5xl.safetensors",
-    "path": "models/ella"
-  },
-  {
-    "url": "https://huggingface.co/QQGYLab/ELLA/resolve/main/models--google--flan-t5-xl--text_encoder/model.safetensors",
-    "path": "models/ella_encoder/models--google--flan-t5-xl--text_encoder"
-  },
-  {
-    "url": "https://huggingface.co/QQGYLab/ELLA/resolve/main/models--google--flan-t5-xl--text_encoder/spiece.model",
-    "path": "models/ella_encoder/models--google--flan-t5-xl--text_encoder"
   },
   {
       "url": "https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet.git",

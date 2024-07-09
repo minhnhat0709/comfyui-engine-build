@@ -2,17 +2,17 @@
   "96": {
     "inputs": {
       "upscale_by": 2.5,
-      "seed": 597600009150577,
-      "steps": 6,
-      "cfg": 3,
-      "sampler_name": "dpmpp_2m",
-      "scheduler": "karras",
+      "seed": 1068412937206110,
+      "steps": 8,
+      "cfg": 5,
+      "sampler_name": "ddim",
+      "scheduler": "ddim_uniform",
       "denoise": 0.5,
       "mode_type": "Chess",
       "tile_width": 768,
       "tile_height": 768,
-      "mask_blur": 8,
-      "tile_padding": 32,
+      "mask_blur": 16,
+      "tile_padding": 64,
       "seam_fix_mode": "None",
       "seam_fix_denoise": 0.6,
       "seam_fix_width": 64,
@@ -25,7 +25,7 @@
         0
       ],
       "model": [
-        "98",
+        "217",
         0
       ],
       "positive": [
@@ -52,7 +52,7 @@
   },
   "97": {
     "inputs": {
-      "image": "ef8d3572-09d0-48db-8a2c-82f04233a951.jpeg",
+      "image": "z5611928542868_47766294f59dcdd7cc2e0373420aef8c (2) (1).jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -62,7 +62,7 @@
   },
   "98": {
     "inputs": {
-      "ckpt_name": "realisticVisionV60B1_v51HyperVAE.safetensors"
+      "ckpt_name": "AbsoluteReality_1.8.1_pruned.safetensors"
     },
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
@@ -71,9 +71,9 @@
   },
   "99": {
     "inputs": {
-      "text": "A modern villa, black and white tone, tree, morning softlight",
+      "text": "an elegant neoclassical building at night",
       "clip": [
-        "98",
+        "217",
         1
       ]
     },
@@ -84,9 +84,9 @@
   },
   "100": {
     "inputs": {
-      "text": "embedding:UnrealisticDream, ",
+      "text": "embedding:UnrealisticDream, old, dirty, bokeh, blurry",
       "clip": [
-        "98",
+        "217",
         1
       ]
     },
@@ -118,7 +118,7 @@
   },
   "103": {
     "inputs": {
-      "sharpen_radius": 2,
+      "sharpen_radius": 1,
       "sigma": 0.3,
       "alpha": 0.2,
       "image": [
@@ -178,7 +178,7 @@
   },
   "186": {
     "inputs": {
-      "strength": 1.25,
+      "strength": 1.5,
       "start_percent": 0,
       "end_percent": 0.9,
       "positive": [
@@ -224,7 +224,7 @@
     "inputs": {
       "base_multiplier": 0.8250000000000001,
       "flip_weights": false,
-      "uncond_multiplier": 0
+      "uncond_multiplier": 0.5
     },
     "class_type": "ScaledSoftControlNetWeights",
     "_meta": {
@@ -238,7 +238,7 @@
         0
       ],
       "target": [
-        "200",
+        "96",
         0
       ]
     },
@@ -250,7 +250,7 @@
   "194": {
     "inputs": {
       "add_noise": "enable",
-      "noise_seed": 112475789317670,
+      "noise_seed": 786329397011214,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
@@ -352,8 +352,8 @@
   },
   "208": {
     "inputs": {
-      "pyrUp_iters": 3,
-      "resolution": 2496,
+      "pyrUp_iters": 2,
+      "resolution": 1984,
       "image": [
         "97",
         0
@@ -378,7 +378,7 @@
   },
   "210": {
     "inputs": {
-      "seed": 384244522777882,
+      "seed": 875045308389790,
       "steps": 6,
       "cfg": 1.47,
       "sampler_name": "dpmpp_2m",
@@ -419,10 +419,6 @@
   "212": {
     "inputs": {
       "tile_size": 768,
-      "pixels": [
-        "96",
-        0
-      ],
       "vae": [
         "98",
         2
@@ -431,6 +427,93 @@
     "class_type": "VAEEncodeTiled",
     "_meta": {
       "title": "VAE Encode (Tiled)"
+    }
+  },
+  "217": {
+    "inputs": {
+      "lora_01": "add_detail.safetensors",
+      "strength_01": 0.5,
+      "lora_02": "None",
+      "strength_02": 1,
+      "lora_03": "None",
+      "strength_03": 1,
+      "lora_04": "None",
+      "strength_04": 1,
+      "model": [
+        "218",
+        0
+      ],
+      "clip": [
+        "98",
+        1
+      ]
+    },
+    "class_type": "Lora Loader Stack (rgthree)",
+    "_meta": {
+      "title": "Lora Loader Stack (rgthree)"
+    }
+  },
+  "218": {
+    "inputs": {
+      "lora_name": "Hyper-SD15-8steps-CFG-lora.safetensors",
+      "strength_model": 1,
+      "model": [
+        "98",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "219": {
+    "inputs": {
+      "scale_factor": 2.5,
+      "blur_strength": 4
+    },
+    "class_type": "TTPlanet_TileSimple_Preprocessor",
+    "_meta": {
+      "title": "TTPlanet Tile Simple"
+    }
+  },
+  "220": {
+    "inputs": {
+      "scale_factor": 1,
+      "blur_strength": 2,
+      "radius": 7,
+      "eps": 0.01
+    },
+    "class_type": "TTPlanet_TileGF_Preprocessor",
+    "_meta": {
+      "title": "TTPlanet Tile GuidedFilter"
+    }
+  },
+  "221": {
+    "inputs": {
+      "steps": 2,
+      "scheduler": "sgm_uniform",
+      "denoise": 0.5,
+      "eta": 0.8,
+      "model": [
+        "217",
+        0
+      ]
+    },
+    "class_type": "TCDModelSamplingDiscrete",
+    "_meta": {
+      "title": "TCD Model Sampling Discrete"
+    }
+  },
+  "223": {
+    "inputs": {
+      "add_noise": true,
+      "noise_seed": 850202830004939,
+      "cfg": 8
+    },
+    "class_type": "SamplerCustom",
+    "_meta": {
+      "title": "SamplerCustom"
     }
   }
 }
