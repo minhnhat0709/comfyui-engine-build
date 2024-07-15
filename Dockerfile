@@ -1,7 +1,7 @@
 FROM pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime as base
 
-RUN apt-get update && apt-get install lsof ffmpeg libsm6 libxext6 wget git-lfs -y
-RUN apt-get install git -y
+RUN apt-get update && apt-get install lsof ffmpeg libsm6 libxext6 wget -y
+RUN apt-get install git git-lfs -y
 
 RUN cd /root && git init . && \
     cd /root && git remote add --fetch origin https://github.com/comfyanonymous/ComfyUI && \
