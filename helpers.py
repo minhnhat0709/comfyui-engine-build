@@ -95,11 +95,12 @@ def get_images(ws, workflow_json, server_address):
 
     error_count = 0
     while True:
+        time.sleep(0.001)
         try:
             out = ws.recv()
             if isinstance(out, str):
                 message = json.loads(out)
-                print(message)
+                #print(message)
                 if message["type"] == "executing":
                     data = message["data"]
                     if data["prompt_id"] == prompt_id:
@@ -117,9 +118,12 @@ def get_images(ws, workflow_json, server_address):
                             out[8:]
                         )  # parse out header of the image byte string
         except Exception as e:
+            print("get image error")
+            print(e)
             error_count += 1
             if error_count > 10:
                 raise e
+                break
 
     return output_images
 

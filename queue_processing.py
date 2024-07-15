@@ -13,7 +13,7 @@ def main():
   # get the port from the first command line
   # port = sys.argv[1]
   # run_comfyui_server(port)
-  # time.sleep(15)
+  time.sleep(15)
 
   port = args.port
 
@@ -23,7 +23,7 @@ def main():
 
   try:
       while True:
-          time.sleep(15)
+          time.sleep(1)
           try:
               task = redis_client.rpop(taskQueue)
 
