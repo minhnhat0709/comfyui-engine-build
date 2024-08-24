@@ -103,7 +103,7 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
     # )
 )
 
-app = modal.App(name="example-comfyui")
+app = modal.App(name="moodz.ai")
 
 # Some additional code for managing ComfyUI lives in `helpers.py`.
 # This includes functions like downloading checkpoints and plugins to the right directory on the ComfyUI server.
@@ -224,7 +224,7 @@ def create_sketch2img_workflow(item, is_edit = False):
     return workflow_data
 
 def create_upscale_workflow(item):
-    download_to_comfyui(item["input_image_url"], "input")
+    download_to_comfyui(item["base_image_url"], "input")
     
     workflow_data = json.loads(
         (pathlib.Path(__file__).parent / "workflow_api_upscale.json").read_text()
@@ -232,7 +232,7 @@ def create_upscale_workflow(item):
 
     # insert the prompt
     workflow_data["99"]["inputs"]["text"] = item["prompt"]
-    workflow_data["97"]["inputs"]["image"] = item["input_image_url"].split("/")[-1]
+    workflow_data["97"]["inputs"]["image"] = item["base_image_url"].split("/")[-1]
     workflow_data["96"]["inputs"]["denoise"] = item["denoising_strength"]
 
     return workflow_data
@@ -292,7 +292,7 @@ def download_files(filter="node, model"):
     gpu="a10g",
     image=comfyui_image,
     timeout=300,
-    container_idle_timeout=60,
+    container_idle_timeout=30,
     mounts=[
         modal.Mount.from_local_file(
             pathlib.Path(__file__).parent / "controlnet.jpg",
@@ -319,7 +319,7 @@ def download_files(filter="node, model"):
             "/root/models/embeddings/UnrealisticDream.pt",
         )
     ],
-    secrets=[modal.Secret.from_name("engine-secret")]
+    secrets=[modal.Secret.from_name("eliai-global")]
 )
 class ComfyUI:
     @modal.build()
