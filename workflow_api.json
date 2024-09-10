@@ -46,68 +46,19 @@
   },
   "134": {
     "inputs": {
-      "width": 1048,
-      "height": 816,
-      "batch_size": 2
+      "width": 1016,
+      "height": 712,
+      "batch_size": 1
     },
     "class_type": "EmptyLatentImage",
     "_meta": {
       "title": "Empty Latent Image"
     }
   },
-  "135": {
-    "inputs": {
-      "add_noise": "enable",
-      "noise_seed": 599333422305908,
-      "steps": 6,
-      "cfg": 2,
-      "sampler_name": "dpmpp_sde",
-      "scheduler": "karras",
-      "start_at_step": 0,
-      "end_at_step": 10000,
-      "return_with_leftover_noise": "disable",
-      "model": [
-        "114",
-        0
-      ],
-      "positive": [
-        "219",
-        0
-      ],
-      "negative": [
-        "219",
-        1
-      ],
-      "latent_image": [
-        "134",
-        0
-      ]
-    },
-    "class_type": "KSamplerAdvanced",
-    "_meta": {
-      "title": "KSampler (Advanced)"
-    }
-  },
-  "136": {
-    "inputs": {
-      "samples": [
-        "135",
-        0
-      ],
-      "vae": [
-        "118",
-        2
-      ]
-    },
-    "class_type": "VAEDecode",
-    "_meta": {
-      "title": "VAE Decode"
-    }
-  },
   "137": {
     "inputs": {
-      "text": "A house, morning fresh vibe, grass yard, tree background",
-      "text_clip": "masterpiece, best quality, black_white_tone, modern_villa",
+      "text": "A house, morning fresh vibe, blue sky",
+      "text_clip": "masterpiece, best quality, embedding:epiCRealism",
       "ella": [
         "139",
         0
@@ -147,7 +98,7 @@
   },
   "140": {
     "inputs": {
-      "text": "old, damaged architecture, dirty walls, pale color",
+      "text": "old, damaged architecture, dirty walls, pale color, blurry, bokeh",
       "text_clip": "embedding:UnrealisticDream, ",
       "ella": [
         "139",
@@ -169,7 +120,7 @@
   },
   "141": {
     "inputs": {
-      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
+      "control_net_name": "controlnet++_lineart_sd15_fp16.safetensors"
     },
     "class_type": "ControlNetLoader",
     "_meta": {
@@ -204,29 +155,16 @@
   "145": {
     "inputs": {
       "sharpen_radius": 1,
-      "sigma": 0.4,
-      "alpha": 0.3,
+      "sigma": 0.3,
+      "alpha": 0.2,
       "image": [
-        "136",
-        0
+        "275",
+        5
       ]
     },
     "class_type": "ImageSharpen",
     "_meta": {
       "title": "ImageSharpen"
-    }
-  },
-  "146": {
-    "inputs": {
-      "text": "A modern Yellow architecture, midday sunshine, swimming pool, fresh vibe, street, building",
-      "clip": [
-        "159",
-        1
-      ]
-    },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP Text Encode (Prompt)"
     }
   },
   "147": {
@@ -245,7 +183,7 @@
   "159": {
     "inputs": {
       "lora_01": "add_detail.safetensors",
-      "strength_01": 0.5,
+      "strength_01": 1,
       "lora_02": "None",
       "strength_02": 0.7000000000000001,
       "lora_03": "None",
@@ -292,78 +230,9 @@
       "title": "Preview Image"
     }
   },
-  "201": {
-    "inputs": {
-      "model_name": "4x_NMKD-Siax_200k.pth"
-    },
-    "class_type": "UpscaleModelLoader",
-    "_meta": {
-      "title": "Load Upscale Model"
-    }
-  },
-  "202": {
-    "inputs": {
-      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
-    },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "Load ControlNet Model"
-    }
-  },
-  "209": {
-    "inputs": {
-      "images": [
-        "136",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
-  "211": {
-    "inputs": {
-      "images": [
-        "227",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
-  "212": {
-    "inputs": {
-      "images": [
-        "145",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
-  "213": {
-    "inputs": {
-      "sharpen_radius": 3,
-      "sigma": 0.2,
-      "alpha": 0.1,
-      "image": [
-        "239",
-        0
-      ]
-    },
-    "class_type": "ImageSharpen",
-    "_meta": {
-      "title": "ImageSharpen"
-    }
-  },
   "216": {
     "inputs": {
-      "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors"
+      "control_net_name": "controlnet++_lineart_sd15_fp16.safetensors"
     },
     "class_type": "ControlNetLoaderAdvanced",
     "_meta": {
@@ -439,39 +308,10 @@
       "title": "Scaled Soft Weights 🛂🅐🅒🅝"
     }
   },
-  "225": {
-    "inputs": {
-      "source": [
-        "136",
-        0
-      ],
-      "target": [
-        "213",
-        0
-      ]
-    },
-    "class_type": "Runtime44ColorMatch",
-    "_meta": {
-      "title": "Runtime44 Color Match"
-    }
-  },
-  "227": {
-    "inputs": {
-      "strength": 0.25,
-      "image": [
-        "225",
-        0
-      ]
-    },
-    "class_type": "MMakerColorEnhance",
-    "_meta": {
-      "title": "Color Enhance"
-    }
-  },
   "229": {
     "inputs": {
       "images": [
-        "227",
+        "145",
         0
       ]
     },
@@ -480,162 +320,133 @@
       "title": "SaveImageWebsocket"
     }
   },
-  "230": {
+  "242": {
     "inputs": {
-      "upscale_method": "lanczos",
-      "scale_by": 0.35000000000000003,
-      "image": [
-        "240",
-        0
-      ]
+      "control_net_name": "controlnet++_lineart_sd15_fp16.safetensors"
     },
-    "class_type": "ImageScaleBy",
+    "class_type": "ControlNetLoaderAdvanced",
     "_meta": {
-      "title": "Upscale Image By"
+      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
     }
   },
-  "232": {
+  "243": {
     "inputs": {
-      "add_noise": "enable",
-      "noise_seed": 192025585923427,
-      "steps": 6,
-      "cfg": 1,
-      "sampler_name": "dpmpp_2m",
-      "scheduler": "karras",
-      "start_at_step": 4,
-      "end_at_step": 6,
-      "return_with_leftover_noise": "disable",
-      "model": [
-        "234",
-        0
-      ],
+      "strength": 0.35000000000000003,
+      "start_percent": 0.1,
+      "end_percent": 0.6,
       "positive": [
-        "237",
+        "219",
         0
       ],
       "negative": [
-        "140",
+        "219",
+        1
+      ],
+      "control_net": [
+        "242",
         0
       ],
-      "latent_image": [
-        "233",
+      "image": [
+        "283",
+        0
+      ],
+      "timestep_kf": [
+        "224",
+        1
+      ],
+      "weights_override": [
+        "224",
         0
       ]
     },
-    "class_type": "KSamplerAdvanced",
+    "class_type": "ACN_AdvancedControlNetApply",
     "_meta": {
-      "title": "KSampler (Advanced)"
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
     }
   },
-  "233": {
+  "275": {
     "inputs": {
-      "pixels": [
-        "230",
-        0
-      ],
-      "vae": [
-        "118",
-        2
-      ]
-    },
-    "class_type": "VAEEncode",
-    "_meta": {
-      "title": "VAE Encode"
-    }
-  },
-  "234": {
-    "inputs": {
-      "method": "MultiDiffusion",
-      "tile_width": 640,
-      "tile_height": 640,
-      "tile_overlap": 64,
-      "tile_batch_size": 6,
+      "seed": 849942299256178,
+      "steps": 6,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "karras",
+      "denoise": 1,
+      "preview_method": "auto",
+      "vae_decode": "true",
       "model": [
         "114",
         0
-      ]
-    },
-    "class_type": "TiledDiffusion",
-    "_meta": {
-      "title": "Tiled Diffusion"
-    }
-  },
-  "236": {
-    "inputs": {
-      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
-    },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "Load ControlNet Model"
-    }
-  },
-  "237": {
-    "inputs": {
-      "strength": 1,
-      "conditioning": [
-        "137",
+      ],
+      "positive": [
+        "243",
         0
       ],
-      "control_net": [
-        "236",
+      "negative": [
+        "243",
+        1
+      ],
+      "latent_image": [
+        "134",
         0
       ],
-      "image": [
-        "238",
-        0
-      ]
-    },
-    "class_type": "ControlNetApply",
-    "_meta": {
-      "title": "Apply ControlNet"
-    }
-  },
-  "238": {
-    "inputs": {
-      "pyrUp_iters": 3,
-      "resolution": 640,
-      "image": [
-        "230",
-        0
-      ]
-    },
-    "class_type": "TilePreprocessor",
-    "_meta": {
-      "title": "Tile"
-    }
-  },
-  "239": {
-    "inputs": {
-      "tile_size": 640,
-      "fast": true,
-      "samples": [
-        "232",
-        0
-      ],
-      "vae": [
+      "optional_vae": [
         "118",
         2
+      ],
+      "script": [
+        "282",
+        0
       ]
     },
-    "class_type": "VAEDecodeTiled_TiledDiffusion",
+    "class_type": "KSampler (Efficient)",
     "_meta": {
-      "title": "Tiled VAE Decode"
+      "title": "KSampler (Efficient)"
     }
   },
-  "240": {
+  "282": {
     "inputs": {
-      "upscale_model": [
-        "201",
-        0
-      ],
-      "image": [
+      "upscale_type": "latent",
+      "hires_ckpt_name": "(use same)",
+      "latent_upscaler": "city96.v1",
+      "pixel_upscaler": "4x_NMKD-Siax_200k.pth",
+      "upscale_by": 1.5,
+      "use_same_seed": false,
+      "seed": 117735178854533,
+      "hires_steps": 4,
+      "denoise": 0.56,
+      "iterations": 1,
+      "use_controlnet": false,
+      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors",
+      "strength": 1,
+      "preprocessor": "TilePreprocessor",
+      "preprocessor_imgs": false
+    },
+    "class_type": "HighRes-Fix Script",
+    "_meta": {
+      "title": "HighRes-Fix Script"
+    }
+  },
+  "283": {
+    "inputs": {
+      "image": "SD_StandardNoise.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image (Noise)"
+    }
+  },
+  "284": {
+    "inputs": {
+      "images": [
         "145",
         0
       ]
     },
-    "class_type": "ImageUpscaleWithModel",
+    "class_type": "PreviewImage",
     "_meta": {
-      "title": "Upscale Image (using Model)"
+      "title": "Preview Image"
     }
   }
 }

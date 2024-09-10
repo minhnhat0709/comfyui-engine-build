@@ -4,15 +4,47 @@
     "path": "models/checkpoints"
   },
   {
-    "url": "https://huggingface.co/Lykon/AbsoluteReality/resolve/main/AbsoluteReality_1.8.1_pruned.safetensors",
+    "url": "https://huggingface.co/LyliaEngine/ponyRealism_v21MainVAE/resolve/main/ponyRealism_v21MainVAE.safetensors",
     "path": "models/checkpoints"
+  },
+  {
+    "url": "https://huggingface.co/Kijai/flux-fp8/resolve/main/flux1-dev-fp8.safetensors",
+    "path": "models/unet"
   },
   {
     "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/UnrealisticDream.pt",
     "path": "models/embeddings"
   },
   {
+    "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors",
+    "path": "models/clip"
+  },
+  {
+    "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors",
+    "path": "models/clip"
+  },
+  {
+    "url": "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors",
+    "path": "models/vae"
+  },
+  {
+    "url": "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-FLUX.1-dev-8steps-lora.safetensors",
+    "path": "models/loras"
+  },
+  {
     "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/add_detail.safetensors",
+    "path": "models/loras"
+  },
+  {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/add-detail-xl.safetensors",
+    "path": "models/loras"
+  },
+  {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/3DMM_XL_V13.safetensors",
+    "path": "models/loras"
+  },
+  {
+    "url": "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SDXL-4steps-lora.safetensors",
     "path": "models/loras"
   },
   {
@@ -24,19 +56,23 @@
     "path": "models/loras"
   },
   {
+    "url": "https://huggingface.co/TTPlanet/TTPLanet_SDXL_Controlnet_Tile_Realistic/resolve/main/TTPLANET_Controlnet_Tile_realistic_v2_fp16.safetensors",
+    "path": "models/controlnet"
+  }, 
+  {
     "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11f1e_sd15_tile_fp16.safetensors",
     "path": "models/controlnet"
   }, 
   {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_lineart_fp16.safetensors",
+    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_lineart_sd15_fp16.safetensors",
     "path": "models/controlnet"
   },
   {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_canny_fp16.safetensors",
+    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_canny_sd15_fp16.safetensors",
     "path": "models/controlnet"
   },
   {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_depth_fp16.safetensors",
+    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_depth_sd15_fp16.safetensors",
     "path": "models/controlnet"
   },
   {
@@ -48,11 +84,11 @@
     "path": "models/controlnet"
   },
   {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_scribble_fp16.safetensors",
+    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_hed_softedge_sd15_fp16.safetensors",
     "path": "models/controlnet"
   },
   {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_seg_fp16.safetensors",
+    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_seg_sd15_fp16.safetensors",
     "path": "models/controlnet"
   },
   {
@@ -65,8 +101,7 @@
   },
   {
       "url": "https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet.git",
-      "path": "custom_nodes",
-      "git_sha": "bf16347fd09ec14f8e6e9d5b5f31bb7561395275"
+      "path": "custom_nodes"
   },
   {
       "url": "https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git",
@@ -90,10 +125,6 @@
   },
   {
       "url": "https://github.com/theUpsider/ComfyUI-Logic.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/ltdrdata/ComfyUI-Manager.git",
       "path": "custom_nodes"
   },
   {
@@ -134,6 +165,14 @@
   },
   {
     "url": "https://github.com/minhnhat0709/comfyui_r44_nodes.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/city96/SD-Latent-Upscaler.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/ltdrdata/ComfyUI-Impact-Pack.git",
     "path": "custom_nodes"
   }
 ]
