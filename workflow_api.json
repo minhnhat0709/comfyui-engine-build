@@ -57,8 +57,8 @@
   },
   "137": {
     "inputs": {
-      "text": "A house, morning fresh vibe, blue sky",
-      "text_clip": "masterpiece, best quality, embedding:epiCRealism",
+      "text": "neoclassic_townhouse, white wall, beautiful garden, bright sun, day light, ",
+      "text_clip": "masterpiece, best quality,",
       "ella": [
         "139",
         0
@@ -118,30 +118,6 @@
       "title": "ELLA Text Encode"
     }
   },
-  "141": {
-    "inputs": {
-      "control_net_name": "controlnet++_lineart_sd15_fp16.safetensors"
-    },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "Load ControlNet Model"
-    }
-  },
-  "142": {
-    "inputs": {
-      "strength": 1.37,
-      "start_percent": 0.035,
-      "end_percent": 0.9,
-      "control_net": [
-        "141",
-        0
-      ]
-    },
-    "class_type": "ControlNetApplyAdvanced",
-    "_meta": {
-      "title": "Apply ControlNet (Advanced)"
-    }
-  },
   "143": {
     "inputs": {
       "image": "controlnet.jpg",
@@ -154,7 +130,7 @@
   },
   "145": {
     "inputs": {
-      "sharpen_radius": 1,
+      "sharpen_radius": 2,
       "sigma": 0.3,
       "alpha": 0.2,
       "image": [
@@ -183,7 +159,7 @@
   "159": {
     "inputs": {
       "lora_01": "add_detail.safetensors",
-      "strength_01": 1,
+      "strength_01": 0.5,
       "lora_02": "None",
       "strength_02": 0.7000000000000001,
       "lora_03": "None",
@@ -232,7 +208,7 @@
   },
   "216": {
     "inputs": {
-      "control_net_name": "controlnet++_lineart_sd15_fp16.safetensors"
+      "control_net_name": "controlnet11Models_lineart.safetensors"
     },
     "class_type": "ControlNetLoaderAdvanced",
     "_meta": {
@@ -274,29 +250,6 @@
       "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
     }
   },
-  "220": {
-    "inputs": {
-      "weight_00": 0.099,
-      "weight_01": 0.121,
-      "weight_02": 0.146,
-      "weight_03": 0.177,
-      "weight_04": 0.215,
-      "weight_05": 0.26,
-      "weight_06": 0.315,
-      "weight_07": 0.382,
-      "weight_08": 0.463,
-      "weight_09": 0.562,
-      "weight_10": 0.681,
-      "weight_11": 0.8250000000000001,
-      "weight_12": 1,
-      "flip_weights": false,
-      "uncond_multiplier": 0
-    },
-    "class_type": "SoftControlNetWeights",
-    "_meta": {
-      "title": "ControlNet Soft Weights 🛂🅐🅒🅝"
-    }
-  },
   "224": {
     "inputs": {
       "base_multiplier": 0.8250000000000001,
@@ -320,53 +273,9 @@
       "title": "SaveImageWebsocket"
     }
   },
-  "242": {
-    "inputs": {
-      "control_net_name": "controlnet++_lineart_sd15_fp16.safetensors"
-    },
-    "class_type": "ControlNetLoaderAdvanced",
-    "_meta": {
-      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
-    }
-  },
-  "243": {
-    "inputs": {
-      "strength": 0.35000000000000003,
-      "start_percent": 0.1,
-      "end_percent": 0.6,
-      "positive": [
-        "219",
-        0
-      ],
-      "negative": [
-        "219",
-        1
-      ],
-      "control_net": [
-        "242",
-        0
-      ],
-      "image": [
-        "283",
-        0
-      ],
-      "timestep_kf": [
-        "224",
-        1
-      ],
-      "weights_override": [
-        "224",
-        0
-      ]
-    },
-    "class_type": "ACN_AdvancedControlNetApply",
-    "_meta": {
-      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
-    }
-  },
   "275": {
     "inputs": {
-      "seed": 849942299256178,
+      "seed": 876632572477256,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
@@ -379,11 +288,11 @@
         0
       ],
       "positive": [
-        "243",
+        "219",
         0
       ],
       "negative": [
-        "243",
+        "219",
         1
       ],
       "latent_image": [
@@ -425,16 +334,6 @@
     "class_type": "HighRes-Fix Script",
     "_meta": {
       "title": "HighRes-Fix Script"
-    }
-  },
-  "283": {
-    "inputs": {
-      "image": "SD_StandardNoise.png",
-      "upload": "image"
-    },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "Load Image (Noise)"
     }
   },
   "284": {

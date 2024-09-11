@@ -2,19 +2,19 @@
   "96": {
     "inputs": {
       "upscale_by": 2,
-      "seed": 1015985830884844,
+      "seed": 739460947991248,
       "steps": 4,
-      "cfg": 1,
+      "cfg": 2,
       "sampler_name": "euler_ancestral",
-      "scheduler": "ddim_uniform",
+      "scheduler": "simple",
       "denoise": 0.5,
       "mode_type": "Chess",
       "tile_width": 768,
       "tile_height": 768,
-      "mask_blur": 16,
+      "mask_blur": 8,
       "tile_padding": 64,
       "seam_fix_mode": "None",
-      "seam_fix_denoise": 0.6,
+      "seam_fix_denoise": 0.25,
       "seam_fix_width": 64,
       "seam_fix_mask_blur": 8,
       "seam_fix_padding": 16,
@@ -25,7 +25,7 @@
         0
       ],
       "model": [
-        "217",
+        "98",
         0
       ],
       "positive": [
@@ -62,7 +62,7 @@
   },
   "98": {
     "inputs": {
-      "ckpt_name": "ponyRealism_v21MainVAE.safetensors"
+      "ckpt_name": "ponyRealism_v21Lightning4SVAE.safetensors"
     },
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
@@ -71,9 +71,9 @@
   },
   "99": {
     "inputs": {
-      "text": "score_9, score_8_up, score_7_up, BREAK , an image that is highly detailed with natural textures and intricate patterns, showcasing realistic lighting and deep shadows to give the scene a sense of depth. The focus should be clearly defined, making every object appear sharply focused with pin-sharp details. Colorful\nUHD, 8k, F2.8, RAW Photo, ultra detailed, sharp focus,\n3DMM",
+      "text": "score_9, score_8_up, score_7_up, BREAK , Highly detailed, natural textures, intricate patterns, realistic lighting, deep shadows, sense of depth, clearly defined focus, sharp focus, pin-sharp details, realism. Colorful\nUHD, 8k, F2.8, RAW Photo, ultra detailed, sharp focus,\n3DMM",
       "clip": [
-        "217",
+        "98",
         1
       ]
     },
@@ -84,9 +84,9 @@
   },
   "100": {
     "inputs": {
-      "text": "old, dirty, bokeh, blurry, score_4, score_5, score_6",
+      "text": "old, dirty, bokeh, blurry, score 1, score 2, score 3,",
       "clip": [
-        "217",
+        "98",
         1
       ]
     },
@@ -106,9 +106,9 @@
   },
   "103": {
     "inputs": {
-      "sharpen_radius": 1,
-      "sigma": 0.4,
-      "alpha": 0.3,
+      "sharpen_radius": 2,
+      "sigma": 0.3,
+      "alpha": 0.2,
       "image": [
         "96",
         0
@@ -133,9 +133,9 @@
   },
   "186": {
     "inputs": {
-      "strength": 0.8,
+      "strength": 0.9,
       "start_percent": 0,
-      "end_percent": 0.9,
+      "end_percent": 0.8,
       "positive": [
         "99",
         0
@@ -149,7 +149,7 @@
         0
       ],
       "image": [
-        "97",
+        "233",
         0
       ],
       "timestep_kf": [
@@ -168,7 +168,7 @@
   },
   "188": {
     "inputs": {
-      "control_net_name": "TTPLANET_Controlnet_Tile_realistic_v2_fp16.safetensors"
+      "control_net_name": "controlnetxlCNXL_xinsirTile.safetensors"
     },
     "class_type": "ControlNetLoaderAdvanced",
     "_meta": {
@@ -179,49 +179,11 @@
     "inputs": {
       "base_multiplier": 0.8250000000000001,
       "flip_weights": false,
-      "uncond_multiplier": 0.5
+      "uncond_multiplier": 1
     },
     "class_type": "ScaledSoftControlNetWeights",
     "_meta": {
       "title": "Scaled Soft Weights 🛂🅐🅒🅝"
-    }
-  },
-  "217": {
-    "inputs": {
-      "lora_01": "3DMM_XL_V13.safetensors",
-      "strength_01": 0.5,
-      "lora_02": "add-detail-xl.safetensors",
-      "strength_02": 1,
-      "lora_03": "None",
-      "strength_03": 1,
-      "lora_04": "None",
-      "strength_04": 1,
-      "model": [
-        "218",
-        0
-      ],
-      "clip": [
-        "98",
-        1
-      ]
-    },
-    "class_type": "Lora Loader Stack (rgthree)",
-    "_meta": {
-      "title": "Lora Loader Stack (rgthree)"
-    }
-  },
-  "218": {
-    "inputs": {
-      "lora_name": "Hyper-SDXL-4steps-lora.safetensors",
-      "strength_model": 1,
-      "model": [
-        "98",
-        0
-      ]
-    },
-    "class_type": "LoraLoaderModelOnly",
-    "_meta": {
-      "title": "LoraLoaderModelOnly"
     }
   },
   "231": {
@@ -250,6 +212,20 @@
     "class_type": "PreviewImage",
     "_meta": {
       "title": "Preview Image"
+    }
+  },
+  "233": {
+    "inputs": {
+      "scale_factor": 2,
+      "blur_strength": 4,
+      "image": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "TTPlanet_TileSimple_Preprocessor",
+    "_meta": {
+      "title": "TTPlanet Tile Simple"
     }
   }
 }

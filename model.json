@@ -4,7 +4,7 @@
     "path": "models/checkpoints"
   },
   {
-    "url": "https://huggingface.co/LyliaEngine/ponyRealism_v21MainVAE/resolve/main/ponyRealism_v21MainVAE.safetensors",
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/ponyRealism_v21Lightning4SVAE.safetensors",
     "path": "models/checkpoints"
   },
   {
@@ -56,7 +56,7 @@
     "path": "models/loras"
   },
   {
-    "url": "https://huggingface.co/TTPlanet/TTPLanet_SDXL_Controlnet_Tile_Realistic/resolve/main/TTPLANET_Controlnet_Tile_realistic_v2_fp16.safetensors",
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/controlnetxlCNXL_xinsirTile.safetensors",
     "path": "models/controlnet"
   }, 
   {
@@ -64,15 +64,15 @@
     "path": "models/controlnet"
   }, 
   {
-    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_lineart_sd15_fp16.safetensors",
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_lineart_fp16.safetensors",
     "path": "models/controlnet"
   },
   {
-    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_canny_sd15_fp16.safetensors",
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_canny_fp16.safetensors",
     "path": "models/controlnet"
   },
   {
-    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_depth_sd15_fp16.safetensors",
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_depth_fp16.safetensors",
     "path": "models/controlnet"
   },
   {
@@ -84,11 +84,11 @@
     "path": "models/controlnet"
   },
   {
-    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_hed_softedge_sd15_fp16.safetensors",
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_scribble_fp16.safetensors",
     "path": "models/controlnet"
   },
   {
-    "url": "https://huggingface.co/huchenlei/ControlNet_plus_plus_collection_fp16/resolve/main/controlnet++_seg_sd15_fp16.safetensors",
+    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_seg_fp16.safetensors",
     "path": "models/controlnet"
   },
   {

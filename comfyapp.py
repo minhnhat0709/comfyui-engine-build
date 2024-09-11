@@ -158,13 +158,13 @@ def workflow_run(workflow_data, task_id, user_id, seed, port=8189):
 
 def create_sketch2img_workflow(item, is_edit = False):
     preprocessor_map = {
-      "controlnet++_canny_sd15_fp16.safetensors": "CannyEdgePreprocessor",
-      "controlnet++_depth_sd15_fp16.safetensors": "DepthAnythingPreprocessor",
-      "controlnet++_lineart_sd15_fp16.safetensors": "LineArtPreprocessor",
+      "control_v11p_sd15_canny_fp16.safetensors": "CannyEdgePreprocessor",
+      "control_v11p_sd15_depth_fp16.safetensors": "DepthAnythingPreprocessor",
+      "control_v11p_sd15_lineart_fp16.safetensors": "LineArtPreprocessor",
       "control_v11p_sd15_mlsd_fp16.safetensors": "M-LSDPreprocessor",
       "control_v11p_sd15_openpose_fp16.safetensors": "OpenposePreprocessor",
-      "controlnet++_hed_softedge_sd15_fp16.safetensors": "Scribble_XDoG_Preprocessor",  # Assuming "hed" is related to line art
-      "controlnet++_seg_sd15_fp16.safetensors": "SAMPreprocessor",
+      "control_v11p_sd15_scribble_fp16.safetensors": "Scribble_XDoG_Preprocessor",
+      "control_v11p_sd15_seg_fp16.safetensors": "SAMPreprocessor",
       "control_v11u_sd15_tile_fp16.safetensors": "TilePreprocessor",
     }
     workflow_data = json.loads(
