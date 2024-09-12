@@ -208,7 +208,7 @@
   },
   "216": {
     "inputs": {
-      "control_net_name": "controlnet11Models_lineart.safetensors"
+      "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors"
     },
     "class_type": "ControlNetLoaderAdvanced",
     "_meta": {
