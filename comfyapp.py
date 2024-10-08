@@ -147,8 +147,10 @@ def workflow_run(workflow_data, task_id, user_id, seed, port=8189):
             # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
             ws.close()  # close the websocket
             
-            background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
-            background_thread.start()
+            # background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
+            # background_thread.start()
+
+            eliai.image_uploading(images, seed, task_id, user_id)
         except Exception as e:
             raise e
         
