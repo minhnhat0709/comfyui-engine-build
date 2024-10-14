@@ -1,20 +1,20 @@
 {
   "96": {
     "inputs": {
-      "upscale_by": 2.5,
-      "seed": 1068412937206110,
-      "steps": 8,
-      "cfg": 5,
-      "sampler_name": "ddim",
-      "scheduler": "ddim_uniform",
+      "upscale_by": 2,
+      "seed": 739460947991248,
+      "steps": 4,
+      "cfg": 2,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "simple",
       "denoise": 0.5,
       "mode_type": "Chess",
       "tile_width": 768,
       "tile_height": 768,
-      "mask_blur": 16,
+      "mask_blur": 8,
       "tile_padding": 64,
       "seam_fix_mode": "None",
-      "seam_fix_denoise": 0.6,
+      "seam_fix_denoise": 0.25,
       "seam_fix_width": 64,
       "seam_fix_mask_blur": 8,
       "seam_fix_padding": 16,
@@ -25,7 +25,7 @@
         0
       ],
       "model": [
-        "217",
+        "98",
         0
       ],
       "positive": [
@@ -52,7 +52,7 @@
   },
   "97": {
     "inputs": {
-      "image": "z5611928542868_47766294f59dcdd7cc2e0373420aef8c (2) (1).jpg",
+      "image": "controlnet.jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -62,7 +62,7 @@
   },
   "98": {
     "inputs": {
-      "ckpt_name": "AbsoluteReality_1.8.1_pruned.safetensors"
+      "ckpt_name": "ponyRealism_v21Lightning4SVAE.safetensors"
     },
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
@@ -71,9 +71,9 @@
   },
   "99": {
     "inputs": {
-      "text": "an elegant neoclassical building at night",
+      "text": "score_9, score_8_up, score_7_up, BREAK , Highly detailed, natural textures, intricate patterns, realistic lighting, deep shadows, sense of depth, clearly defined focus, sharp focus, pin-sharp details, realism. Colorful\nUHD, 8k, F2.8, RAW Photo, ultra detailed, sharp focus,\n3DMM",
       "clip": [
-        "217",
+        "98",
         1
       ]
     },
@@ -84,9 +84,9 @@
   },
   "100": {
     "inputs": {
-      "text": "embedding:UnrealisticDream, old, dirty, bokeh, blurry",
+      "text": "old, dirty, bokeh, blurry, score 1, score 2, score 3,",
       "clip": [
-        "217",
+        "98",
         1
       ]
     },
@@ -104,64 +104,19 @@
       "title": "Load Upscale Model"
     }
   },
-  "102": {
-    "inputs": {
-      "images": [
-        "103",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
   "103": {
     "inputs": {
-      "sharpen_radius": 1,
+      "sharpen_radius": 2,
       "sigma": 0.3,
       "alpha": 0.2,
       "image": [
-        "191",
+        "96",
         0
       ]
     },
     "class_type": "ImageSharpen",
     "_meta": {
       "title": "ImageSharpen"
-    }
-  },
-  "104": {
-    "inputs": {
-      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
-    },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "Load ControlNet Model"
-    }
-  },
-  "105": {
-    "inputs": {
-      "strength": 0.9,
-      "start_percent": 0,
-      "end_percent": 0.9,
-      "control_net": [
-        "104",
-        0
-      ]
-    },
-    "class_type": "ControlNetApplyAdvanced",
-    "_meta": {
-      "title": "Apply ControlNet (Advanced)"
-    }
-  },
-  "182": {
-    "inputs": {
-      "strength": 1
-    },
-    "class_type": "MMakerColorEnhance",
-    "_meta": {
-      "title": "Color Enhance"
     }
   },
   "184": {
@@ -178,9 +133,9 @@
   },
   "186": {
     "inputs": {
-      "strength": 1.5,
+      "strength": 0.9,
       "start_percent": 0,
-      "end_percent": 0.9,
+      "end_percent": 0.8,
       "positive": [
         "99",
         0
@@ -194,7 +149,7 @@
         0
       ],
       "image": [
-        "208",
+        "233",
         0
       ],
       "timestep_kf": [
@@ -213,7 +168,7 @@
   },
   "188": {
     "inputs": {
-      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
+      "control_net_name": "controlnetxlCNXL_xinsirTile.safetensors"
     },
     "class_type": "ControlNetLoaderAdvanced",
     "_meta": {
@@ -224,120 +179,17 @@
     "inputs": {
       "base_multiplier": 0.8250000000000001,
       "flip_weights": false,
-      "uncond_multiplier": 0.5
+      "uncond_multiplier": 1
     },
     "class_type": "ScaledSoftControlNetWeights",
     "_meta": {
       "title": "Scaled Soft Weights 🛂🅐🅒🅝"
     }
   },
-  "191": {
+  "231": {
     "inputs": {
-      "source": [
+      "pixels": [
         "97",
-        0
-      ],
-      "target": [
-        "96",
-        0
-      ]
-    },
-    "class_type": "Runtime44ColorMatch",
-    "_meta": {
-      "title": "Runtime44 Color Match"
-    }
-  },
-  "194": {
-    "inputs": {
-      "add_noise": "enable",
-      "noise_seed": 786329397011214,
-      "steps": 6,
-      "cfg": 2,
-      "sampler_name": "dpmpp_sde",
-      "scheduler": "karras",
-      "start_at_step": 4,
-      "end_at_step": 6,
-      "return_with_leftover_noise": "disable"
-    },
-    "class_type": "KSamplerAdvanced",
-    "_meta": {
-      "title": "KSampler (Advanced)"
-    }
-  },
-  "195": {
-    "inputs": {},
-    "class_type": "VAEEncode",
-    "_meta": {
-      "title": "VAE Encode"
-    }
-  },
-  "196": {
-    "inputs": {
-      "method": "Mixture of Diffusers",
-      "tile_width": 768,
-      "tile_height": 768,
-      "tile_overlap": 64,
-      "tile_batch_size": 6,
-      "model": [
-        "98",
-        0
-      ]
-    },
-    "class_type": "TiledDiffusion",
-    "_meta": {
-      "title": "Tiled Diffusion"
-    }
-  },
-  "197": {
-    "inputs": {
-      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
-    },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "Load ControlNet Model"
-    }
-  },
-  "198": {
-    "inputs": {
-      "strength": 0.4,
-      "conditioning": [
-        "99",
-        0
-      ],
-      "control_net": [
-        "197",
-        0
-      ],
-      "image": [
-        "199",
-        0
-      ]
-    },
-    "class_type": "ControlNetApply",
-    "_meta": {
-      "title": "Apply ControlNet"
-    }
-  },
-  "199": {
-    "inputs": {
-      "pyrUp_iters": 3,
-      "resolution": 2496,
-      "image": [
-        "97",
-        0
-      ]
-    },
-    "class_type": "TilePreprocessor",
-    "_meta": {
-      "title": "Tile"
-    }
-  },
-  "200": {
-    "inputs": {
-      "tile_size": 768,
-      "fast": true,
-      "samples": [
-        "210",
         0
       ],
       "vae": [
@@ -345,29 +197,15 @@
         2
       ]
     },
-    "class_type": "VAEDecodeTiled_TiledDiffusion",
+    "class_type": "VAEEncode",
     "_meta": {
-      "title": "Tiled VAE Decode"
+      "title": "VAE Encode"
     }
   },
-  "208": {
-    "inputs": {
-      "pyrUp_iters": 2,
-      "resolution": 1984,
-      "image": [
-        "97",
-        0
-      ]
-    },
-    "class_type": "TilePreprocessor",
-    "_meta": {
-      "title": "Tile"
-    }
-  },
-  "209": {
+  "232": {
     "inputs": {
       "images": [
-        "96",
+        "103",
         0
       ]
     },
@@ -376,144 +214,18 @@
       "title": "Preview Image"
     }
   },
-  "210": {
+  "233": {
     "inputs": {
-      "seed": 875045308389790,
-      "steps": 6,
-      "cfg": 1.47,
-      "sampler_name": "dpmpp_2m",
-      "scheduler": "karras",
-      "denoise": 0.4,
-      "model": [
-        "196",
-        0
-      ],
-      "positive": [
-        "198",
-        0
-      ],
-      "negative": [
-        "100",
-        0
-      ],
-      "latent_image": [
-        "212",
+      "scale_factor": 2,
+      "blur_strength": 4,
+      "image": [
+        "97",
         0
       ]
-    },
-    "class_type": "KSampler",
-    "_meta": {
-      "title": "KSampler"
-    }
-  },
-  "211": {
-    "inputs": {
-      "preprocessor": "LeReS-DepthMapPreprocessor",
-      "resolution": 512
-    },
-    "class_type": "AIO_Preprocessor",
-    "_meta": {
-      "title": "AIO Aux Preprocessor"
-    }
-  },
-  "212": {
-    "inputs": {
-      "tile_size": 768,
-      "vae": [
-        "98",
-        2
-      ]
-    },
-    "class_type": "VAEEncodeTiled",
-    "_meta": {
-      "title": "VAE Encode (Tiled)"
-    }
-  },
-  "217": {
-    "inputs": {
-      "lora_01": "add_detail.safetensors",
-      "strength_01": 0.5,
-      "lora_02": "None",
-      "strength_02": 1,
-      "lora_03": "None",
-      "strength_03": 1,
-      "lora_04": "None",
-      "strength_04": 1,
-      "model": [
-        "218",
-        0
-      ],
-      "clip": [
-        "98",
-        1
-      ]
-    },
-    "class_type": "Lora Loader Stack (rgthree)",
-    "_meta": {
-      "title": "Lora Loader Stack (rgthree)"
-    }
-  },
-  "218": {
-    "inputs": {
-      "lora_name": "Hyper-SD15-8steps-CFG-lora.safetensors",
-      "strength_model": 1,
-      "model": [
-        "98",
-        0
-      ]
-    },
-    "class_type": "LoraLoaderModelOnly",
-    "_meta": {
-      "title": "LoraLoaderModelOnly"
-    }
-  },
-  "219": {
-    "inputs": {
-      "scale_factor": 2.5,
-      "blur_strength": 4
     },
     "class_type": "TTPlanet_TileSimple_Preprocessor",
     "_meta": {
       "title": "TTPlanet Tile Simple"
-    }
-  },
-  "220": {
-    "inputs": {
-      "scale_factor": 1,
-      "blur_strength": 2,
-      "radius": 7,
-      "eps": 0.01
-    },
-    "class_type": "TTPlanet_TileGF_Preprocessor",
-    "_meta": {
-      "title": "TTPlanet Tile GuidedFilter"
-    }
-  },
-  "221": {
-    "inputs": {
-      "steps": 2,
-      "scheduler": "sgm_uniform",
-      "denoise": 0.5,
-      "eta": 0.8,
-      "model": [
-        "217",
-        0
-      ]
-    },
-    "class_type": "TCDModelSamplingDiscrete",
-    "_meta": {
-      "title": "TCD Model Sampling Discrete"
-    }
-  },
-  "223": {
-    "inputs": {
-      "add_noise": true,
-      "noise_seed": 850202830004939,
-      "cfg": 8
-    },
-    "class_type": "SamplerCustom",
-    "_meta": {
-      "title": "SamplerCustom"
     }
   }
 }

@@ -67,7 +67,8 @@ import eliai
 from eliai import supabase
 from lora_manager import load_loras
 
-comfyui_commit_sha = "1900e5119f70d6db0677fe91194050be3c4476c4"
+# comfyui_commit_sha = "1900e5119f70d6db0677fe91194050be3c4476c4"
+comfyui_commit_sha = "c6812947e98eb384250575d94108d9eb747765d9"
 
 comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
     modal.Image.from_registry(  # start from basic Linux with Python
@@ -146,8 +147,10 @@ def workflow_run(workflow_data, task_id, user_id, seed, port=8189):
             # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
             ws.close()  # close the websocket
             
-            background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
-            background_thread.start()
+            # background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
+            # background_thread.start()
+
+            eliai.image_uploading(images, seed, task_id, user_id)
         except Exception as e:
             raise e
         
@@ -197,7 +200,7 @@ def create_sketch2img_workflow(item, is_edit = False):
     if is_edit == False:
         workflow_data["134"]["inputs"]["height"] = item["height"]
         workflow_data["134"]["inputs"]["width"] = item["width"]
-        workflow_data["135"]["inputs"]["noise_seed"] = item["seed"]
+        workflow_data["275"]["inputs"]["seed"] = item["seed"]
         workflow_data["134"]["inputs"]["batch_size"] = item["batch_size"]
     else:
         workflow_data["232"]["inputs"]["image_gen_height"] = item["height"] * 1.5
@@ -223,17 +226,22 @@ def create_sketch2img_workflow(item, is_edit = False):
 
     return workflow_data
 
-def create_upscale_workflow(item):
+def create_upscale_workflow(item, isFlux = False):
     download_to_comfyui(item["base_image_url"], "input")
     
     workflow_data = json.loads(
-        (pathlib.Path(__file__).parent / "workflow_api_upscale.json").read_text()
+        (pathlib.Path(__file__).parent / ("workflow_api_flux_upscale.json" if isFlux else "workflow_api_upscale.json")).read_text()
     )
 
     # insert the prompt
-    workflow_data["99"]["inputs"]["text"] = item["prompt"]
-    workflow_data["97"]["inputs"]["image"] = item["base_image_url"].split("/")[-1]
-    workflow_data["96"]["inputs"]["denoise"] = item["denoising_strength"]
+    # workflow_data["99"]["inputs"]["text"] = item["prompt"]
+    if isFlux:
+        workflow_data["59"]["inputs"]["image"] = item["base_image_url"].split("/")[-1]
+        workflow_data["72"]["inputs"]["denoise"] = item["denoising_strength"]
+    else:
+        workflow_data["97"]["inputs"]["image"] = item["base_image_url"].split("/")[-1]
+        workflow_data["96"]["inputs"]["denoise"] = item["denoising_strength"]
+    
 
     return workflow_data
 def run_task( task, port=8189):
@@ -248,8 +256,8 @@ def run_task( task, port=8189):
             item["seed"] = random.randint(1,4294967294)
         
         # download input images to the container
-        if item["type"] == "upscale":
-            workflow_data = create_upscale_workflow(item=item)
+        if "upscale" in item["type"]:
+            workflow_data = create_upscale_workflow(item=item, isFlux=item["type"] == "flux_upscale")
         else:
             workflow_data = create_sketch2img_workflow(item=item, is_edit=item["type"] == "edit")
         
@@ -299,12 +307,20 @@ def download_files(filter="node, model"):
             "/root/input/controlnet.jpg",
         ),
         modal.Mount.from_local_file(
+            pathlib.Path(__file__).parent / "SD_StandardNoise.png",
+            "/root/input/SD_StandardNoise.png",
+        ),
+        modal.Mount.from_local_file(
             pathlib.Path(__file__).parent / "workflow_api.json",
             "/root/workflow_api.json",
         ),
         modal.Mount.from_local_file(
             pathlib.Path(__file__).parent / "workflow_api_upscale.json",
             "/root/workflow_api_upscale.json",
+        ),
+        modal.Mount.from_local_file(
+            pathlib.Path(__file__).parent / "workflow_api_flux_upscale.json",
+            "/root/workflow_api_flux_upscale.json",
         ),
         modal.Mount.from_local_file(
             pathlib.Path(__file__).parent / "workflow_api_inpaint.json",
@@ -325,6 +341,7 @@ class ComfyUI:
     @modal.build()
     def download_models(self):
         download_files()
+        subprocess.run(["python", "/root/custom_nodes/ComfyUI-Impact-Pack/install.py"], check=True)
 
     
 

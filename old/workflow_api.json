@@ -48,7 +48,7 @@
     "inputs": {
       "width": 1048,
       "height": 816,
-      "batch_size": 1
+      "batch_size": 2
     },
     "class_type": "EmptyLatentImage",
     "_meta": {
@@ -58,11 +58,11 @@
   "135": {
     "inputs": {
       "add_noise": "enable",
-      "noise_seed": 413978191858749,
+      "noise_seed": 599333422305908,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
-      "scheduler": "exponential",
+      "scheduler": "karras",
       "start_at_step": 0,
       "end_at_step": 10000,
       "return_with_leftover_noise": "disable",
@@ -106,8 +106,8 @@
   },
   "137": {
     "inputs": {
-      "text": "A elegant yellow house, morning fresh vibe, grass yard, tree background",
-      "text_clip": "masterpiece, best quality",
+      "text": "A house, morning fresh vibe, grass yard, tree background",
+      "text_clip": "masterpiece, best quality, black_white_tone, modern_villa",
       "ella": [
         "139",
         0
@@ -128,7 +128,7 @@
   },
   "139": {
     "inputs": {
-      "scheduler": "exponential",
+      "scheduler": "karras",
       "steps": 6,
       "denoise": 1,
       "model": [
@@ -169,7 +169,7 @@
   },
   "141": {
     "inputs": {
-      "control_net_name": null
+      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
     },
     "class_type": "ControlNetLoader",
     "_meta": {
@@ -244,10 +244,10 @@
   },
   "159": {
     "inputs": {
-      "lora_01": "None",
+      "lora_01": "add_detail.safetensors",
       "strength_01": 0.5,
       "lora_02": "None",
-      "strength_02": 0.73,
+      "strength_02": 0.7000000000000001,
       "lora_03": "None",
       "strength_03": 0.34,
       "lora_04": "None",
@@ -292,57 +292,6 @@
       "title": "Preview Image"
     }
   },
-  "200": {
-    "inputs": {
-      "upscale_by": 1.5,
-      "seed": 678054284815568,
-      "steps": 4,
-      "cfg": 2,
-      "sampler_name": "dpmpp_2m",
-      "scheduler": "sgm_uniform",
-      "denoise": 0.25,
-      "mode_type": "Linear",
-      "tile_width": 640,
-      "tile_height": 640,
-      "mask_blur": 8,
-      "tile_padding": 32,
-      "seam_fix_mode": "None",
-      "seam_fix_denoise": 1,
-      "seam_fix_width": 64,
-      "seam_fix_mask_blur": 8,
-      "seam_fix_padding": 16,
-      "force_uniform_tiles": true,
-      "tiled_decode": false,
-      "image": [
-        "145",
-        0
-      ],
-      "model": [
-        "114",
-        0
-      ],
-      "positive": [
-        "137",
-        0
-      ],
-      "negative": [
-        "140",
-        0
-      ],
-      "vae": [
-        "118",
-        2
-      ],
-      "upscale_model": [
-        "201",
-        0
-      ]
-    },
-    "class_type": "UltimateSDUpscale",
-    "_meta": {
-      "title": "Ultimate SD Upscale"
-    }
-  },
   "201": {
     "inputs": {
       "model_name": "4x_NMKD-Siax_200k.pth"
@@ -354,7 +303,7 @@
   },
   "202": {
     "inputs": {
-      "control_net_name": null
+      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
     },
     "class_type": "ControlNetLoader",
     "_meta": {
@@ -373,57 +322,6 @@
       "title": "Preview Image"
     }
   },
-  "210": {
-    "inputs": {
-      "upscale_by": 1,
-      "seed": 68503895589554,
-      "steps": 4,
-      "cfg": 2,
-      "sampler_name": "dpmpp_2m",
-      "scheduler": "sgm_uniform",
-      "denoise": 0.2,
-      "mode_type": "Linear",
-      "tile_width": 840,
-      "tile_height": 840,
-      "mask_blur": 8,
-      "tile_padding": 32,
-      "seam_fix_mode": "None",
-      "seam_fix_denoise": 1,
-      "seam_fix_width": 64,
-      "seam_fix_mask_blur": 8,
-      "seam_fix_padding": 16,
-      "force_uniform_tiles": false,
-      "tiled_decode": false,
-      "image": [
-        "200",
-        0
-      ],
-      "model": [
-        "114",
-        0
-      ],
-      "positive": [
-        "137",
-        0
-      ],
-      "negative": [
-        "140",
-        0
-      ],
-      "vae": [
-        "118",
-        2
-      ],
-      "upscale_model": [
-        "201",
-        0
-      ]
-    },
-    "class_type": "UltimateSDUpscale",
-    "_meta": {
-      "title": "Ultimate SD Upscale"
-    }
-  },
   "211": {
     "inputs": {
       "images": [
@@ -439,7 +337,7 @@
   "212": {
     "inputs": {
       "images": [
-        "200",
+        "145",
         0
       ]
     },
@@ -451,10 +349,10 @@
   "213": {
     "inputs": {
       "sharpen_radius": 3,
-      "sigma": 0.25,
+      "sigma": 0.2,
       "alpha": 0.1,
       "image": [
-        "210",
+        "239",
         0
       ]
     },
@@ -580,6 +478,164 @@
     "class_type": "SaveImageWebsocket",
     "_meta": {
       "title": "SaveImageWebsocket"
+    }
+  },
+  "230": {
+    "inputs": {
+      "upscale_method": "lanczos",
+      "scale_by": 0.35000000000000003,
+      "image": [
+        "240",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "232": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": 192025585923427,
+      "steps": 6,
+      "cfg": 1,
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "start_at_step": 4,
+      "end_at_step": 6,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "234",
+        0
+      ],
+      "positive": [
+        "237",
+        0
+      ],
+      "negative": [
+        "140",
+        0
+      ],
+      "latent_image": [
+        "233",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced)"
+    }
+  },
+  "233": {
+    "inputs": {
+      "pixels": [
+        "230",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "234": {
+    "inputs": {
+      "method": "MultiDiffusion",
+      "tile_width": 640,
+      "tile_height": 640,
+      "tile_overlap": 64,
+      "tile_batch_size": 6,
+      "model": [
+        "114",
+        0
+      ]
+    },
+    "class_type": "TiledDiffusion",
+    "_meta": {
+      "title": "Tiled Diffusion"
+    }
+  },
+  "236": {
+    "inputs": {
+      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "237": {
+    "inputs": {
+      "strength": 1,
+      "conditioning": [
+        "137",
+        0
+      ],
+      "control_net": [
+        "236",
+        0
+      ],
+      "image": [
+        "238",
+        0
+      ]
+    },
+    "class_type": "ControlNetApply",
+    "_meta": {
+      "title": "Apply ControlNet"
+    }
+  },
+  "238": {
+    "inputs": {
+      "pyrUp_iters": 3,
+      "resolution": 640,
+      "image": [
+        "230",
+        0
+      ]
+    },
+    "class_type": "TilePreprocessor",
+    "_meta": {
+      "title": "Tile"
+    }
+  },
+  "239": {
+    "inputs": {
+      "tile_size": 640,
+      "fast": true,
+      "samples": [
+        "232",
+        0
+      ],
+      "vae": [
+        "118",
+        2
+      ]
+    },
+    "class_type": "VAEDecodeTiled_TiledDiffusion",
+    "_meta": {
+      "title": "Tiled VAE Decode"
+    }
+  },
+  "240": {
+    "inputs": {
+      "upscale_model": [
+        "201",
+        0
+      ],
+      "image": [
+        "145",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
     }
   }
 }
