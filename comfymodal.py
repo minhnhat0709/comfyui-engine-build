@@ -326,14 +326,6 @@ def download_files(filter="node, model"):
             pathlib.Path(__file__).parent / "workflow_api_inpaint.json",
             "/root/workflow_api_inpaint.json",
         ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "models/loras" / "add_detail.safetensors",
-            "/root/models/loras/add_detail.safetensors",
-        ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "models/embeddings" / "UnrealisticDream.pt",
-            "/root/models/embeddings/UnrealisticDream.pt",
-        )
     ],
     secrets=[modal.Secret.from_name("engine-secret")]
 )

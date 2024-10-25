@@ -17,7 +17,7 @@ def download_to_comfyui(url, path, fileName = None, git_sha = None):
     import httpx
     from tqdm import tqdm
 
-    model_directory = "/root/" + path
+    model_directory = "./" + path
     local_filename = fileName if fileName else url.split("/")[-1]
     local_filepath = pathlib.Path(model_directory, local_filename)
     local_filepath.parent.mkdir(parents=True, exist_ok=True)
@@ -25,7 +25,7 @@ def download_to_comfyui(url, path, fileName = None, git_sha = None):
     print(f"downloading {url} ... to {model_directory}")
 
     if url.endswith(".git"):
-        download_custom_node(url, model_directory, git_sha=git_sha)
+        download_custom_node(url, "/root/" + path, git_sha=git_sha)
 
     else:
         if os.path.exists(local_filepath):
