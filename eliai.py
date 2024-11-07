@@ -52,14 +52,14 @@ def s3Storage_base64_upload(image_bytes: bytes, task_id: str, index: int):
 
 
 
-def image_uploading(images: List[bytes], seed:int, task_id:   str, user_id: str):
+def image_uploading(images: List[bytes], seed:int, task_id:   str, user_id: str, schema="public"):
     # time.sleep(10)
     result = []
     for index, image in enumerate(images):
         image_url = s3Storage_base64_upload(image, task_id, index)
         print(f"{image_url}")
         result.append(image_url)
-        supabase.table("Images").insert({
+        supabase.schema(schema).table("Images").insert({
             "image_url": image_url,
             "is_shared": False,
             "seed": seed,
@@ -69,12 +69,12 @@ def image_uploading(images: List[bytes], seed:int, task_id:   str, user_id: str)
     
 
     if len(result) == 0:
-        supabase.table("Tasks").update({
+        supabase.schema(schema).table("Tasks").update({
             "status": "failed",
             "finished_at": datetime.datetime.utcnow().isoformat()
         }).eq("task_id", task_id).execute()
     else:
-        supabase.table("Tasks").update({
+        supabase.schema(schema).table("Tasks").update({
             "status": "done",
             "finished_at": datetime.datetime.utcnow().isoformat()
         }).eq("task_id", task_id).execute()

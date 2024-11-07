@@ -75,8 +75,12 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
         "pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime",
         force_build=False
     )
-    .apt_install("git")
-    .run_commands("apt-get update && apt-get install ffmpeg libsm6 libxext6 git-lfs -y")
+    .env({
+        "DEBIAN_FRONTEND":"noninteractive",
+        "TZ":"Etc/UTC",
+    })
+    # .apt_install("git -y")
+    .run_commands("apt-get update && apt-get install ffmpeg libsm6 libxext6 git git-lfs -y")
     # .run_commands("pip uninstall torch && pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu121")
     .run_commands(  # install ComfyUI
         "cd /root && git init .",
@@ -137,7 +141,7 @@ def run_comfyui_server( port=8188):
         cmd = f"python main.py --dont-print-server --listen --port {port}"
         subprocess.Popen(cmd, shell=True)
 
-def workflow_run(workflow_data, task_id, user_id, seed, port=8189):
+def workflow_run(workflow_data, task_id, user_id, seed, port=8189, schema="public"):
         # send requests to local headless ComfyUI server (on port 8189)
         try:
             
@@ -150,7 +154,7 @@ def workflow_run(workflow_data, task_id, user_id, seed, port=8189):
             # background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
             # background_thread.start()
 
-            eliai.image_uploading(images, seed, task_id, user_id)
+            eliai.image_uploading(images, seed, task_id, user_id, schema)
         except Exception as e:
             raise e
         
@@ -248,7 +252,11 @@ def run_task( task, port=8189):
     try:
         item = task
 
-        supabase.table("Tasks").update({
+        schema = 'public';
+        if item.get("is_new_version") is True:
+            schema = 'new_version';
+        
+        supabase.schema(schema).table("Tasks").update({
             "status": "processing",
         }).eq("task_id", item['task_id']).execute()
 
@@ -264,12 +272,12 @@ def run_task( task, port=8189):
         
         
         print("ready to run")
-        workflow_run(workflow_data, item["task_id"], item["user_id"], item["seed"], port)
+        workflow_run(workflow_data, item["task_id"], item["user_id"], item["seed"], port, schema)
         remove_temp_file([item.get("input_image_url", "").split("/")[-1], item.get("mask", "").split("/")[-1], item.get("image", "").split("/")[-1]])
     except Exception as e:
         print(e)
         if item:
-            supabase.table("Tasks").update({
+            supabase.schema(schema).table("Tasks").update({
                 "status": "failed",
                 "finished_at": datetime.datetime.utcnow().isoformat()
             }).eq("task_id", item['task_id']).execute()
@@ -326,14 +334,14 @@ def download_files(filter="node, model"):
             pathlib.Path(__file__).parent / "workflow_api_inpaint.json",
             "/root/workflow_api_inpaint.json",
         ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "models/loras" / "add_detail.safetensors",
-            "/root/models/loras/add_detail.safetensors",
-        ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "models/embeddings" / "UnrealisticDream.pt",
-            "/root/models/embeddings/UnrealisticDream.pt",
-        )
+        # modal.Mount.from_local_file(
+        #     pathlib.Path(__file__).parent / "models/loras" / "add_detail.safetensors",
+        #     "/root/models/loras/add_detail.safetensors",
+        # ),
+        # modal.Mount.from_local_file(
+        #     pathlib.Path(__file__).parent / "models/embeddings" / "UnrealisticDream.pt",
+        #     "/root/models/embeddings/UnrealisticDream.pt",
+        # )
     ],
     secrets=[modal.Secret.from_name("engine-secret")]
 )
