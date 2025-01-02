@@ -41,7 +41,7 @@ preprocessor_map = {
     }
 
 
-@web_app.post("/run")
+@web_app.post("/controlnet/detect")
 def run():
     item = None
     try:
