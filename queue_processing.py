@@ -6,16 +6,16 @@ import redis
 import time
 import sys
 
-from comfy.cli_args import args
+# from comfy.cli_args import args
 
 def main():
 
-  # get the port from the first command line
-  # port = sys.argv[1]
+  #get the port from the first command line
+  port = sys.argv[1]
   # run_comfyui_server(port)
   time.sleep(15)
 
-  port = args.port
+  # port = args.port
 
   redis_uri = os.environ.get('REDIS_URI')
   taskQueue = os.environ.get('TASK_QUEUE')
@@ -45,4 +45,5 @@ def runQueue():
     #Start YourLedRoutine() in a separate thread
     t1.start()
 
-runQueue()
+if __name__ == "__main__":
+    main()
