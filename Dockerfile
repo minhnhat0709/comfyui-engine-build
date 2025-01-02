@@ -12,7 +12,7 @@ RUN git-lfs install && git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA 
     mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder && \
     mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors
 
-RUN pip install modal httpx tqdm websocket-client boto3 supabase flask cupy-cuda12x redis Pillow
+RUN pip install modal httpx tqdm websocket-client boto3 supabase flask cupy-cuda12x redis Pillow waitress
 
 # COPY model.json /root/model.json
 # COPY helpers.py /root/helpers.py
@@ -23,7 +23,7 @@ COPY . /root
 COPY ./controlnet.jpg /root/input/controlnet.jpg
 COPY ./SD_StandardNoise.png /root/input/SD_StandardNoise.png
 
-COPY queue_processing.py /root/custom_nodes/eliai/prestartup_script.py
+# COPY queue_processing.py /root/custom_nodes/eliai/prestartup_script.py
 
 
 WORKDIR /root

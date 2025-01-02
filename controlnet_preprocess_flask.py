@@ -3,7 +3,7 @@ import json
 import os
 import pathlib
 import subprocess
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
 from PIL import Image
 import io
 from comfyapp import run_task
@@ -52,12 +52,12 @@ def run():
         )
 
         imageBase64 = item["controlnet_input_images"][0]
-        imageBytes = base64.b64decode(imageBase64)
+        imageBytes = base64.b64decode(imageBase64.split(',')[1])
         image = Image.open(io.BytesIO(imageBytes))
-        image.save("root/input/controlnet_input.png")
+        image.save("/root/input/controlnet_input.png")
 
         workflow_data["1"]["inputs"]["image"] = "controlnet_input.png"
-        workflow_data["2"]["inputs"]["preprocessor"] = preprocessor_map[item["control_net_name"]]
+        workflow_data["2"]["inputs"]["preprocessor"] = preprocessor_map[item["controlnet_module"]]
 
 
         server_address = f"127.0.0.1:8189"
@@ -70,17 +70,18 @@ def run():
             result.append(png_bytes_to_jpg_base64(image))
 
         # remove the input image
-        os.remove("root/input/controlnet_input.png")
-        return Response(status=200, json={"images": result})
+        os.remove("/root/input/controlnet_input.png")
+        return jsonify({"images": result})
     except Exception as e:
         print(e)
-    return Response(status=200)
+    return jsonify({"images": []})
 
 @web_app.post("/echo")
 def echo():
     return request.json
 
 if __name__ == "__main__":
+    from waitress import serve
     cmd = f"python main.py --dont-print-server --listen --port 8189"
     subprocess.Popen(cmd, shell=True)
-    web_app.run(host="0.0.0.0", port=5003)
+    serve(web_app, host="0.0.0.0", port=5003)
