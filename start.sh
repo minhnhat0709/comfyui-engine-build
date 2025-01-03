@@ -67,6 +67,7 @@ rm -f "$QUEUE_PID_1" "$QUEUE_PID_2"
 
 # Download initial files
 python -c "from comfyapp import download_files; download_files(filter='model', skip_list=['https://huggingface.co/Kijai/flux-fp8/resolve/main/flux1-dev-fp8.safetensors']);"
+git pull
 
 while true; do
     # Check and start main server for port 5001
