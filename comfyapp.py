@@ -68,11 +68,11 @@ from eliai import supabase
 from lora_manager import load_loras
 
 # comfyui_commit_sha = "1900e5119f70d6db0677fe91194050be3c4476c4"
-comfyui_commit_sha = "c6812947e98eb384250575d94108d9eb747765d9"
+comfyui_commit_sha = "0d4e29f13fafb8fc003a213bb38d4ef4e4e6aa8a"
 
 comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
     modal.Image.from_registry(  # start from basic Linux with Python
-        "pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime",
+        "pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime",
         force_build=False
     )
     .env({
@@ -86,7 +86,7 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
         "cd /root && git init .",
         "cd /root && git remote add --fetch origin https://github.com/comfyanonymous/ComfyUI",
         f"cd /root && git checkout {comfyui_commit_sha}",
-        "cd /root && pip install  -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu121",
+        "cd /root && pip install  -r requirements.txt",
         force_build=False
     )
     .run_commands(
@@ -281,11 +281,13 @@ def run_task( task, port=8189):
                 "status": "failed",
                 "finished_at": datetime.datetime.utcnow().isoformat()
             }).eq("task_id", item['task_id']).execute()
-def download_files(filter="node, model"):
+def download_files(filter="node, model", skip_list=[]):
     models = json.loads(
         (pathlib.Path(__file__).parent / "model.json").read_text()
     )
     for m in models:
+        if m["url"] in skip_list:
+            continue
         if m["url"].endswith(".git") and "node" not in filter:
             continue
         if not m["url"].endswith(".git") and "model" not in filter:
