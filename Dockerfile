@@ -27,7 +27,7 @@ COPY ./SD_StandardNoise.png /root/input/SD_StandardNoise.png
 
 
 WORKDIR /root
-# RUN python -c "from comfyapp import download_files; download_files(filter='node');"
+RUN python -c "from comfyapp import download_files; download_files(filter='node');"
 # RUN python "/root/custom_nodes/ComfyUI-Impact-Pack/install.py"
 
 COPY start.sh /root/start.sh

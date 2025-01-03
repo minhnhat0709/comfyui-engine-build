@@ -101,7 +101,8 @@
   },
   {
       "url": "https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet.git",
-      "path": "custom_nodes"
+      "path": "custom_nodes",
+      "git_sha": "172543b7252db3f15d9bebfa763abb59769624e5"
   },
   {
       "url": "https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git",
