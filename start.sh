@@ -70,6 +70,7 @@ python -c "from comfyapp import download_files; download_files(filter='model', s
 wget -O /root/workflow_api.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api.json
 wget -O /root/workflow_api_inpaint.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_inpaint.json
 wget -O /root/workflow_api_upscale.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_upscale.json
+wget -O /root/workflow_api_controlnet.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_controlnet.json
 
 while true; do
     # Check and start main server for port 5001
