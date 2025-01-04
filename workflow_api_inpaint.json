@@ -540,7 +540,8 @@
       "mask": [
         "233",
         0
-      ]
+      ],
+      "noise_mask": true
     },
     "class_type": "InpaintModelConditioning",
     "_meta": {

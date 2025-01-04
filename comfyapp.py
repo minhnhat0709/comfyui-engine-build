@@ -163,6 +163,7 @@ def workflow_run(workflow_data, task_id, user_id, seed, port=8189, schema="publi
         return
 
 def create_sketch2img_workflow(item, is_edit = False):
+    print("creating workflow")
     preprocessor_map = {
       "control_v11p_sd15_canny_fp16.safetensors": "CannyEdgePreprocessor",
       "control_v11p_sd15_depth_fp16.safetensors": "DepthAnythingPreprocessor",
@@ -173,10 +174,11 @@ def create_sketch2img_workflow(item, is_edit = False):
       "control_v11p_sd15_seg_fp16.safetensors": "SAMPreprocessor",
       "control_v11u_sd15_tile_fp16.safetensors": "TilePreprocessor",
     }
-    workflow_data = json.loads(
-        (pathlib.Path(__file__).parent / ("workflow_api_inpaint.json" if is_edit else "workflow_api.json")).read_text()
-    )
-
+    workflow_file = "workflow_api_inpaint.json" if is_edit else "workflow_api.json"
+    with open(pathlib.Path(__file__).parent / workflow_file, 'r', encoding='utf-8') as f:
+        workflow_data = json.load(f)
+    
+    print("downloading input image")
     if item.get("input_image_url") is not None:
         download_to_comfyui(item["input_image_url"], "input")
         workflow_data["219"]["inputs"]["strength"] = item["control_strength"]
@@ -187,11 +189,11 @@ def create_sketch2img_workflow(item, is_edit = False):
         workflow_data["219"]["inputs"]["strength"] = 0
 
     
-
+    print("inserting prompt")
     # insert the prompt
     workflow_data["137"]["inputs"]["text"] = item["prompt"]
     workflow_data["140"]["inputs"]["text"] = item["negative_prompt"]
-    
+    print("inserting lora")
     if item.get("loras") is not None and len(item["loras"]) > 0:
         load_loras(item["loras"])
         print("lora_loaded")
@@ -202,11 +204,13 @@ def create_sketch2img_workflow(item, is_edit = False):
         workflow_data["137"]["inputs"]["text_clip"] = item["lora_triggers"]
 
     if is_edit == False:
+        print("inserting size")
         workflow_data["134"]["inputs"]["height"] = item["height"]
         workflow_data["134"]["inputs"]["width"] = item["width"]
         workflow_data["275"]["inputs"]["seed"] = item["seed"]
         workflow_data["134"]["inputs"]["batch_size"] = item["batch_size"]
     else:
+        print("inserting size for edit")
         workflow_data["232"]["inputs"]["image_gen_height"] = item["height"] * 1.5
         workflow_data["232"]["inputs"]["image_gen_width"] = item["width"] * 1.5
 
@@ -214,9 +218,10 @@ def create_sketch2img_workflow(item, is_edit = False):
         workflow_data["230"]["inputs"]["seed"] = item["seed"]
         workflow_data["243"]["inputs"]["amount"] = item["batch_size"]
 
-
+        print("downloading mask")
         download_to_comfyui(item["mask"], "input")
         workflow_data["231"]["inputs"]["image"] = item["mask"].split("/")[-1]
+        print("downloading image")
         download_to_comfyui(item["image"], "input")
         workflow_data["234"]["inputs"]["image"] = item["image"].split("/")[-1]
         
