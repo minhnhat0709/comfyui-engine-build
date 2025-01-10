@@ -13,7 +13,7 @@ import uuid
 client_id = str(uuid.uuid4())
 
 
-def download_to_comfyui(url, path, fileName = None, git_sha = None):
+def download_to_comfyui(url, path, fileName = None, git_sha = None, max_retries=3):
     import httpx
     from tqdm import tqdm
 
@@ -26,22 +26,31 @@ def download_to_comfyui(url, path, fileName = None, git_sha = None):
 
     if url.endswith(".git"):
         download_custom_node(url, model_directory, git_sha=git_sha)
-
+        return
     else:
         if os.path.exists(local_filepath):
             return
-        with httpx.stream("GET", url, follow_redirects=True) as stream:
-            total = int(stream.headers["Content-Length"])
-            with open(local_filepath, "wb") as f, tqdm(
-                total=total, unit_scale=True, unit_divisor=1024, unit="B"
-            ) as progress:
-                num_bytes_downloaded = stream.num_bytes_downloaded
-                for data in stream.iter_bytes():
-                    f.write(data)
-                    progress.update(
-                        stream.num_bytes_downloaded - num_bytes_downloaded
-                    )
-                    num_bytes_downloaded = stream.num_bytes_downloaded
+
+        for attempt in range(max_retries):
+            try:
+                with httpx.stream("GET", url, follow_redirects=True, timeout=30.0) as stream:
+                    total = int(stream.headers["Content-Length"])
+                    with open(local_filepath, "wb") as f, tqdm(
+                        total=total, unit_scale=True, unit_divisor=1024, unit="B"
+                    ) as progress:
+                        num_bytes_downloaded = stream.num_bytes_downloaded
+                        for data in stream.iter_bytes():
+                            f.write(data)
+                            progress.update(
+                                stream.num_bytes_downloaded - num_bytes_downloaded
+                            )
+                            num_bytes_downloaded = stream.num_bytes_downloaded
+                return  # Successfully downloaded
+            except (httpx.ReadTimeout, httpx.ConnectTimeout) as e:
+                if attempt == max_retries - 1:  # Last attempt
+                    raise  # Re-raise the last exception if all retries failed
+                print(f"Attempt {attempt + 1} failed. Retrying... Error: {str(e)}")
+                time.sleep(2 ** attempt)  # Exponential backoff
 
 
 def download_custom_node(url, path, git_sha = None):

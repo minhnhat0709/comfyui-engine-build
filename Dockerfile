@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime as base
+FROM pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime as base
 
 RUN apt-get update && apt-get install lsof ffmpeg libsm6 libxext6 wget -y
 RUN apt-get install git git-lfs -y
@@ -6,13 +6,14 @@ RUN apt-get install git git-lfs -y
 RUN cd /root && git init . && \
     cd /root && git remote add --fetch origin https://github.com/comfyanonymous/ComfyUI && \
     cd /root && git checkout 0d4e29f13fafb8fc003a213bb38d4ef4e4e6aa8a && \
-    cd /root && pip install  -r requirements.txt
+    cd /root && pip install --no-cache-dir  -r requirements.txt
 
-RUN git-lfs install && git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA && \
-    mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder && \
-    mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors
+# RUN git-lfs install && git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA && \
+#     mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder && \
+#     mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors &&\
+#     rm -rf /root/ELLA
 
-RUN pip install modal httpx tqdm websocket-client boto3 supabase flask cupy-cuda12x redis Pillow waitress
+RUN pip install --no-cache-dir modal httpx tqdm websocket-client boto3 supabase flask cupy-cuda12x redis Pillow waitress onnxruntime-gpu 
 
 # COPY model.json /root/model.json
 # COPY helpers.py /root/helpers.py
