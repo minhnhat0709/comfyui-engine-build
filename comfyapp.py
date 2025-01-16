@@ -162,7 +162,7 @@ def workflow_run(workflow_data, task_id, user_id, seed, port=8189, schema="publi
         
         return
 
-def create_sketch2img_workflow(item, is_edit = False):
+def create_sketch2img_workflow(item, is_edit = False, is_test = False):
     print("creating workflow")
     preprocessor_map = {
       "control_v11p_sd15_canny_fp16.safetensors": "CannyEdgePreprocessor",
@@ -175,6 +175,8 @@ def create_sketch2img_workflow(item, is_edit = False):
       "control_v11u_sd15_tile_fp16.safetensors": "TilePreprocessor",
     }
     workflow_file = "workflow_api_inpaint.json" if is_edit else "workflow_api.json"
+    if is_test:
+        workflow_file = "workflow_api_test.json"
     with open(pathlib.Path(__file__).parent / workflow_file, 'r', encoding='utf-8') as f:
         workflow_data = json.load(f)
     
@@ -191,8 +193,13 @@ def create_sketch2img_workflow(item, is_edit = False):
     
     print("inserting prompt")
     # insert the prompt
-    workflow_data["137"]["inputs"]["text"] = item["prompt"]
-    workflow_data["140"]["inputs"]["text"] = item["negative_prompt"]
+    if is_test:
+        workflow_data["298"]["inputs"]["text_positive"] = item["prompt"]
+        workflow_data["298"]["inputs"]["text_negative"] = item["negative_prompt"]
+    else:
+        workflow_data["137"]["inputs"]["text"] = item["prompt"]
+        workflow_data["140"]["inputs"]["text"] = item["negative_prompt"]
+
     print("inserting lora")
     if item.get("loras") is not None and len(item["loras"]) > 0:
         load_loras(item["loras"])

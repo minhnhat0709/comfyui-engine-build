@@ -1,0 +1,721 @@
+{
+  "118": {
+    "inputs": {
+      "ckpt_name": "realisticVisionV60B1_v51HyperVAE.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "134": {
+    "inputs": {
+      "width": 1024,
+      "height": 736,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "143": {
+    "inputs": {
+      "image": "z6180936499380_1b9b927705928b26ab33fe48a6eca8ab.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "145": {
+    "inputs": {
+      "sharpen_radius": 2,
+      "sigma": 0.3,
+      "alpha": 0.2,
+      "image": [
+        "275",
+        5
+      ]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "ImageSharpen"
+    }
+  },
+  "147": {
+    "inputs": {
+      "text": [
+        "313",
+        0
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "305",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "159": {
+    "inputs": {
+      "lora_01": "add_detail.safetensors",
+      "strength_01": 0.5,
+      "lora_02": "None",
+      "strength_02": 0.7000000000000001,
+      "lora_03": "None",
+      "strength_03": 0.34,
+      "lora_04": "None",
+      "strength_04": 1,
+      "model": [
+        "118",
+        0
+      ],
+      "clip": [
+        "118",
+        1
+      ]
+    },
+    "class_type": "Lora Loader Stack (rgthree)",
+    "_meta": {
+      "title": "Lora Loader Stack (rgthree)"
+    }
+  },
+  "183": {
+    "inputs": {
+      "preprocessor": "LineArtPreprocessor",
+      "resolution": 1024,
+      "image": [
+        "143",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "186": {
+    "inputs": {
+      "images": [
+        "183",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "216": {
+    "inputs": {
+      "control_net_name": "controlnet++_depth_sd15_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoaderAdvanced",
+    "_meta": {
+      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
+    }
+  },
+  "219": {
+    "inputs": {
+      "strength": 0.9,
+      "start_percent": 0,
+      "end_percent": 0.9,
+      "positive": [
+        "354",
+        0
+      ],
+      "negative": [
+        "355",
+        0
+      ],
+      "control_net": [
+        "216",
+        0
+      ],
+      "image": [
+        "183",
+        0
+      ],
+      "timestep_kf": [
+        "224",
+        1
+      ],
+      "weights_override": [
+        "224",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "224": {
+    "inputs": {
+      "base_multiplier": 0.8,
+      "flip_weights": false,
+      "uncond_multiplier": 1
+    },
+    "class_type": "ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "275": {
+    "inputs": {
+      "seed": 876632572477273,
+      "steps": 6,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "karras",
+      "denoise": 1,
+      "preview_method": "none",
+      "vae_decode": "true",
+      "model": [
+        "294",
+        0
+      ],
+      "positive": [
+        "300",
+        0
+      ],
+      "negative": [
+        "300",
+        1
+      ],
+      "latent_image": [
+        "134",
+        0
+      ],
+      "optional_vae": [
+        "118",
+        2
+      ]
+    },
+    "class_type": "KSampler (Efficient)",
+    "_meta": {
+      "title": "KSampler (Efficient)"
+    }
+  },
+  "282": {
+    "inputs": {
+      "upscale_type": "latent",
+      "hires_ckpt_name": "(use same)",
+      "latent_upscaler": "city96.v1",
+      "pixel_upscaler": "4x_NMKD-Siax_200k.pth",
+      "upscale_by": 1.5,
+      "use_same_seed": false,
+      "seed": 117735178854533,
+      "hires_steps": 4,
+      "denoise": 0.56,
+      "iterations": 1,
+      "use_controlnet": false,
+      "control_net_name": "control_v11f1e_sd15_tile_fp16.safetensors",
+      "strength": 1,
+      "preprocessor": "TilePreprocessor",
+      "preprocessor_imgs": false
+    },
+    "class_type": "HighRes-Fix Script",
+    "_meta": {
+      "title": "HighRes-Fix Script"
+    }
+  },
+  "286": {
+    "inputs": {
+      "seed": 876632572477286,
+      "steps": 5,
+      "cfg": 2,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "AYS SDXL",
+      "denoise": 0.55,
+      "preview_method": "none",
+      "vae_decode": "true",
+      "model": [
+        "350",
+        0
+      ],
+      "positive": [
+        "291",
+        0
+      ],
+      "negative": [
+        "291",
+        1
+      ],
+      "latent_image": [
+        "287",
+        0
+      ],
+      "optional_vae": [
+        "305",
+        2
+      ]
+    },
+    "class_type": "KSampler (Efficient)",
+    "_meta": {
+      "title": "KSampler (Efficient)"
+    }
+  },
+  "287": {
+    "inputs": {
+      "version": "SDXL",
+      "upscale": 1.5,
+      "latent": [
+        "307",
+        0
+      ]
+    },
+    "class_type": "NNLatentUpscale",
+    "_meta": {
+      "title": "NNLatentUpscale"
+    }
+  },
+  "289": {
+    "inputs": {
+      "control_net_name": "controlnetxlCNXL_xinsirTile.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "291": {
+    "inputs": {
+      "strength": 0.9,
+      "start_percent": 0,
+      "end_percent": 0.8,
+      "positive": [
+        "147",
+        0
+      ],
+      "negative": [
+        "299",
+        0
+      ],
+      "control_net": [
+        "308",
+        0
+      ],
+      "image": [
+        "292",
+        0
+      ],
+      "timestep_kf": [
+        "297",
+        1
+      ],
+      "weights_override": [
+        "297",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "292": {
+    "inputs": {
+      "preprocessor": "HEDPreprocessor",
+      "resolution": 1024,
+      "image": [
+        "145",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "294": {
+    "inputs": {
+      "scale": 2,
+      "model": [
+        "159",
+        0
+      ]
+    },
+    "class_type": "PerturbedAttentionGuidance",
+    "_meta": {
+      "title": "PerturbedAttentionGuidance"
+    }
+  },
+  "296": {
+    "inputs": {
+      "sharpen_radius": 3,
+      "sigma": 0.2,
+      "alpha": 0.15,
+      "image": [
+        "309",
+        0
+      ]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "ImageSharpen"
+    }
+  },
+  "297": {
+    "inputs": {
+      "base_multiplier": 0.9,
+      "uncond_multiplier": 1
+    },
+    "class_type": "ACN_ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "298": {
+    "inputs": {
+      "text_positive": "a thai roof house, white wall, beautiful garden, bright sun, day light, ",
+      "text_negative": "old, damaged architecture, dirty walls, pale color, blurry, bokeh",
+      "style": "sai-photographic",
+      "log_prompt": "Yes",
+      "style_name": "",
+      "speak_and_recognation": true
+    },
+    "class_type": "SDXLPromptStyler",
+    "_meta": {
+      "title": "SDXL Prompt Styler"
+    }
+  },
+  "299": {
+    "inputs": {
+      "text": [
+        "316",
+        0
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "305",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "300": {
+    "inputs": {
+      "strength": 0.9,
+      "start_percent": 0,
+      "end_percent": 0.9,
+      "positive": [
+        "219",
+        0
+      ],
+      "negative": [
+        "219",
+        1
+      ],
+      "control_net": [
+        "302",
+        0
+      ],
+      "image": [
+        "303",
+        0
+      ],
+      "timestep_kf": [
+        "301",
+        1
+      ],
+      "weights_override": [
+        "301",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "301": {
+    "inputs": {
+      "base_multiplier": 0.8250000000000001,
+      "flip_weights": false,
+      "uncond_multiplier": 0
+    },
+    "class_type": "ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "302": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_depth_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoaderAdvanced",
+    "_meta": {
+      "title": "Load Advanced ControlNet Model 🛂🅐🅒🅝"
+    }
+  },
+  "303": {
+    "inputs": {
+      "preprocessor": "DepthAnythingPreprocessor",
+      "resolution": 512,
+      "image": [
+        "143",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "304": {
+    "inputs": {
+      "images": [
+        "303",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "305": {
+    "inputs": {
+      "ckpt_name": "ponyRealism_v21Lightning4SVAE.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "307": {
+    "inputs": {
+      "pixels": [
+        "145",
+        0
+      ],
+      "vae": [
+        "305",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "308": {
+    "inputs": {
+      "name": "controlnet++_sdxl_promax.safetensors",
+      "control_type": "hed/pidi/scribble/ted"
+    },
+    "class_type": "ACN_ControlNet++LoaderSingle",
+    "_meta": {
+      "title": "Load ControlNet++ Model (Single) 🛂🅐🅒🅝"
+    }
+  },
+  "309": {
+    "inputs": {
+      "strength": 1,
+      "image": [
+        "318",
+        0
+      ]
+    },
+    "class_type": "MMakerColorEnhance",
+    "_meta": {
+      "title": "Color Enhance"
+    }
+  },
+  "310": {
+    "inputs": {
+      "resolution": "1280x768 (1.67)",
+      "batch_size": 1,
+      "width_override": 0,
+      "height_override": 0
+    },
+    "class_type": "SDXLEmptyLatentSizePicker+",
+    "_meta": {
+      "title": "🔧 Empty Latent Size Picker"
+    }
+  },
+  "313": {
+    "inputs": {
+      "delimiter": ", ",
+      "clean_whitespace": "false",
+      "text_a": [
+        "314",
+        0
+      ],
+      "text_b": [
+        "298",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "314": {
+    "inputs": {
+      "text": "score_9, score_8_up, score_7_up",
+      "speak_and_recognation": true
+    },
+    "class_type": "ttN text",
+    "_meta": {
+      "title": "text"
+    }
+  },
+  "315": {
+    "inputs": {
+      "text": "score_6, score_5, score_4, ",
+      "speak_and_recognation": true
+    },
+    "class_type": "ttN text",
+    "_meta": {
+      "title": "text"
+    }
+  },
+  "316": {
+    "inputs": {
+      "delimiter": ", ",
+      "clean_whitespace": "false",
+      "text_a": [
+        "315",
+        0
+      ],
+      "text_b": [
+        "298",
+        1
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "318": {
+    "inputs": {
+      "samples": [
+        "286",
+        3
+      ],
+      "vae": [
+        "305",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "320": {
+    "inputs": {
+      "model_name": "4x_NMKD-Siax_200k.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "340": {
+    "inputs": {
+      "preprocessor": "DepthAnythingPreprocessor",
+      "resolution": 1024
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "341": {
+    "inputs": {
+      "image": "z6199238315032_025183993821966d5994dff8526159a0.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "350": {
+    "inputs": {
+      "scale": 3,
+      "model": [
+        "305",
+        0
+      ]
+    },
+    "class_type": "PerturbedAttentionGuidance",
+    "_meta": {
+      "title": "PerturbedAttentionGuidance"
+    }
+  },
+  "352": {
+    "inputs": {
+      "brightness": 1.05,
+      "contrast": 1.05,
+      "sharpness": 2,
+      "image": [
+        "318",
+        0
+      ]
+    },
+    "class_type": "Runtime44ImageEnhance",
+    "_meta": {
+      "title": "Runtime44 Image Enhancer"
+    }
+  },
+  "354": {
+    "inputs": {
+      "text": [
+        "298",
+        0
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "159",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "355": {
+    "inputs": {
+      "text": [
+        "298",
+        1
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "118",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "356": {
+    "inputs": {
+      "images": [
+        "352",
+        0
+      ]
+    },
+    "class_type": "SaveImageWebsocket",
+    "_meta": {
+      "title": "SaveImageWebsocket"
+    }
+  }
+}
