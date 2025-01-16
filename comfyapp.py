@@ -208,7 +208,10 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
             # download_to_comfyui(lora["download_url"], "models/loras", lora["name"])
             workflow_data["159"]["inputs"][f"lora_0{index+1}"] = lora["name"]
             workflow_data["159"]["inputs"][f"strength_0{index+1}"] = lora["weight"]
-        workflow_data["137"]["inputs"]["text_clip"] = item["lora_triggers"]
+        if is_test:
+            workflow_data["298"]["inputs"]["text_positive"] += ", " + item["lora_triggers"]
+        else:
+            workflow_data["137"]["inputs"]["text_clip"] = item["lora_triggers"]
 
     if is_edit == False:
         print("inserting size")
