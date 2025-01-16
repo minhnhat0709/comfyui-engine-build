@@ -279,7 +279,7 @@ def run_task( task, port=8189):
         if "upscale" in item["type"]:
             workflow_data = create_upscale_workflow(item=item, isFlux=item["type"] == "flux_upscale")
         else:
-            workflow_data = create_sketch2img_workflow(item=item, is_edit=item["type"] == "edit")
+            workflow_data = create_sketch2img_workflow(item=item, is_edit=item["type"] == "edit", is_test=item.get("is_test", False))
         
         
         
