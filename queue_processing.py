@@ -1,7 +1,7 @@
 import json
 import os
 import threading
-from comfyapp import run_comfyui_server, run_task
+from task_runner import run_task
 import redis
 import time
 import sys
