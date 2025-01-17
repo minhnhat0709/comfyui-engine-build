@@ -67,15 +67,15 @@ rm -f "$QUEUE_PID_1" "$QUEUE_PID_2"
 
 # Download initial files
 python -c "from comfyapp import download_files; download_files(filter='model', skip_list=['https://huggingface.co/Kijai/flux-fp8/resolve/main/flux1-dev-fp8.safetensors', 'https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors']);"
-git-lfs install && git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA 
-mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder 
-mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors 
+# git-lfs install && git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA 
+# mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder 
+# mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors 
 # rm -rf /root/ELLA
 
-wget -O /root/workflow_api.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api.json
-wget -O /root/workflow_api_inpaint.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_inpaint.json
-wget -O /root/workflow_api_upscale.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_upscale.json
-wget -O /root/workflow_api_controlnet.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_controlnet.json
+# wget -O /root/workflow_api.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api.json
+# wget -O /root/workflow_api_inpaint.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_inpaint.json
+# wget -O /root/workflow_api_upscale.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_upscale.json
+# wget -O /root/workflow_api_controlnet.json https://raw.githubusercontent.com/minhnhat0709/comfyui-engine-build/main/workflow_api_controlnet.json
 
 while true; do
     # Check and start main server for port 5001

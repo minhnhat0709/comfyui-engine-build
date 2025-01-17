@@ -4,7 +4,7 @@
     "path": "models/checkpoints"
   },
   {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/ponyRealism_v21Lightning4SVAE.safetensors",
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/ponyRealism_V22Hyper4SVAE.safetensors",
     "path": "models/checkpoints"
   },
   {
@@ -56,6 +56,14 @@
     "path": "models/loras"
   },
   {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/controlnet++_sdxl_promax.safetensors",
+    "path": "models/controlnet"
+  },
+  {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/controlnet++_depth_sd15_fp16.safetensors",
+    "path": "models/controlnet"
+  },
+  {
     "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/controlnetxlCNXL_xinsirTile.safetensors",
     "path": "models/controlnet"
   }, 
@@ -97,6 +105,10 @@
   },
   {
     "url": "https://huggingface.co/uwg/upscaler/resolve/main/ESRGAN/4x_NMKD-Siax_200k.pth",
+    "path": "models/upscale_models"
+  },
+  {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/RealESRGAN_x4plus.pth",
     "path": "models/upscale_models"
   },
   {
@@ -175,5 +187,14 @@
   {
     "url": "https://github.com/ltdrdata/ComfyUI-Impact-Pack.git",
     "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/Ttl/ComfyUi_NNLatentUpscale.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/WASasquatch/was-node-suite-comfyui.git",
+    "path": "custom_nodes"
   }
 ]
+

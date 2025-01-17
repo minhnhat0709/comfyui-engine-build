@@ -1,0 +1,316 @@
+{
+  "97": {
+    "inputs": {
+      "image": "image.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "101": {
+    "inputs": {
+      "model_name": "RealESRGAN_x4plus.pth"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "234": {
+    "inputs": {
+      "text": [
+        "260",
+        0
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "243",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "235": {
+    "inputs": {
+      "seed": 876632572477290,
+      "steps": 5,
+      "cfg": 2,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "AYS SDXL",
+      "denoise": 0.55,
+      "preview_method": "none",
+      "vae_decode": "true",
+      "model": [
+        "252",
+        0
+      ],
+      "positive": [
+        "238",
+        0
+      ],
+      "negative": [
+        "238",
+        1
+      ],
+      "latent_image": [
+        "244",
+        0
+      ],
+      "optional_vae": [
+        "243",
+        2
+      ]
+    },
+    "class_type": "KSampler (Efficient)",
+    "_meta": {
+      "title": "KSampler (Efficient)"
+    }
+  },
+  "237": {
+    "inputs": {
+      "control_net_name": "controlnetxlCNXL_xinsirTile.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "238": {
+    "inputs": {
+      "strength": 0.9,
+      "start_percent": 0,
+      "end_percent": 0.8,
+      "positive": [
+        "234",
+        0
+      ],
+      "negative": [
+        "242",
+        0
+      ],
+      "control_net": [
+        "245",
+        0
+      ],
+      "image": [
+        "239",
+        0
+      ],
+      "timestep_kf": [
+        "241",
+        1
+      ],
+      "weights_override": [
+        "241",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "239": {
+    "inputs": {
+      "preprocessor": "HEDPreprocessor",
+      "resolution": 1024,
+      "image": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "241": {
+    "inputs": {
+      "base_multiplier": 0.9,
+      "uncond_multiplier": 1
+    },
+    "class_type": "ACN_ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "242": {
+    "inputs": {
+      "text": [
+        "259",
+        0
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "243",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "243": {
+    "inputs": {
+      "ckpt_name": "ponyRealism_V22Hyper4SVAE.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "244": {
+    "inputs": {
+      "pixels": [
+        "257",
+        0
+      ],
+      "vae": [
+        "243",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "245": {
+    "inputs": {
+      "name": "controlnet++_sdxl_promax.safetensors",
+      "control_type": "hed/pidi/scribble/ted"
+    },
+    "class_type": "ACN_ControlNet++LoaderSingle",
+    "_meta": {
+      "title": "Load ControlNet++ Model (Single) 🛂🅐🅒🅝"
+    }
+  },
+  "251": {
+    "inputs": {
+      "samples": [
+        "235",
+        3
+      ],
+      "vae": [
+        "243",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "252": {
+    "inputs": {
+      "scale": 3,
+      "model": [
+        "243",
+        0
+      ]
+    },
+    "class_type": "PerturbedAttentionGuidance",
+    "_meta": {
+      "title": "PerturbedAttentionGuidance"
+    }
+  },
+  "253": {
+    "inputs": {
+      "brightness": 1.05,
+      "contrast": 1.05,
+      "sharpness": 2,
+      "image": [
+        "251",
+        0
+      ]
+    },
+    "class_type": "Runtime44ImageEnhance",
+    "_meta": {
+      "title": "Runtime44 Image Enhancer"
+    }
+  },
+  "254": {
+    "inputs": {
+      "images": [
+        "253",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "255": {
+    "inputs": {
+      "images": [
+        "253",
+        0
+      ]
+    },
+    "class_type": "SaveImageWebsocket",
+    "_meta": {
+      "title": "SaveImageWebsocket"
+    }
+  },
+  "256": {
+    "inputs": {
+      "upscale_model": [
+        "101",
+        0
+      ],
+      "image": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "257": {
+    "inputs": {
+      "width": 2560,
+      "height": 2560,
+      "interpolation": "lanczos",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "256",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "259": {
+    "inputs": {
+      "text": "score_6, score_5, score_4, ",
+      "speak_and_recognation": true
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "260": {
+    "inputs": {
+      "text": " score_9, score_8_up, score_7_up, BREAK , Highly detailed, natural textures, intricate patterns, realistic lighting, deep shadows, sense of depth, clearly defined focus, sharp focus, pin-sharp details, realism. Colorful\nUHD, 8k, F2.8, RAW Photo, ultra detailed, sharp focus,\n3DMM",
+      "speak_and_recognation": true
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  }
+}
