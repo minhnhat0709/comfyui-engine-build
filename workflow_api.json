@@ -65,7 +65,7 @@
     "inputs": {
       "lora_01": "add_detail.safetensors",
       "strength_01": 0.5,
-      "lora_02": "Nhà_mái_ngói.safetensors",
+      "lora_02": "None",
       "strength_02": 0.7000000000000001,
       "lora_03": "None",
       "strength_03": 0.34,

@@ -13,7 +13,7 @@ RUN cd /root && git init . && \
 #     mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors &&\
 #     rm -rf /root/ELLA
 
-RUN pip install --no-cache-dir modal httpx tqdm websocket-client boto3 supabase flask cupy-cuda12x redis Pillow waitress onnxruntime-gpu 
+RUN pip install --no-cache-dir modal==0.71.0 httpx tqdm websocket-client boto3==1.35.92 supabase flask cupy-cuda12x redis Pillow waitress onnxruntime-gpu 
 
 # COPY model.json /root/model.json
 # COPY helpers.py /root/helpers.py

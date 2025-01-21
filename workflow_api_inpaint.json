@@ -193,21 +193,9 @@
       "title": "Scaled Soft Weights 🛂🅐🅒🅝"
     }
   },
-  "229": {
-    "inputs": {
-      "images": [
-        "136",
-        0
-      ]
-    },
-    "class_type": "SaveImageWebsocket",
-    "_meta": {
-      "title": "SaveImageWebsocket"
-    }
-  },
   "230": {
     "inputs": {
-      "seed": 388969686451232,
+      "seed": 295703316896822,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
@@ -709,7 +697,7 @@
     "inputs": {
       "text_positive": "A elegant blue house, morning fresh vibe, grass yard, tree background",
       "text_negative": "old, damaged architecture, dirty walls, pale color",
-      "style": "photographic",
+      "style": "sai-photographic",
       "log_prompt": "No",
       "style_name": "",
       "speak_and_recognation": true
@@ -844,6 +832,18 @@
     "class_type": "Text Multiline",
     "_meta": {
       "title": "Text Multiline"
+    }
+  },
+  "289": {
+    "inputs": {
+      "images": [
+        "145",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
     }
   }
 }

@@ -4,6 +4,7 @@ import json
 import pathlib
 import os
 import json
+import threading
 from helpers import connect_to_local_server, download_to_comfyui, get_images
 from eliai import supabase
 
@@ -19,10 +20,10 @@ def workflow_run(workflow_data, task_id, user_id, seed, port=8189, schema="publi
             # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
             ws.close()  # close the websocket
             
-            # background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id))
-            # background_thread.start()
+            background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id, schema))
+            background_thread.start()
 
-            eliai.image_uploading(images, seed, task_id, user_id, schema)
+            # eliai.image_uploading(images, seed, task_id, user_id, schema)
         except Exception as e:
             raise e
         
@@ -69,8 +70,8 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
             print("lora_loaded")
             for index, lora in enumerate(item["loras"]):
                 # download_to_comfyui(lora["download_url"], "models/loras", lora["name"])
-                workflow_data["159"]["inputs"][f"lora_0{index+1}"] = lora["name"]
-                workflow_data["159"]["inputs"][f"strength_0{index+1}"] = lora["weight"]
+                workflow_data["159"]["inputs"][f"lora_0{index+2}"] = lora["name"]
+                workflow_data["159"]["inputs"][f"strength_0{index+2}"] = lora["weight"]
                 workflow_data["278"]["inputs"]["text_positive"] += ", " + item["lora_triggers"]
 
 
@@ -111,8 +112,8 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
             print("lora_loaded")
             for index, lora in enumerate(item["loras"]):
                 # download_to_comfyui(lora["download_url"], "models/loras", lora["name"])
-                workflow_data["159"]["inputs"][f"lora_0{index+1}"] = lora["name"]
-                workflow_data["159"]["inputs"][f"strength_0{index+1}"] = lora["weight"]
+                workflow_data["159"]["inputs"][f"lora_0{index+2}"] = lora["name"]
+                workflow_data["159"]["inputs"][f"strength_0{index+2}"] = lora["weight"]
                 workflow_data["298"]["inputs"]["text_positive"] += ", " + item["lora_triggers"]
         
         workflow_data["134"]["inputs"]["height"] = item["height"]
