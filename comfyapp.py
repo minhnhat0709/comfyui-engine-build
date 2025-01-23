@@ -187,8 +187,12 @@ def download_files(filter="node, model", skip_list=[]):
             "/root/workflow_api.json",
         ),
         modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "workflow_api_upscale.json",
-            "/root/workflow_api_upscale.json",
+            pathlib.Path(__file__).parent / "workflow_api_upscale_basic.json",
+            "/root/workflow_api_upscale_basic.json",
+        ),
+        modal.Mount.from_local_file(
+            pathlib.Path(__file__).parent / "workflow_api_upscale_advanced.json",
+            "/root/workflow_api_upscale_advanced.json",
         ),
         modal.Mount.from_local_file(
             pathlib.Path(__file__).parent / "workflow_api_flux_upscale.json",

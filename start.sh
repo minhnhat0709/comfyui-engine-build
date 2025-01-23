@@ -90,14 +90,14 @@ while true; do
     
     
     # Check and start main server for port 5002
-    if ! lsof -i:5002 -sTCP:LISTEN > /dev/null; then
-        echo "[$(date)] Starting main server on port 5002"
-        nohup python3 ./main.py --dont-print-server --listen --port 5002 > /engine_2.txt 2>&1 &
-        sleep 15  # Give the server time to start
-    fi
+    # if ! lsof -i:5002 -sTCP:LISTEN > /dev/null; then
+    #     echo "[$(date)] Starting main server on port 5002"
+    #     nohup python3 ./main.py --dont-print-server --listen --port 5002 > /engine_2.txt 2>&1 &
+    #     sleep 15  # Give the server time to start
+    # fi
     
-    # Check queue process for port 5002
-    check_queue_process 5002
+    # # Check queue process for port 5002
+    # check_queue_process 5002
     
 
     

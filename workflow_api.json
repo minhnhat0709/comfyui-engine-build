@@ -11,7 +11,7 @@
   "134": {
     "inputs": {
       "width": 1024,
-      "height": 736,
+      "height": 768,
       "batch_size": 1
     },
     "class_type": "EmptyLatentImage",
@@ -21,7 +21,7 @@
   },
   "143": {
     "inputs": {
-      "image": "mau-thiet-ke-nha-1-tang-kt-8.5x15m-9356.jpg",
+      "image": "controlnet.jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -168,7 +168,7 @@
   },
   "275": {
     "inputs": {
-      "seed": 876632572477277,
+      "seed": 876632572477282,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
@@ -227,7 +227,7 @@
   },
   "286": {
     "inputs": {
-      "seed": 876632572477290,
+      "seed": 876632572477297,
       "steps": 5,
       "cfg": 2,
       "sampler_name": "euler_ancestral",
@@ -331,18 +331,6 @@
     "class_type": "AIO_Preprocessor",
     "_meta": {
       "title": "AIO Aux Preprocessor"
-    }
-  },
-  "293": {
-    "inputs": {
-      "images": [
-        "358",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
     }
   },
   "294": {
@@ -589,21 +577,6 @@
       "title": "PerturbedAttentionGuidance"
     }
   },
-  "352": {
-    "inputs": {
-      "brightness": 1.05,
-      "contrast": 1.05,
-      "sharpness": 2,
-      "image": [
-        "318",
-        0
-      ]
-    },
-    "class_type": "Runtime44ImageEnhance",
-    "_meta": {
-      "title": "Runtime44 Image Enhancer"
-    }
-  },
   "354": {
     "inputs": {
       "text": [
@@ -658,11 +631,39 @@
       "title": "Text Multiline"
     }
   },
-  "358": {
+  "359": {
+    "inputs": {
+      "images": [
+        "368",
+        0
+      ]
+    },
+    "class_type": "SaveImageWebsocket",
+    "_meta": {
+      "title": "SaveImageWebsocket"
+    }
+  },
+  "360": {
+    "inputs": {
+      "noise_radius": 6,
+      "preserve_edges": 0.75,
+      "sharpen": 5.5,
+      "ratio": 0.5,
+      "image": [
+        "318",
+        0
+      ]
+    },
+    "class_type": "ImageSmartSharpen+",
+    "_meta": {
+      "title": "🔧 Image Smart Sharpen"
+    }
+  },
+  "361": {
     "inputs": {
       "strength": 1,
       "image": [
-        "352",
+        "360",
         0
       ]
     },
@@ -671,16 +672,19 @@
       "title": "Color Enhance"
     }
   },
-  "359": {
+  "368": {
     "inputs": {
-      "images": [
-        "358",
+      "black_level": 30,
+      "mid_level": 120,
+      "white_level": 255,
+      "image": [
+        "361",
         0
       ]
     },
-    "class_type": "SaveImageWebsocket",
+    "class_type": "Image Levels Adjustment",
     "_meta": {
-      "title": "SaveImageWebsocket"
+      "title": "Image Levels Adjustment"
     }
   }
 }
