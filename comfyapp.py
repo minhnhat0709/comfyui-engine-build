@@ -230,7 +230,9 @@ class ComfyUI:
     # def ui(self):
     #     self._run_comfyui_server()
 
-    
+    @modal.method()
+    def run_task_eliai(self, item):
+        run_task(item)
     
     @modal.wsgi_app()
     def flask_app(self):
@@ -246,6 +248,8 @@ class ComfyUI:
             try:
                 item = request.json
                 run_task(item)
+                # self.run_task_eliai.spawn(item)
+
             except Exception as e:
                 print(e)
             return Response(status=200)
@@ -255,6 +259,9 @@ class ComfyUI:
             return request.json
 
         return web_app
+
+
+
 
 # ### The workflow for developing workflows
 #
