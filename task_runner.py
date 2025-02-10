@@ -58,6 +58,7 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
             workflow_data["183"]["inputs"]["preprocessor"] = preprocessor_map[item["control_net_name"]]
         else:
             workflow_data["219"]["inputs"]["strength"] = 0
+            workflow_data["300"]["inputs"]["strength"] = 0
 
             print("inserting prompt")
         # insert the prompt
