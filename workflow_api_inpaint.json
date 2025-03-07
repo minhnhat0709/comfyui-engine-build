@@ -79,7 +79,7 @@
   "159": {
     "inputs": {
       "lora_01": "None",
-      "strength_01": 0.5,
+      "strength_01": 0.7000000000000001,
       "lora_02": "None",
       "strength_02": 0.73,
       "lora_03": "None",
@@ -87,7 +87,7 @@
       "lora_04": "None",
       "strength_04": 1,
       "model": [
-        "118",
+        "314",
         0
       ],
       "clip": [
@@ -129,7 +129,7 @@
   "209": {
     "inputs": {
       "images": [
-        "293",
+        "302",
         0
       ]
     },
@@ -195,7 +195,7 @@
   },
   "230": {
     "inputs": {
-      "seed": 354757691473652,
+      "seed": 261729596158745,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
@@ -225,7 +225,7 @@
   },
   "231": {
     "inputs": {
-      "image": "mask.png",
+      "image": "controlnet.jpg",
       "channel": "alpha",
       "upload": "image"
     },
@@ -259,7 +259,7 @@
   },
   "234": {
     "inputs": {
-      "image": "ComfyUI_temp_itpyt_00007_.png",
+      "image": "controlnet.jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -312,7 +312,7 @@
   "244": {
     "inputs": {
       "text": [
-        "259",
+        "278",
         0
       ],
       "speak_and_recognation": true,
@@ -328,9 +328,9 @@
   },
   "245": {
     "inputs": {
-      "seed": 876632572477290,
+      "seed": 876632572477429,
       "steps": 5,
-      "cfg": 2,
+      "cfg": 1,
       "sampler_name": "euler_ancestral",
       "scheduler": "AYS SDXL",
       "denoise": 0.6,
@@ -387,7 +387,7 @@
   },
   "248": {
     "inputs": {
-      "strength": 0.9,
+      "strength": 0.8,
       "start_percent": 0,
       "end_percent": 0.8,
       "positive": [
@@ -447,8 +447,8 @@
   "253": {
     "inputs": {
       "text": [
-        "262",
-        0
+        "278",
+        1
       ],
       "speak_and_recognation": true,
       "clip": [
@@ -676,10 +676,6 @@
       "mask_optional": [
         "231",
         0
-      ],
-      "weights_override": [
-        "283",
-        0
       ]
     },
     "class_type": "ACN_AdvancedControlNetApply",
@@ -711,7 +707,7 @@
     "inputs": {
       "black_pixel_for_xinsir_cn": true,
       "image": [
-        "145",
+        "277",
         0
       ],
       "mask": [
@@ -747,7 +743,7 @@
   "290": {
     "inputs": {
       "images": [
-        "293",
+        "302",
         0
       ]
     },
@@ -756,48 +752,137 @@
       "title": "SaveImageWebsocket"
     }
   },
-  "291": {
+  "300": {
     "inputs": {
-      "noise_radius": 6,
-      "preserve_edges": 0.75,
-      "sharpen": 5.5,
-      "ratio": 0.5,
+      "images": [
+        "145",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "302": {
+    "inputs": {
+      "method": "mkl",
+      "strength": 1,
+      "image_ref": [
+        "145",
+        0
+      ],
+      "image_target": [
+        "311",
+        0
+      ]
+    },
+    "class_type": "ColorMatch",
+    "_meta": {
+      "title": "Color Match"
+    }
+  },
+  "303": {
+    "inputs": {
+      "sharpen_radius": 1,
+      "sigma": 0.6,
+      "alpha": 0.4,
       "image": [
         "263",
         0
       ]
     },
-    "class_type": "ImageSmartSharpen+",
+    "class_type": "ImageSharpen",
     "_meta": {
-      "title": "🔧 Image Smart Sharpen"
+      "title": "Image Sharpen"
     }
   },
-  "292": {
+  "310": {
     "inputs": {
-      "strength": 1,
-      "image": [
-        "291",
+      "amount": 6,
+      "device": "auto",
+      "mask": [
+        "233",
         0
       ]
     },
-    "class_type": "MMakerColorEnhance",
+    "class_type": "MaskBlur+",
     "_meta": {
-      "title": "Color Enhance"
+      "title": "🔧 Mask Blur"
     }
   },
-  "293": {
+  "311": {
     "inputs": {
-      "black_level": 30,
-      "mid_level": 120,
-      "white_level": 255,
-      "image": [
-        "292",
+      "x": 0,
+      "y": 0,
+      "resize_source": true,
+      "destination": [
+        "277",
+        0
+      ],
+      "source": [
+        "303",
+        0
+      ],
+      "mask": [
+        "310",
         0
       ]
     },
-    "class_type": "Image Levels Adjustment",
+    "class_type": "ImageCompositeMasked",
     "_meta": {
-      "title": "Image Levels Adjustment"
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "312": {
+    "inputs": {
+      "image": "controlnet.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "313": {
+    "inputs": {
+      "preset": "PLUS (high strength)",
+      "model": [
+        "118",
+        0
+      ]
+    },
+    "class_type": "IPAdapterUnifiedLoader",
+    "_meta": {
+      "title": "IPAdapter Unified Loader"
+    }
+  },
+  "314": {
+    "inputs": {
+      "weight": 0,
+      "weight_type": "strong style transfer",
+      "combine_embeds": "concat",
+      "start_at": 0,
+      "end_at": 1,
+      "embeds_scaling": "V only",
+      "enhance_tiles": 2,
+      "enhance_ratio": 1,
+      "model": [
+        "313",
+        0
+      ],
+      "ipadapter": [
+        "313",
+        1
+      ],
+      "image": [
+        "312",
+        0
+      ]
+    },
+    "class_type": "IPAdapterClipVisionEnhancer",
+    "_meta": {
+      "title": "IPAdapter ClipVision Enhancer"
     }
   }
 }

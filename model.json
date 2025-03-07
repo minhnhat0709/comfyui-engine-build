@@ -8,6 +8,10 @@
     "path": "models/checkpoints"
   },
   {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/juggernautXL_juggXILightningByRD.safetensors",
+    "path": "models/checkpoints"
+  },
+  {
     "url": "https://huggingface.co/Kijai/flux-fp8/resolve/main/flux1-dev-fp8.safetensors",
     "path": "models/unet"
   },
@@ -100,6 +104,10 @@
     "path": "models/controlnet"
   },
   {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/controlnet++_lineart_sd15_fp16.safetensors",
+    "path": "models/controlnet"
+  },
+  {
     "url": "https://huggingface.co/Kim2091/UltraSharp/resolve/main/4x-UltraSharp.pth",
     "path": "models/upscale_models"
   },
@@ -110,6 +118,18 @@
   {
     "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/RealESRGAN_x4plus.pth",
     "path": "models/upscale_models"
+  },
+  {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/ip-adapter-plus_sdxl_vit-h.safetensors",
+    "path": "models/ipadapter"
+  },
+  {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/ip-adapter-plus_sd15.safetensors",
+    "path": "models/ipadapter"
+  },
+  {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors",
+    "path": "models/clip_vision"
   },
   {
       "url": "https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet.git",
@@ -194,6 +214,14 @@
   },
   {
     "url": "https://github.com/WASasquatch/was-node-suite-comfyui.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/kijai/ComfyUI-KJNodes.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/cubiq/ComfyUI_IPAdapter_plus.git",
     "path": "custom_nodes"
   }
 ]

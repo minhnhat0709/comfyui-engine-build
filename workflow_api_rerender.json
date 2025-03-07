@@ -1,0 +1,486 @@
+{
+  "147": {
+    "inputs": {
+      "text": [
+        "313",
+        0
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "305",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "286": {
+    "inputs": {
+      "seed": 876632572477313,
+      "steps": 6,
+      "cfg": 2,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "karras",
+      "denoise": 0.9,
+      "preview_method": "none",
+      "vae_decode": "false",
+      "model": [
+        "387",
+        0
+      ],
+      "positive": [
+        "371",
+        0
+      ],
+      "negative": [
+        "371",
+        1
+      ],
+      "latent_image": [
+        "287",
+        0
+      ],
+      "optional_vae": [
+        "305",
+        2
+      ]
+    },
+    "class_type": "KSampler (Efficient)",
+    "_meta": {
+      "title": "KSampler (Efficient)"
+    }
+  },
+  "287": {
+    "inputs": {
+      "version": "SDXL",
+      "upscale": 1.5,
+      "latent": [
+        "307",
+        0
+      ]
+    },
+    "class_type": "NNLatentUpscale",
+    "_meta": {
+      "title": "NNLatentUpscale"
+    }
+  },
+  "289": {
+    "inputs": {
+      "control_net_name": "TTPLANET_Controlnet_Tile_realistic_v2_fp16.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "291": {
+    "inputs": {
+      "strength": 0.6,
+      "start_percent": 0.4,
+      "end_percent": 0.8,
+      "positive": [
+        "147",
+        0
+      ],
+      "negative": [
+        "299",
+        0
+      ],
+      "control_net": [
+        "382",
+        0
+      ],
+      "image": [
+        "292",
+        0
+      ],
+      "timestep_kf": [
+        "297",
+        1
+      ],
+      "weights_override": [
+        "297",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "292": {
+    "inputs": {
+      "preprocessor": "TTPlanet_TileGF_Preprocessor",
+      "resolution": 1024,
+      "image": [
+        "381",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "293": {
+    "inputs": {
+      "images": [
+        "386",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "297": {
+    "inputs": {
+      "base_multiplier": 0.9,
+      "uncond_multiplier": 1
+    },
+    "class_type": "ACN_ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "298": {
+    "inputs": {
+      "text_positive": "A modern, luxurious hotel bedroom with two neatly made beds, a wooden accent wall with vertical slats, and a warm, inviting atmosphere. The beds have black and gray linens with soft, plump pillows. Above the headboards, two framed world map paintings add a touch of elegance. The room features built-in wooden storage cabinets and a workspace with a light blue modern chair. The desk area includes a coffee cup, neatly arranged on a dark tabletop. The floor is covered in a subtle gray carpet, complementing the wooden textures and neutral color palette. Ultra-realistic textures, high detail, perfect lighting, 8K resolution, cinematic depth of field.",
+      "text_negative": "cartoon, 3D render, low resolution, blurry, overexposed, unrealistic textures, plastic-looking surfaces, distorted shapes, artificial colors",
+      "style": "sai-photographic",
+      "log_prompt": "Yes",
+      "style_name": "",
+      "speak_and_recognation": true
+    },
+    "class_type": "SDXLPromptStyler",
+    "_meta": {
+      "title": "SDXL Prompt Styler"
+    }
+  },
+  "299": {
+    "inputs": {
+      "text": [
+        "316",
+        0
+      ],
+      "speak_and_recognation": true,
+      "clip": [
+        "305",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "305": {
+    "inputs": {
+      "ckpt_name": "juggernautXL_juggXILightningByRD.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "307": {
+    "inputs": {
+      "pixels": [
+        "381",
+        0
+      ],
+      "vae": [
+        "305",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "308": {
+    "inputs": {
+      "name": "controlnet++_sdxl_promax.safetensors",
+      "control_type": "canny/lineart/mlsd"
+    },
+    "class_type": "ACN_ControlNet++LoaderSingle",
+    "_meta": {
+      "title": "Load ControlNet++ Model (Single) 🛂🅐🅒🅝"
+    }
+  },
+  "313": {
+    "inputs": {
+      "delimiter": ", ",
+      "clean_whitespace": "false",
+      "text_a": [
+        "356",
+        0
+      ],
+      "text_b": [
+        "298",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "316": {
+    "inputs": {
+      "delimiter": ", ",
+      "clean_whitespace": "false",
+      "text_a": [
+        "357",
+        0
+      ],
+      "text_b": [
+        "298",
+        1
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "318": {
+    "inputs": {
+      "samples": [
+        "286",
+        3
+      ],
+      "vae": [
+        "305",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "350": {
+    "inputs": {
+      "scale": 3,
+      "model": [
+        "305",
+        0
+      ]
+    },
+    "class_type": "PerturbedAttentionGuidance",
+    "_meta": {
+      "title": "PerturbedAttentionGuidance"
+    }
+  },
+  "356": {
+    "inputs": {
+      "text": "score_9, score_8_up, score_7_up",
+      "speak_and_recognation": true
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "357": {
+    "inputs": {
+      "text": "score_6, score_5, score_4, ",
+      "speak_and_recognation": true
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "359": {
+    "inputs": {
+      "images": [
+        "386",
+        0
+      ]
+    },
+    "class_type": "SaveImageWebsocket",
+    "_meta": {
+      "title": "SaveImageWebsocket"
+    }
+  },
+  "360": {
+    "inputs": {
+      "images": [
+        "381",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "370": {
+    "inputs": {
+      "preprocessor": "LineartStandardPreprocessor",
+      "resolution": 1024,
+      "image": [
+        "381",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "371": {
+    "inputs": {
+      "strength": 0.8,
+      "start_percent": 0,
+      "end_percent": 1,
+      "positive": [
+        "291",
+        0
+      ],
+      "negative": [
+        "291",
+        1
+      ],
+      "control_net": [
+        "308",
+        0
+      ],
+      "image": [
+        "370",
+        0
+      ],
+      "timestep_kf": [
+        "297",
+        1
+      ],
+      "weights_override": [
+        "297",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "373": {
+    "inputs": {
+      "preset": "PLUS (high strength)",
+      "model": [
+        "350",
+        0
+      ]
+    },
+    "class_type": "IPAdapterUnifiedLoader",
+    "_meta": {
+      "title": "IPAdapter Unified Loader"
+    }
+  },
+  "379": {
+    "inputs": {
+      "image": "z6353943574057_2e0739d142638a868401110cdd5a9174.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "381": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "interpolation": "nearest",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "379",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "382": {
+    "inputs": {
+      "name": "controlnet++_sdxl_promax.safetensors",
+      "control_type": "tile"
+    },
+    "class_type": "ACN_ControlNet++LoaderSingle",
+    "_meta": {
+      "title": "Load ControlNet++ Model (Single) 🛂🅐🅒🅝"
+    }
+  },
+  "385": {
+    "inputs": {
+      "noise_radius": 6,
+      "preserve_edges": 0.75,
+      "sharpen": 5.5,
+      "ratio": 0.5,
+      "image": [
+        "318",
+        0
+      ]
+    },
+    "class_type": "ImageSmartSharpen+",
+    "_meta": {
+      "title": "🔧 Image Smart Sharpen"
+    }
+  },
+  "386": {
+    "inputs": {
+      "black_level": 20,
+      "mid_level": 120,
+      "white_level": 255,
+      "image": [
+        "385",
+        0
+      ]
+    },
+    "class_type": "Image Levels Adjustment",
+    "_meta": {
+      "title": "Image Levels Adjustment"
+    }
+  },
+  "387": {
+    "inputs": {
+      "weight_style": 0.1,
+      "weight_composition": 0.4,
+      "expand_style": false,
+      "combine_embeds": "average",
+      "start_at": 0,
+      "end_at": 1,
+      "embeds_scaling": "V only",
+      "model": [
+        "373",
+        0
+      ],
+      "ipadapter": [
+        "373",
+        1
+      ],
+      "image_style": [
+        "381",
+        0
+      ],
+      "image_composition": [
+        "381",
+        0
+      ]
+    },
+    "class_type": "IPAdapterStyleComposition",
+    "_meta": {
+      "title": "IPAdapter Style & Composition SDXL"
+    }
+  }
+}

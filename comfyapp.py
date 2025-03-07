@@ -155,6 +155,10 @@ def download_files(filter="node, model", skip_list=[]):
         if not m["url"].endswith(".git") and "model" not in filter:
             continue
         download_to_comfyui(m["url"], m["path"],git_sha=m.get("git_sha", None))
+
+
+
+ckpts_vol = modal.Volume.from_name("ckpts")
 # ## Running ComfyUI interactively and as an API on Modal
 #
 # Below, we use Modal's class syntax to run our customized ComfyUI environment and workflow on Modal.
@@ -173,6 +177,7 @@ def download_files(filter="node, model", skip_list=[]):
     image=comfyui_image,
     timeout=300,
     container_idle_timeout=60,
+    volumes={"/ckpts": ckpts_vol},
     mounts=[
         modal.Mount.from_local_file(
             pathlib.Path(__file__).parent / "controlnet.jpg",
@@ -202,6 +207,10 @@ def download_files(filter="node, model", skip_list=[]):
             pathlib.Path(__file__).parent / "workflow_api_inpaint.json",
             "/root/workflow_api_inpaint.json",
         ),
+        modal.Mount.from_local_file(
+            pathlib.Path(__file__).parent / "workflow_api_rerender.json",
+            "/root/workflow_api_rerender.json",
+        ),
         # modal.Mount.from_local_file(
         #     pathlib.Path(__file__).parent / "models/loras" / "add_detail.safetensors",
         #     "/root/models/loras/add_detail.safetensors",
@@ -218,12 +227,14 @@ class ComfyUI:
     def download_models(self):
         download_files()
         subprocess.run(["python", "/root/custom_nodes/ComfyUI-Impact-Pack/install.py"], check=True)
+        
 
     
 
     @modal.enter()
     def prepare_comfyui(self):
         # runs on a different port as to not conflict with the UI instance
+        subprocess.run(["cp","-r", "/ckpts/ckpts", "/root/custom_nodes/comfyui_controlnet_aux/"], check=True)
         run_comfyui_server(port=8189)
 
     # @modal.web_server(8188, startup_timeout=30)

@@ -11,7 +11,7 @@
   "134": {
     "inputs": {
       "width": 1024,
-      "height": 768,
+      "height": 736,
       "batch_size": 1
     },
     "class_type": "EmptyLatentImage",
@@ -72,7 +72,7 @@
       "lora_04": "None",
       "strength_04": 1,
       "model": [
-        "118",
+        "396",
         0
       ],
       "clip": [
@@ -99,18 +99,6 @@
       "title": "AIO Aux Preprocessor"
     }
   },
-  "186": {
-    "inputs": {
-      "images": [
-        "183",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
   "216": {
     "inputs": {
       "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors"
@@ -124,7 +112,7 @@
     "inputs": {
       "strength": 0.9,
       "start_percent": 0,
-      "end_percent": 0.9,
+      "end_percent": 1,
       "positive": [
         "354",
         0
@@ -141,10 +129,6 @@
         "183",
         0
       ],
-      "timestep_kf": [
-        "224",
-        1
-      ],
       "weights_override": [
         "224",
         0
@@ -157,7 +141,7 @@
   },
   "224": {
     "inputs": {
-      "base_multiplier": 0.8,
+      "base_multiplier": 0.9,
       "flip_weights": false,
       "uncond_multiplier": 1
     },
@@ -168,7 +152,7 @@
   },
   "275": {
     "inputs": {
-      "seed": 876632572477282,
+      "seed": 2572480889,
       "steps": 6,
       "cfg": 2,
       "sampler_name": "dpmpp_sde",
@@ -227,12 +211,12 @@
   },
   "286": {
     "inputs": {
-      "seed": 876632572477297,
+      "seed": 876632572477500,
       "steps": 5,
       "cfg": 2,
       "sampler_name": "euler_ancestral",
       "scheduler": "AYS SDXL",
-      "denoise": 0.55,
+      "denoise": 0.6,
       "preview_method": "none",
       "vae_decode": "true",
       "model": [
@@ -240,11 +224,11 @@
         0
       ],
       "positive": [
-        "291",
+        "389",
         0
       ],
       "negative": [
-        "291",
+        "389",
         1
       ],
       "latent_image": [
@@ -302,7 +286,7 @@
         0
       ],
       "image": [
-        "292",
+        "388",
         0
       ],
       "timestep_kf": [
@@ -317,20 +301,6 @@
     "class_type": "ACN_AdvancedControlNetApply",
     "_meta": {
       "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
-    }
-  },
-  "292": {
-    "inputs": {
-      "preprocessor": "HEDPreprocessor",
-      "resolution": 1024,
-      "image": [
-        "145",
-        0
-      ]
-    },
-    "class_type": "AIO_Preprocessor",
-    "_meta": {
-      "title": "AIO Aux Preprocessor"
     }
   },
   "294": {
@@ -358,7 +328,7 @@
   },
   "298": {
     "inputs": {
-      "text_positive": "a sloped roof house, white wall, beautiful garden, bright sun, day light, ",
+      "text_positive": "a sloped house with garden",
       "text_negative": "old, damaged architecture, dirty walls, pale color, blurry, bokeh",
       "style": "sai-photographic",
       "log_prompt": "Yes",
@@ -389,9 +359,9 @@
   },
   "300": {
     "inputs": {
-      "strength": 0.9,
-      "start_percent": 0,
-      "end_percent": 0.9,
+      "strength": 0.6,
+      "start_percent": 0.2,
+      "end_percent": 1,
       "positive": [
         "219",
         0
@@ -424,9 +394,9 @@
   },
   "301": {
     "inputs": {
-      "base_multiplier": 0.8250000000000001,
+      "base_multiplier": 0.8,
       "flip_weights": false,
-      "uncond_multiplier": 0
+      "uncond_multiplier": 1
     },
     "class_type": "ScaledSoftControlNetWeights",
     "_meta": {
@@ -445,7 +415,7 @@
   "303": {
     "inputs": {
       "preprocessor": "DepthAnythingPreprocessor",
-      "resolution": 512,
+      "resolution": 1024,
       "image": [
         "143",
         0
@@ -454,18 +424,6 @@
     "class_type": "AIO_Preprocessor",
     "_meta": {
       "title": "AIO Aux Preprocessor"
-    }
-  },
-  "304": {
-    "inputs": {
-      "images": [
-        "303",
-        0
-      ]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
     }
   },
   "305": {
@@ -480,7 +438,7 @@
   "307": {
     "inputs": {
       "pixels": [
-        "145",
+        "377",
         0
       ],
       "vae": [
@@ -496,7 +454,7 @@
   "308": {
     "inputs": {
       "name": "controlnet++_sdxl_promax.safetensors",
-      "control_type": "hed/pidi/scribble/ted"
+      "control_type": "tile"
     },
     "class_type": "ACN_ControlNet++LoaderSingle",
     "_meta": {
@@ -566,7 +524,7 @@
   },
   "350": {
     "inputs": {
-      "scale": 3,
+      "scale": 2,
       "model": [
         "305",
         0
@@ -634,7 +592,7 @@
   "359": {
     "inputs": {
       "images": [
-        "368",
+        "360",
         0
       ]
     },
@@ -659,11 +617,62 @@
       "title": "🔧 Image Smart Sharpen"
     }
   },
-  "361": {
+  "362": {
     "inputs": {
-      "strength": 1,
+      "images": [
+        "368",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "363": {
+    "inputs": {
+      "images": [
+        "377",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "368": {
+    "inputs": {
+      "black_level": 20,
+      "mid_level": 120,
+      "white_level": 255,
       "image": [
         "360",
+        0
+      ]
+    },
+    "class_type": "Image Levels Adjustment",
+    "_meta": {
+      "title": "Image Levels Adjustment"
+    }
+  },
+  "372": {
+    "inputs": {
+      "images": [
+        "360",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "377": {
+    "inputs": {
+      "strength": 0.5,
+      "image": [
+        "145",
         0
       ]
     },
@@ -672,19 +681,181 @@
       "title": "Color Enhance"
     }
   },
-  "368": {
+  "379": {
     "inputs": {
-      "black_level": 30,
-      "mid_level": 120,
-      "white_level": 255,
-      "image": [
-        "361",
+      "images": [
+        "145",
         0
       ]
     },
-    "class_type": "Image Levels Adjustment",
+    "class_type": "PreviewImage",
     "_meta": {
-      "title": "Image Levels Adjustment"
+      "title": "Preview Image"
+    }
+  },
+  "380": {
+    "inputs": {
+      "text": "luxury_interior, living room",
+      "speak_and_recognation": true
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "381": {
+    "inputs": {
+      "text": "a sloped house\n\n\t\nmodern_villa, black_white_tone, modern_house, beautiful_garden, Modern villa featuring cantilevered volumes, flat roof, and integrated carport. The facade combines white concrete and dark metal accents. Lush garden with tropical plants surround the house. Soft, diffused lighting. professional photography, architectural visualization, detailed materials, perfect lighting, photorealistic",
+      "speak_and_recognation": true
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "384": {
+    "inputs": {
+      "width": 736,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "388": {
+    "inputs": {
+      "preprocessor": "TTPlanet_TileGF_Preprocessor",
+      "resolution": 512,
+      "image": [
+        "377",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "389": {
+    "inputs": {
+      "strength": 0.9,
+      "start_percent": 0,
+      "end_percent": 1,
+      "positive": [
+        "291",
+        0
+      ],
+      "negative": [
+        "291",
+        1
+      ],
+      "control_net": [
+        "390",
+        0
+      ],
+      "image": [
+        "391",
+        0
+      ],
+      "timestep_kf": [
+        "392",
+        1
+      ],
+      "weights_override": [
+        "392",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "390": {
+    "inputs": {
+      "name": "controlnet++_sdxl_promax.safetensors",
+      "control_type": "hed/pidi/scribble/ted"
+    },
+    "class_type": "ACN_ControlNet++LoaderSingle",
+    "_meta": {
+      "title": "Load ControlNet++ Model (Single) 🛂🅐🅒🅝"
+    }
+  },
+  "391": {
+    "inputs": {
+      "preprocessor": "HEDPreprocessor",
+      "resolution": 512,
+      "image": [
+        "377",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "392": {
+    "inputs": {
+      "base_multiplier": 0.8250000000000001,
+      "uncond_multiplier": 1
+    },
+    "class_type": "ACN_ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "393": {
+    "inputs": {
+      "preset": "PLUS (high strength)",
+      "model": [
+        "118",
+        0
+      ]
+    },
+    "class_type": "IPAdapterUnifiedLoader",
+    "_meta": {
+      "title": "IPAdapter Unified Loader"
+    }
+  },
+  "395": {
+    "inputs": {
+      "image": "controlnet.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "396": {
+    "inputs": {
+      "weight": 0,
+      "weight_type": "strong style transfer",
+      "combine_embeds": "concat",
+      "start_at": 0,
+      "end_at": 1,
+      "embeds_scaling": "V only",
+      "enhance_tiles": 2,
+      "enhance_ratio": 1,
+      "model": [
+        "393",
+        0
+      ],
+      "ipadapter": [
+        "393",
+        1
+      ],
+      "image": [
+        "395",
+        0
+      ]
+    },
+    "class_type": "IPAdapterClipVisionEnhancer",
+    "_meta": {
+      "title": "IPAdapter ClipVision Enhancer"
     }
   }
 }

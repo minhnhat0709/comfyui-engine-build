@@ -20,10 +20,10 @@ def workflow_run(workflow_data, task_id, user_id, seed, port=8189, schema="publi
             # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
             ws.close()  # close the websocket
             
-            # background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id, schema))
-            # background_thread.start()
+            background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id, schema))
+            background_thread.start()
 
-            eliai.image_uploading(images, seed, task_id, user_id, schema)
+            # eliai.image_uploading(images, seed, task_id, user_id, schema)
         except Exception as e:
             raise e
         
@@ -42,7 +42,11 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
       "control_v11p_sd15_scribble_fp16.safetensors": "Scribble_XDoG_Preprocessor",
       "control_v11p_sd15_seg_fp16.safetensors": "SAMPreprocessor",
       "control_v11u_sd15_tile_fp16.safetensors": "TilePreprocessor",
+      "controlnet++_lineart_sd15_fp16.safetensors": "LineArtPreprocessor"
     }
+
+    if item.get("is_hard_controlnet", False):
+        item["control_net_name"] = "controlnet++_lineart_sd15_fp16.safetensors"
 
     def create_sketch2img_workflow_inpaint(item):
         workflow_file = "workflow_api_inpaint.json"
@@ -75,7 +79,14 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
                 workflow_data["159"]["inputs"][f"strength_0{index+2}"] = lora["weight"]
                 workflow_data["278"]["inputs"]["text_positive"] += ", " + item["lora_triggers"]
 
+        if item.get("reference_image_url") is not None:
+            download_to_comfyui(item["reference_image_url"], "input")
+            workflow_data["312"]["inputs"]["image"] = item["reference_image_url"].split("/")[-1]
+            workflow_data["314"]["inputs"]["weight"] = item["reference_image_weight"]
+        else:
+            workflow_data["314"]["inputs"]["weight"] = 0
 
+            
         workflow_data["230"]["inputs"]["denoise"] = item["denoise"]
         workflow_data["230"]["inputs"]["seed"] = item["seed"]
 
@@ -117,6 +128,13 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
                 workflow_data["159"]["inputs"][f"lora_0{index+2}"] = lora["name"]
                 workflow_data["159"]["inputs"][f"strength_0{index+2}"] = lora["weight"]
                 workflow_data["298"]["inputs"]["text_positive"] += ", " + item["lora_triggers"]
+        
+        if item.get("reference_image_url") is not None:
+            download_to_comfyui(item["reference_image_url"], "input")
+            workflow_data["395"]["inputs"]["image"] = item["reference_image_url"].split("/")[-1]
+            workflow_data["396"]["inputs"]["weight"] = item["reference_image_weight"]
+        else:
+            workflow_data["396"]["inputs"]["weight"] = 0
         
         workflow_data["134"]["inputs"]["height"] = item["height"]
         workflow_data["134"]["inputs"]["width"] = item["width"]
@@ -182,6 +200,18 @@ def create_upscale_workflow(item, isFlux = False):
 
     return workflow_data
 
+
+def create_rerender_workflow(item):
+    download_to_comfyui(item["input_image_url"], "input")
+    workflow_data = json.loads(
+            (pathlib.Path(__file__).parent / "workflow_api_rerender.json").read_text()
+        )
+    
+    workflow_data["379"]["inputs"]["image"] = item["input_image_url"].split("/")[-1]
+    workflow_data["298"]["inputs"]["text_positive"] = item["prompt"]
+    workflow_data["387"]["inputs"]["weight_style"] = item["weight_style"]
+    return workflow_data
+
 def remove_temp_file(list_file_name):
     for item in list_file_name:
         try:
@@ -206,8 +236,10 @@ def run_task( task, port=8189):
         if item["seed"] == 0:
             item["seed"] = random.randint(1,4294967294)
         
+        if "rerender" in item["type"]:
+            workflow_data = create_rerender_workflow(item=item)
         # download input images to the container
-        if "upscale" in item["type"]:
+        elif "upscale" in item["type"]:
             workflow_data = create_upscale_workflow(item=item, isFlux=item["type"] == "flux_upscale")
         else:
             workflow_data = create_sketch2img_workflow(item=item, is_edit=item["type"] == "edit", is_test=item.get("is_test", False))
