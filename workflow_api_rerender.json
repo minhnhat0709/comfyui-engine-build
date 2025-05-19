@@ -31,11 +31,11 @@
         0
       ],
       "positive": [
-        "371",
+        "389",
         0
       ],
       "negative": [
-        "371",
+        "389",
         1
       ],
       "latent_image": [
@@ -148,7 +148,7 @@
   },
   "298": {
     "inputs": {
-      "text_positive": "A modern, luxurious hotel bedroom with two neatly made beds, a wooden accent wall with vertical slats, and a warm, inviting atmosphere. The beds have black and gray linens with soft, plump pillows. Above the headboards, two framed world map paintings add a touch of elegance. The room features built-in wooden storage cabinets and a workspace with a light blue modern chair. The desk area includes a coffee cup, neatly arranged on a dark tabletop. The floor is covered in a subtle gray carpet, complementing the wooden textures and neutral color palette. Ultra-realistic textures, high detail, perfect lighting, 8K resolution, cinematic depth of field.",
+      "text_positive": "Photorealistic outdoor garden featuring: smooth white stucco (<stucco>:1.2) walls with subtle light diffusion; natural stone path: textured (<stone>:1.3) with fine grain and slight weathering; dark metal frame: (<metal>:1.1) brushed finish reflecting sky; wooden pergola: aged (<wood>:1.2) with visible grain and weathered texture. Light: diffused daylight, natural material aging, proper reflections, authentic textures, precise surface details.",
       "text_negative": "cartoon, 3D render, low resolution, blurry, overexposed, unrealistic textures, plastic-looking surfaces, distorted shapes, artificial colors",
       "style": "sai-photographic",
       "log_prompt": "Yes",
@@ -385,7 +385,7 @@
   },
   "379": {
     "inputs": {
-      "image": "z6353943574057_2e0739d142638a868401110cdd5a9174.jpg",
+      "image": "controlnet.jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
@@ -454,7 +454,7 @@
   },
   "387": {
     "inputs": {
-      "weight_style": 0.1,
+      "weight_style": 0.4,
       "weight_composition": 0.4,
       "expand_style": false,
       "combine_embeds": "average",
@@ -481,6 +481,75 @@
     "class_type": "IPAdapterStyleComposition",
     "_meta": {
       "title": "IPAdapter Style & Composition SDXL"
+    }
+  },
+  "389": {
+    "inputs": {
+      "strength": 0.9,
+      "start_percent": 0,
+      "end_percent": 1,
+      "positive": [
+        "371",
+        0
+      ],
+      "negative": [
+        "371",
+        1
+      ],
+      "control_net": [
+        "390",
+        0
+      ],
+      "image": [
+        "391",
+        0
+      ],
+      "timestep_kf": [
+        "392",
+        1
+      ],
+      "weights_override": [
+        "392",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "390": {
+    "inputs": {
+      "name": "controlnet++_sdxl_promax.safetensors",
+      "control_type": "none"
+    },
+    "class_type": "ACN_ControlNet++LoaderSingle",
+    "_meta": {
+      "title": "Load ControlNet++ Model (Single) 🛂🅐🅒🅝"
+    }
+  },
+  "391": {
+    "inputs": {
+      "preprocessor": "DepthAnythingPreprocessor",
+      "resolution": 512,
+      "image": [
+        "381",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "392": {
+    "inputs": {
+      "base_multiplier": 0.9,
+      "uncond_multiplier": 1
+    },
+    "class_type": "ACN_ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
     }
   }
 }

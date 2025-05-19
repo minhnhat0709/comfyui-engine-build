@@ -87,7 +87,7 @@ while true; do
         # Check and start main server for the current port
         if ! lsof -i:$PORT -sTCP:LISTEN > /dev/null; then
             echo "[$(date)] Starting main server on port $PORT"
-            nohup python3 ./main.py --dont-print-server --listen --port $PORT > /engine_$i.txt 2>&1 &
+            nohup python3 ./main.py --dont-print-server --highvram --listen --port $PORT > /engine_$i.txt 2>&1 &
             sleep 15  # Give the server time to start
         fi
         
@@ -101,6 +101,7 @@ while true; do
         nohup python controlnet_preprocess_flask.py &
     fi
     
+    find ./temp -type f -mmin +60 -delete
     sleep 5  # Wait before checking again
 done
 

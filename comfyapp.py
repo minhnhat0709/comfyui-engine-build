@@ -63,9 +63,6 @@ import threading
 from typing import Dict
 
 import modal
-import eliai
-from eliai import supabase
-from lora_manager import load_loras
 from task_runner import run_task
 
 # comfyui_commit_sha = "1900e5119f70d6db0677fe91194050be3c4476c4"
@@ -97,24 +94,72 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
         "mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors",
         force_build=False
     )
-    .pip_install("httpx", "tqdm", "websocket-client", "boto3", "supabase", "flask", "cupy-cuda12x", "Pillow", force_build=False)  # add web dependencies
-    .copy_local_file(  # copy over the ComfyUI model definition JSON and helper Python module
-        pathlib.Path(__file__).parent / "model.json", "/root/model.json"
+    .pip_install("httpx", "tqdm", "websocket-client", "boto3", "supabase", "flask", "cupy-cuda12x", "Pillow", "modal", force_build=False)  # add web dependencies
+    .run_commands("rm -rf /root/models")
+    .add_local_file(  # copy over the ComfyUI model definition JSON and helper Python module
+        pathlib.Path(__file__).parent / "comfyapp.py", "/root/comfyapp.py", copy=True
     )
-    .copy_local_file(
-        pathlib.Path(__file__).parent / "helpers.py", "/root/helpers.py"
+    .add_local_file(
+        pathlib.Path(__file__).parent / "helpers.py", "/root/helpers.py", copy=True
     )
-    # .copy_local_dir(
-    #     pathlib.Path(__file__).parent / "models", "/root/ComfyUI/models"
-    # )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "task_runner.py", "/root/task_runner.py", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "eliai.py", "/root/eliai.py", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "lora_manager.py", "/root/lora_manager.py", copy=True
+    )
+    .add_local_file(  # copy over the ComfyUI model definition JSON and helper Python module
+        pathlib.Path(__file__).parent / "model.json", "/root/model.json", copy=True
+    )
+    .run_commands('cd /root && python -c "from comfyapp import download_files; download_files(filter=\'node\')"')
+    # .run_commands("cd /root && python /root/custom_nodes/ComfyUI-Impact-Pack/install.py")
 )
+
+comfyui_image = (
+    comfyui_image
+    .add_local_python_source("task_runner", "lora_manager", "helpers", "eliai", copy=True)
+    
+    .add_local_file(
+        pathlib.Path(__file__).parent / "helpers.py", "/root/helpers.py", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "controlnet.jpg", "/root/input/controlnet.jpg", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "workflow_api.json", "/root/workflow_api.json", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "workflow_api_upscale_basic.json", "/root/workflow_api_upscale_basic.json", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "workflow_api_upscale_advanced.json", "/root/workflow_api_upscale_advanced.json", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "workflow_api_flux_upscale.json", "/root/workflow_api_flux_upscale.json", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "workflow_api_inpaint.json", "/root/workflow_api_inpaint.json", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "workflow_api_rerender.json", "/root/workflow_api_rerender.json", copy=True
+    ).add_local_file(
+        pathlib.Path(__file__).parent / "queue_processing_5001.txt", "/queue_processing_5001.txt", copy=True
+    )
+    .add_local_file(
+        pathlib.Path(__file__).parent / "engine_1.txt", "/engine_1.txt", copy=True
+    )
+)
+    
 
 app = modal.App(name="example-comfyui")
 
 # Some additional code for managing ComfyUI lives in `helpers.py`.
 # This includes functions like downloading checkpoints and plugins to the right directory on the ComfyUI server.
-with comfyui_image.imports():
-    from helpers import connect_to_local_server, download_to_comfyui, get_images
+# with comfyui_image.imports():
+from helpers import connect_to_local_server, download_to_comfyui, get_images
 
 def remove_all_files_and_dirs_in_folder(folder_path):
     # Get a list of all files and directories in the folder
@@ -159,6 +204,19 @@ def download_files(filter="node, model", skip_list=[]):
 
 
 ckpts_vol = modal.Volume.from_name("ckpts")
+
+@app.function(volumes={"/root/models": ckpts_vol})
+def download_files_to_volume():
+    download_files(filter='model')
+    
+    # Commit changes to the volume
+    ckpts_vol.commit()
+    print(f"Committed files to models volume")
+    
+    return
+#modal run comfyapp.py::app.download_files_to_volume
+
+
 # ## Running ComfyUI interactively and as an API on Modal
 #
 # Below, we use Modal's class syntax to run our customized ComfyUI environment and workflow on Modal.
@@ -176,57 +234,57 @@ ckpts_vol = modal.Volume.from_name("ckpts")
     gpu="a10g",
     image=comfyui_image,
     timeout=300,
-    container_idle_timeout=60,
-    volumes={"/ckpts": ckpts_vol},
-    mounts=[
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "controlnet.jpg",
-            "/root/input/controlnet.jpg",
-        ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "SD_StandardNoise.png",
-            "/root/input/SD_StandardNoise.png",
-        ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "workflow_api.json",
-            "/root/workflow_api.json",
-        ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "workflow_api_upscale_basic.json",
-            "/root/workflow_api_upscale_basic.json",
-        ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "workflow_api_upscale_advanced.json",
-            "/root/workflow_api_upscale_advanced.json",
-        ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "workflow_api_flux_upscale.json",
-            "/root/workflow_api_flux_upscale.json",
-        ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "workflow_api_inpaint.json",
-            "/root/workflow_api_inpaint.json",
-        ),
-        modal.Mount.from_local_file(
-            pathlib.Path(__file__).parent / "workflow_api_rerender.json",
-            "/root/workflow_api_rerender.json",
-        ),
-        # modal.Mount.from_local_file(
-        #     pathlib.Path(__file__).parent / "models/loras" / "add_detail.safetensors",
-        #     "/root/models/loras/add_detail.safetensors",
-        # ),
-        # modal.Mount.from_local_file(
-        #     pathlib.Path(__file__).parent / "models/embeddings" / "UnrealisticDream.pt",
-        #     "/root/models/embeddings/UnrealisticDream.pt",
-        # )
-    ],
+    scaledown_window=60,
+    volumes={"/root/models": ckpts_vol},
+    # mounts=[
+    #     modal.Mount.from_local_file(
+    #         pathlib.Path(__file__).parent / "controlnet.jpg",
+    #         "/root/input/controlnet.jpg",
+    #     ),
+    #     # modal.Mount.from_local_file(
+    #     #     pathlib.Path(__file__).parent / "SD_StandardNoise.png",
+    #     #     "/root/input/SD_StandardNoise.png",
+    #     # ),
+    #     modal.Mount.from_local_file(
+    #         pathlib.Path(__file__).parent / "workflow_api.json",
+    #         "/root/workflow_api.json",
+    #     ),
+    #     modal.Mount.from_local_file(
+    #         pathlib.Path(__file__).parent / "workflow_api_upscale_basic.json",
+    #         "/root/workflow_api_upscale_basic.json",
+    #     ),
+    #     modal.Mount.from_local_file(
+    #         pathlib.Path(__file__).parent / "workflow_api_upscale_advanced.json",
+    #         "/root/workflow_api_upscale_advanced.json",
+    #     ),
+    #     modal.Mount.from_local_file(
+    #         pathlib.Path(__file__).parent / "workflow_api_flux_upscale.json",
+    #         "/root/workflow_api_flux_upscale.json",
+    #     ),
+    #     modal.Mount.from_local_file(
+    #         pathlib.Path(__file__).parent / "workflow_api_inpaint.json",
+    #         "/root/workflow_api_inpaint.json",
+    #     ),
+    #     modal.Mount.from_local_file(
+    #         pathlib.Path(__file__).parent / "workflow_api_rerender.json",
+    #         "/root/workflow_api_rerender.json",
+    #     ),
+    #     # modal.Mount.from_local_file(
+    #     #     pathlib.Path(__file__).parent / "models/loras" / "add_detail.safetensors",
+    #     #     "/root/models/loras/add_detail.safetensors",
+    #     # ),
+    #     # modal.Mount.from_local_file(
+    #     #     pathlib.Path(__file__).parent / "models/embeddings" / "UnrealisticDream.pt",
+    #     #     "/root/models/embeddings/UnrealisticDream.pt",
+    #     # )
+    # ],
     secrets=[modal.Secret.from_name("engine-secret")]
 )
 class ComfyUI:
-    @modal.build()
-    def download_models(self):
-        download_files()
-        subprocess.run(["python", "/root/custom_nodes/ComfyUI-Impact-Pack/install.py"], check=True)
+    # @modal.build()
+    # def download_models(self):
+    #     download_files()
+    #     subprocess.run(["python", "/root/custom_nodes/ComfyUI-Impact-Pack/install.py"], check=True)
         
 
     
@@ -234,7 +292,7 @@ class ComfyUI:
     @modal.enter()
     def prepare_comfyui(self):
         # runs on a different port as to not conflict with the UI instance
-        subprocess.run(["cp","-r", "/ckpts/ckpts", "/root/custom_nodes/comfyui_controlnet_aux/"], check=True)
+        subprocess.run(["cp","-r", "/root/models/ckpts", "/root/custom_nodes/comfyui_controlnet_aux/"], check=True)
         run_comfyui_server(port=8189)
 
     # @modal.web_server(8188, startup_timeout=30)
@@ -244,6 +302,41 @@ class ComfyUI:
     @modal.method()
     def run_task_eliai(self, item):
         run_task(item)
+        
+    @modal.method()
+    def download_to_ckpts_volume(self, urls, destination_folder="/root/models"):
+        """
+        Download files to the ckpts volume and make them available to the container.
+        
+        Args:
+            urls: List of URLs to download files from
+            destination_folder: Folder within the volume to save files to
+            
+        Returns:
+            List of downloaded file paths
+        """
+        # Call the standalone function to download files to the volume
+        downloaded_files = download_files_to_volume(urls, destination_folder)
+        
+        # Reload the volume to make the changes visible to this container
+        ckpts_vol.reload()
+        
+        # Copy files to ComfyUI directories if needed
+        if destination_folder == "/root/models":
+            # Create ckpts directory in controlnet_aux if it doesn't exist
+            os.makedirs("/root/custom_nodes/comfyui_controlnet_aux/ckpts", exist_ok=True)
+            
+            # Copy the downloaded files to the controlnet_aux directory
+            for file_path in downloaded_files:
+                filename = os.path.basename(file_path)
+                dest_path = f"/root/custom_nodes/comfyui_controlnet_aux/ckpts/{filename}"
+                try:
+                    shutil.copy(file_path, dest_path)
+                    print(f"Copied {file_path} to {dest_path}")
+                except Exception as e:
+                    print(f"Error copying {file_path} to {dest_path}: {e}")
+        
+        return downloaded_files
     
     @modal.wsgi_app()
     def flask_app(self):
@@ -258,7 +351,9 @@ class ComfyUI:
             item = None
             try:
                 item = request.json
+                # ckpts_vol.reload()
                 run_task(item)
+                # ckpts_vol.commit()
                 # self.run_task_eliai.spawn(item)
 
             except Exception as e:
@@ -268,6 +363,21 @@ class ComfyUI:
         @web_app.post("/echo")
         def echo():
             return request.json
+            
+        @web_app.get("/download_to_ckpts")
+        def download_to_ckpts():
+            try:
+                download_files(filter='model')
+    
+                # Commit changes to the volume
+                ckpts_vol.commit()
+                
+                return {
+                    "status": "success",
+                }
+                
+            except Exception as e:
+                return {"error": str(e)}, 500
 
         return web_app
 
@@ -298,3 +408,7 @@ class ComfyUI:
 #
 # If you're interested in building a platform for running ComfyUI workflows with dynamically-defined dependencies and workflows,
 # please [reach out to us on Slack](https://modal.com/slack).
+
+
+# if __name__ == "__main__":
+#     ComfyUI()

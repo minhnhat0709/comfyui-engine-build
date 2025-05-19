@@ -6,21 +6,24 @@ import os
 import json
 import threading
 from helpers import connect_to_local_server, download_to_comfyui, get_images
-from eliai import supabase
+from eliai import supabase, image_uploading
 
-import eliai
+# import eliai
 from lora_manager import load_loras
 def workflow_run(workflow_data, task_id, user_id, seed, port=8189, schema="public"):
         # send requests to local headless ComfyUI server (on port 8189)
         try:
             
             server_address = f"127.0.0.1:{port}"
+            print("starting connection")
             ws = connect_to_local_server(server_address)
+            print("connected")
             images = get_images(ws, workflow_data, server_address)
+            print("images received")
             # eliai.image_uploading(images=images, seed=seed, task_id=task_id, user_id=user_id)
             ws.close()  # close the websocket
             
-            background_thread = threading.Thread(target=eliai.image_uploading, args=(images, seed, task_id, user_id, schema))
+            background_thread = threading.Thread(target=image_uploading, args=(images, seed, task_id, user_id, schema))
             background_thread.start()
 
             # eliai.image_uploading(images, seed, task_id, user_id, schema)
@@ -77,7 +80,7 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
                 # download_to_comfyui(lora["download_url"], "models/loras", lora["name"])
                 workflow_data["159"]["inputs"][f"lora_0{index+2}"] = lora["name"]
                 workflow_data["159"]["inputs"][f"strength_0{index+2}"] = lora["weight"]
-                workflow_data["278"]["inputs"]["text_positive"] += ", " + item["lora_triggers"]
+                workflow_data["278"]["inputs"]["text_positive"] += ", " + item.get("lora_triggers", "")
 
         if item.get("reference_image_url") is not None:
             download_to_comfyui(item["reference_image_url"], "input")
@@ -127,7 +130,7 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
                 # download_to_comfyui(lora["download_url"], "models/loras", lora["name"])
                 workflow_data["159"]["inputs"][f"lora_0{index+2}"] = lora["name"]
                 workflow_data["159"]["inputs"][f"strength_0{index+2}"] = lora["weight"]
-                workflow_data["298"]["inputs"]["text_positive"] += ", " + item["lora_triggers"]
+                workflow_data["298"]["inputs"]["text_positive"] += ", " + item.get("lora_triggers", "")
         
         if item.get("reference_image_url") is not None:
             download_to_comfyui(item["reference_image_url"], "input")
@@ -220,6 +223,7 @@ def remove_temp_file(list_file_name):
         except Exception as e:
             print(f"File {item} not found. Skipping.")
 
+import linecache
 
 def run_task( task, port=8189):
     try:
@@ -252,7 +256,40 @@ def run_task( task, port=8189):
     except Exception as e:
         print(e)
         if item:
+            engine_log_file = '/engine_1.txt'
+            queue_log_file = '/queue_processing_5001.txt'
+
+            line_number = 100
+            line_number_q = 40
+
+            # Read specific line from queue log file
+            with open(queue_log_file, 'r') as f:
+                queue_lines = f.readlines()
+                queue_log = queue_lines[-line_number_q:]
+
+            # Read specific line from engine log file
+            with open(engine_log_file, 'r') as f:
+                engine_lines = f.readlines()
+                engine_log = engine_lines[-line_number:]
+
+            log = engine_log + ["\n\n\n\n\n\n\n\n"] + queue_log + ["\n\n\n\n\n\n\n\n"] + str(e)
             supabase.schema(schema).table("Tasks").update({
                 "status": "failed",
-                "finished_at": datetime.datetime.utcnow().isoformat()
+                "finished_at": datetime.datetime.utcnow().isoformat(),
+                "logs": "\n".join(log)
             }).eq("task_id", item['task_id']).execute()
+
+
+# if __name__ == "__main__":
+#       engine_log_file = './engine_1.txt'
+
+#       line_number = 100
+#       line_number_q = 40
+
+#       # Read specific line from queue log file
+#       with open(engine_log_file, 'r', encoding="utf8") as f:
+#           queue_lines = f.readlines()
+#           print(len(queue_lines))
+#           queue_log = queue_lines[-line_number:]
+
+#       print (queue_log)

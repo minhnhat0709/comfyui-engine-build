@@ -26,7 +26,7 @@ async def run():
     data = request.json
     # fire_and_forget("https://eliai-team--example-comfyui-comfyui-flask-app.modal.run/run", data)
     
-    comfyui_class = modal.Cls.lookup("example-comfyui", "ComfyUI")
+    comfyui_class = modal.Cls.from_name("example-comfyui", "ComfyUI")
     obj = comfyui_class()
 
     call = obj.run_task_eliai.spawn(data)

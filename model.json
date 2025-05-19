@@ -218,7 +218,8 @@
   },
   {
     "url": "https://github.com/kijai/ComfyUI-KJNodes.git",
-    "path": "custom_nodes"
+    "path": "custom_nodes",
+    "git_sha": "fa6d20eeb32cbcbd84ee325e3cfdc6ed6b43056f"
   },
   {
     "url": "https://github.com/cubiq/ComfyUI_IPAdapter_plus.git",
