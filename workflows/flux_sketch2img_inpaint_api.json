@@ -1,0 +1,982 @@
+{
+  "6": {
+    "inputs": {
+      "text": "blurry",
+      "clip": [
+        "100",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "13",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "10": {
+    "inputs": {
+      "vae_name": "flux_ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "11": {
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "12": {
+    "inputs": {
+      "unet_name": "flux1-dev-fp8.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "13": {
+    "inputs": {
+      "noise": [
+        "25",
+        0
+      ],
+      "guider": [
+        "108",
+        0
+      ],
+      "sampler": [
+        "96",
+        0
+      ],
+      "sigmas": [
+        "17",
+        0
+      ],
+      "latent_image": [
+        "76",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "16": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "17": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 0.3500000000000001,
+      "model": [
+        "82",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "22": {
+    "inputs": {},
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "25": {
+    "inputs": {
+      "noise_seed": [
+        "57",
+        0
+      ]
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "57": {
+    "inputs": {
+      "seed": 333477489190881
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "Seed (rgthree)"
+    }
+  },
+  "59": {
+    "inputs": {
+      "image": "controlnet.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "controlnet_image"
+    }
+  },
+  "72": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "82",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "73": {
+    "inputs": {
+      "model_name": "4xUltrasharp_4xUltrasharpV10.pt"
+    },
+    "class_type": "UpscaleModelLoader",
+    "_meta": {
+      "title": "Load Upscale Model"
+    }
+  },
+  "74": {
+    "inputs": {
+      "upscale_model": [
+        "73",
+        0
+      ],
+      "image": [
+        "78",
+        0
+      ]
+    },
+    "class_type": "ImageUpscaleWithModel",
+    "_meta": {
+      "title": "Upscale Image (using Model)"
+    }
+  },
+  "76": {
+    "inputs": {
+      "pixels": [
+        "160",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "77": {
+    "inputs": {
+      "noise": [
+        "25",
+        0
+      ],
+      "guider": [
+        "150",
+        0
+      ],
+      "sampler": [
+        "96",
+        0
+      ],
+      "sigmas": [
+        "72",
+        0
+      ],
+      "latent_image": [
+        "110",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "78": {
+    "inputs": {
+      "samples": [
+        "77",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "79": {
+    "inputs": {
+      "images": [
+        "78",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "80": {
+    "inputs": {
+      "images": [
+        "158",
+        0
+      ]
+    },
+    "class_type": "SaveImageWebsocket",
+    "_meta": {
+      "title": "SaveImageWebsocket"
+    }
+  },
+  "82": {
+    "inputs": {
+      "lora_name": "flux_turbo_alpha.safetensors",
+      "strength_model": 1.0000000000000002,
+      "model": [
+        "100",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "83": {
+    "inputs": {
+      "clip_l": "a raw photo that is highly detailed with natural textures and intricate patterns, showcasing realistic lighting and deep shadows to give the scene a sense of depth. The focus should be clearly defined, making every object appear sharply focused with pin-sharp details. Colorful, realistic image",
+      "t5xxl": [
+        "127",
+        0
+      ],
+      "guidance": 3.5,
+      "clip": [
+        "100",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncodeFlux",
+    "_meta": {
+      "title": "CLIPTextEncodeFlux"
+    }
+  },
+  "84": {
+    "inputs": {
+      "max_shift": 1.1000000000000003,
+      "base_shift": 0.6000000000000001,
+      "width": 1024,
+      "height": 1024,
+      "model": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingFlux",
+    "_meta": {
+      "title": "ModelSamplingFlux"
+    }
+  },
+  "86": {
+    "inputs": {
+      "guidance": 1,
+      "conditioning": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "87": {
+    "inputs": {
+      "control_net_name": "flux_union_v20.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "90": {
+    "inputs": {
+      "preprocessor": "CannyEdgePreprocessor",
+      "resolution": 768,
+      "image": [
+        "59",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "controlnet_preprocessor"
+    }
+  },
+  "91": {
+    "inputs": {
+      "type": "canny/lineart/anime_lineart/mlsd",
+      "control_net": [
+        "87",
+        0
+      ]
+    },
+    "class_type": "SetUnionControlNetType",
+    "_meta": {
+      "title": "SetUnionControlNetType"
+    }
+  },
+  "93": {
+    "inputs": {
+      "strength": [
+        "128",
+        0
+      ],
+      "start_percent": 0,
+      "end_percent": 0.8000000000000002,
+      "positive": [
+        "83",
+        0
+      ],
+      "negative": [
+        "86",
+        0
+      ],
+      "control_net": [
+        "91",
+        0
+      ],
+      "image": [
+        "90",
+        0
+      ],
+      "timestep_kf": [
+        "101",
+        1
+      ],
+      "weights_override": [
+        "101",
+        0
+      ],
+      "vae_optional": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply_v2",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "94": {
+    "inputs": {
+      "input_0": 1,
+      "input_1": 1,
+      "input_2": 1,
+      "input_3": 1,
+      "input_4": 1,
+      "input_5": 1,
+      "input_6": 1,
+      "input_7": 1,
+      "input_8": 1,
+      "input_9": 1,
+      "input_10": 1,
+      "input_11": 1,
+      "input_12": 1,
+      "input_13": 1,
+      "input_14": 1,
+      "input_15": 1,
+      "input_16": 1,
+      "input_17": 1,
+      "input_18": 1,
+      "uncond_multiplier": 0
+    },
+    "class_type": "ACN_CustomControlNetWeightsFlux",
+    "_meta": {
+      "title": "ControlNet Custom Weights [Flux] 🛂🅐🅒🅝"
+    }
+  },
+  "95": {
+    "inputs": {
+      "text": "a raw photo that is highly detailed with natural textures and intricate patterns, showcasing realistic lighting and deep shadows to give the scene a sense of depth. The focus should be clearly defined, making every object appear sharply focused with pin-sharp details. Colorful, realistic image"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "Text Multiline"
+    }
+  },
+  "96": {
+    "inputs": {
+      "detail_amount": 0.10000000000000002,
+      "start": 0.2,
+      "end": 0.8,
+      "bias": 0.5000000000000001,
+      "exponent": 1.0000000000000002,
+      "start_offset": 0,
+      "end_offset": 0,
+      "fade": 0,
+      "smooth": true,
+      "cfg_scale_override": 0,
+      "sampler": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "DetailDaemonSamplerNode",
+    "_meta": {
+      "title": "Detail Daemon Sampler"
+    }
+  },
+  "99": {
+    "inputs": {
+      "images": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "100": {
+    "inputs": {
+      "lora_01": "aidmaHyperrealism-FLUX-v0.3.safetensors",
+      "strength_01": 0.5000000000000001,
+      "lora_02": "None",
+      "strength_02": 0.7000000000000002,
+      "lora_03": "None",
+      "strength_03": 1,
+      "lora_04": "None",
+      "strength_04": 1,
+      "model": [
+        "84",
+        0
+      ],
+      "clip": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "Lora Loader Stack (rgthree)",
+    "_meta": {
+      "title": "lora_loader"
+    }
+  },
+  "101": {
+    "inputs": {
+      "base_multiplier": 1,
+      "uncond_multiplier": 0.8000000000000002
+    },
+    "class_type": "ACN_ScaledSoftControlNetWeights",
+    "_meta": {
+      "title": "Scaled Soft Weights 🛂🅐🅒🅝"
+    }
+  },
+  "103": {
+    "inputs": {
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "108": {
+    "inputs": {
+      "model": [
+        "82",
+        0
+      ],
+      "conditioning": [
+        "83",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "110": {
+    "inputs": {
+      "width": [
+        "111",
+        0
+      ],
+      "height": [
+        "112",
+        0
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "111": {
+    "inputs": {
+      "value": 1024
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "width"
+    }
+  },
+  "112": {
+    "inputs": {
+      "value": 768
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "height"
+    }
+  },
+  "116": {
+    "inputs": {
+      "black_level": 30,
+      "mid_level": 127.5,
+      "white_level": 255,
+      "image": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "Image Levels Adjustment",
+    "_meta": {
+      "title": "Image Levels Adjustment"
+    }
+  },
+  "117": {
+    "inputs": {
+      "images": [
+        "118",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "118": {
+    "inputs": {
+      "sharpen_radius": 1,
+      "sigma": 0.30000000000000004,
+      "alpha": 0.15000000000000002,
+      "image": [
+        "116",
+        0
+      ]
+    },
+    "class_type": "ImageSharpen",
+    "_meta": {
+      "title": "Image Sharpen"
+    }
+  },
+  "121": {
+    "inputs": {
+      "strength": [
+        "156",
+        0
+      ],
+      "start_percent": 0,
+      "end_percent": 0.8000000000000002,
+      "positive": [
+        "93",
+        0
+      ],
+      "negative": [
+        "93",
+        1
+      ],
+      "control_net": [
+        "123",
+        0
+      ],
+      "image": [
+        "124",
+        0
+      ],
+      "timestep_kf": [
+        "101",
+        1
+      ],
+      "weights_override": [
+        "101",
+        0
+      ],
+      "vae_optional": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "ACN_AdvancedControlNetApply_v2",
+    "_meta": {
+      "title": "Apply Advanced ControlNet 🛂🅐🅒🅝"
+    }
+  },
+  "122": {
+    "inputs": {
+      "control_net_name": "flux_union_v20.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "123": {
+    "inputs": {
+      "type": "depth",
+      "control_net": [
+        "122",
+        0
+      ]
+    },
+    "class_type": "SetUnionControlNetType",
+    "_meta": {
+      "title": "SetUnionControlNetType"
+    }
+  },
+  "124": {
+    "inputs": {
+      "preprocessor": "DepthAnythingPreprocessor",
+      "resolution": 768,
+      "image": [
+        "59",
+        0
+      ]
+    },
+    "class_type": "AIO_Preprocessor",
+    "_meta": {
+      "title": "AIO Aux Preprocessor"
+    }
+  },
+  "125": {
+    "inputs": {
+      "images": [
+        "124",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "127": {
+    "inputs": {
+      "value": "Luxurious interior: The bedroom has a desk integrated with adjacent shelves, the bed of Queen size with the headboard with a cushion.  Lighting accents from modern chandeliers and table lights.  Marble floors and wallpaper with motifs create a delicate atmosphere.  Professional photography, visualization of architecture, detailed materials, perfect and surreal lighting."
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "prompt"
+    }
+  },
+  "128": {
+    "inputs": {
+      "value": 0.8
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "controlnet_weight"
+    }
+  },
+  "130": {
+    "inputs": {
+      "instruction_prompt": "Expand the following prompt to add more detail",
+      "max_new_tokens": 128
+    },
+    "class_type": "Superprompt",
+    "_meta": {
+      "title": "Superprompt"
+    }
+  },
+  "134": {
+    "inputs": {
+      "image": "controlnet.jpg",
+      "channel": "alpha"
+    },
+    "class_type": "LoadImageMask",
+    "_meta": {
+      "title": "mask"
+    }
+  },
+  "135": {
+    "inputs": {
+      "mask": [
+        "134",
+        0
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
+  },
+  "138": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "is_inpainting"
+    }
+  },
+  "139": {
+    "inputs": {
+      "image": "controlnet.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "base_image"
+    }
+  },
+  "147": {
+    "inputs": {
+      "control_net_name": "flux_cn_inpainting.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "148": {
+    "inputs": {},
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
+  },
+  "149": {
+    "inputs": {
+      "strength": [
+        "157",
+        0
+      ],
+      "start_percent": 0,
+      "end_percent": 1,
+      "positive": [
+        "121",
+        0
+      ],
+      "negative": [
+        "121",
+        1
+      ],
+      "control_net": [
+        "147",
+        0
+      ],
+      "vae": [
+        "10",
+        0
+      ],
+      "image": [
+        "139",
+        0
+      ],
+      "mask": [
+        "151",
+        0
+      ]
+    },
+    "class_type": "ControlNetInpaintingAliMamaApply",
+    "_meta": {
+      "title": "ControlNetInpaintingAliMamaApply"
+    }
+  },
+  "150": {
+    "inputs": {
+      "cfg": 1,
+      "model": [
+        "82",
+        0
+      ],
+      "positive": [
+        "149",
+        0
+      ],
+      "negative": [
+        "149",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFGGuider"
+    }
+  },
+  "151": {
+    "inputs": {
+      "expand": 2,
+      "incremental_expandrate": 0,
+      "tapered_corners": true,
+      "flip_input": false,
+      "blur_radius": 6,
+      "lerp_alpha": 1,
+      "decay_factor": 1,
+      "fill_holes": false,
+      "mask": [
+        "135",
+        0
+      ]
+    },
+    "class_type": "GrowMaskWithBlur",
+    "_meta": {
+      "title": "Grow Mask With Blur"
+    }
+  },
+  "153": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": true,
+      "destination": [
+        "118",
+        0
+      ],
+      "source": [
+        "139",
+        0
+      ],
+      "mask": [
+        "155",
+        0
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "154": {
+    "inputs": {
+      "images": [
+        "153",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "155": {
+    "inputs": {
+      "mask": [
+        "151",
+        0
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
+  },
+  "156": {
+    "inputs": {
+      "value": 0.5
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "depth_weight"
+    }
+  },
+  "157": {
+    "inputs": {
+      "value": 0
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "inpaint_weight"
+    }
+  },
+  "158": {
+    "inputs": {
+      "image_a": [
+        "153",
+        0
+      ],
+      "image_b": [
+        "118",
+        0
+      ],
+      "boolean": [
+        "138",
+        0
+      ]
+    },
+    "class_type": "Image Input Switch",
+    "_meta": {
+      "title": "Image Input Switch"
+    }
+  },
+  "160": {
+    "inputs": {
+      "width": 1536,
+      "height": 1536,
+      "upscale_method": "nearest-exact",
+      "keep_proportion": "resize",
+      "pad_color": "0, 0, 0",
+      "crop_position": "center",
+      "divisible_by": 2,
+      "device": "cpu",
+      "image": [
+        "74",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJv2",
+    "_meta": {
+      "title": "Resize Image v2"
+    }
+  }
+}

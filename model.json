@@ -1,215 +1,67 @@
 [
   {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/realisticVisionV60B1_v51HyperVAE.safetensors",
-    "path": "models/checkpoints"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/ponyRealism_V22Hyper4SVAE.safetensors",
-    "path": "models/checkpoints"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/juggernautXL_juggXILightningByRD.safetensors",
-    "path": "models/checkpoints"
-  },
-  {
-    "url": "https://huggingface.co/Kijai/flux-fp8/resolve/main/flux1-dev-fp8.safetensors",
-    "path": "models/unet"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/UnrealisticDream.pt",
-    "path": "models/embeddings"
-  },
-  {
-    "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors",
-    "path": "models/clip"
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/flux_ae.safetensors",
+    "path": "models/vae",
+    "filename": "flux_ae.safetensors"
   },
   {
     "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors",
-    "path": "models/clip"
+    "path": "models/clip",
+    "filename": "t5xxl_fp8_e4m3fn.safetensors"
   },
   {
-    "url": "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/ae.safetensors",
-    "path": "models/vae"
+    "url": "https://huggingface.co/Comfy-Org/stable-diffusion-3.5-fp8/resolve/main/text_encoders/clip_l.safetensors",
+    "path": "models/clip",
+    "filename": "clip_l.safetensors"
   },
   {
-    "url": "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-FLUX.1-dev-8steps-lora.safetensors",
-    "path": "models/loras"
+    "url": "https://huggingface.co/Kijai/flux-fp8/resolve/main/flux1-dev-fp8.safetensors",
+    "path": "models/unet",
+    "filename":"flux1-dev-fp8.safetensors"
   },
   {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/add_detail.safetensors",
-    "path": "models/loras"
+    "url": "https://huggingface.co/Shakker-Labs/FLUX.1-dev-ControlNet-Union-Pro-2.0/resolve/main/diffusion_pytorch_model.safetensors",
+    "path": "models/controlnet",
+    "filename":"flux_union_v20.safetensors"
   },
   {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/add-detail-xl.safetensors",
-    "path": "models/loras"
+    "url": "https://huggingface.co/alimama-creative/FLUX.1-Turbo-Alpha/resolve/main/diffusion_pytorch_model.safetensors",
+    "path": "models/loras",
+    "filename":"flux_turbo_alpha.safetensors"
   },
   {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/3DMM_XL_V13.safetensors",
-    "path": "models/loras"
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/aidmaHyperrealism-FLUX-v0.3.safetensors",
+    "path": "models/loras",
+    "filename":"aidmaHyperrealism-FLUX-v0.3.safetensors"
   },
   {
-    "url": "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SDXL-4steps-lora.safetensors",
-    "path": "models/loras"
-  },
-  {
-    "url": "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SD15-8steps-CFG-lora.safetensors",
-    "path": "models/loras"
-  },
-  {
-    "url": "https://huggingface.co/ByteDance/Hyper-SD/resolve/main/Hyper-SD15-4steps-lora.safetensors",
-    "path": "models/loras"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/controlnet++_sdxl_promax.safetensors",
-    "path": "models/controlnet"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/controlnet++_depth_sd15_fp16.safetensors",
-    "path": "models/controlnet"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/controlnetxlCNXL_xinsirTile.safetensors",
-    "path": "models/controlnet"
-  }, 
-  {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11f1e_sd15_tile_fp16.safetensors",
-    "path": "models/controlnet"
-  }, 
-  {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_lineart_fp16.safetensors",
-    "path": "models/controlnet"
-  },
-  {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_canny_fp16.safetensors",
-    "path": "models/controlnet"
-  },
-  {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_depth_fp16.safetensors",
-    "path": "models/controlnet"
-  },
-  {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_mlsd_fp16.safetensors",
-    "path": "models/controlnet"
-  },
-  {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_openpose_fp16.safetensors",
-    "path": "models/controlnet"
-  },
-  {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_scribble_fp16.safetensors",
-    "path": "models/controlnet"
-  },
-  {
-    "url": "https://huggingface.co/ckpt/ControlNet-v1-1/resolve/main/control_v11p_sd15_seg_fp16.safetensors",
-    "path": "models/controlnet"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/controlnet++_lineart_sd15_fp16.safetensors",
-    "path": "models/controlnet"
+    "url": "https://huggingface.co/alimama-creative/FLUX.1-dev-Controlnet-Inpainting-Beta/resolve/main/diffusion_pytorch_model.safetensors",
+    "path": "models/controlnet",
+    "filename":"flux_cn_inpainting.safetensors"
   },
   {
     "url": "https://huggingface.co/Kim2091/UltraSharp/resolve/main/4x-UltraSharp.pth",
-    "path": "models/upscale_models"
-  },
-  {
-    "url": "https://huggingface.co/uwg/upscaler/resolve/main/ESRGAN/4x_NMKD-Siax_200k.pth",
-    "path": "models/upscale_models"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/RealESRGAN_x4plus.pth",
-    "path": "models/upscale_models"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/ip-adapter-plus_sdxl_vit-h.safetensors",
-    "path": "models/ipadapter"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/ip-adapter-plus_sd15.safetensors",
-    "path": "models/ipadapter"
-  },
-  {
-    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors",
-    "path": "models/clip_vision"
-  },
-  {
-      "url": "https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet.git",
-      "path": "custom_nodes",
-      "git_sha": "172543b7252db3f15d9bebfa763abb59769624e5"
-  },
-  {
-      "url": "https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/hylarucoder/ComfyUI-Eagle-PNGInfo.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/TencentQQGYLab/ComfyUI-ELLA.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/0xbitches/ComfyUI-LCM.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/theUpsider/ComfyUI-Logic.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/JettHu/ComfyUI-TCD.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/shiimizu/ComfyUI-TiledDiffusion.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/cubiq/ComfyUI_essentials.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/cubiq/ComfyUI_IPAdapter_plus.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/jags111/efficiency-nodes-comfyui.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://github.com/rgthree/rgthree-comfy.git",
-      "path": "custom_nodes"
-  },
-  {
-      "url": "https://git.mmaker.moe/mmaker/sd-webui-color-enhance.git",
-      "path": "custom_nodes"
+    "path": "models/upscale_models",
+    "filename":"4xUltrasharp_4xUltrasharpV10.pt"
   },
   {
     "url": "https://github.com/Fannovel16/comfyui_controlnet_aux.git",
     "path": "custom_nodes"
   },
   {
-    "url": "https://github.com/minhnhat0709/comfyui_r44_nodes.git",
+    "url": "https://github.com/rgthree/rgthree-comfy.git",
     "path": "custom_nodes"
   },
   {
-    "url": "https://github.com/city96/SD-Latent-Upscaler.git",
+    "url": "https://github.com/Kosinkadink/ComfyUI-Advanced-ControlNet.git",
     "path": "custom_nodes"
   },
   {
-    "url": "https://github.com/ltdrdata/ComfyUI-Impact-Pack.git",
+    "url": "https://github.com/Jonseed/ComfyUI-Detail-Daemon.git",
     "path": "custom_nodes"
   },
   {
-    "url": "https://github.com/Ttl/ComfyUi_NNLatentUpscale.git",
+    "url": "https://github.com/fearnworks/ComfyUI_FearnworksNodes.git",
     "path": "custom_nodes"
   },
   {
@@ -218,12 +70,6 @@
   },
   {
     "url": "https://github.com/kijai/ComfyUI-KJNodes.git",
-    "path": "custom_nodes",
-    "git_sha": "fa6d20eeb32cbcbd84ee325e3cfdc6ed6b43056f"
-  },
-  {
-    "url": "https://github.com/cubiq/ComfyUI_IPAdapter_plus.git",
     "path": "custom_nodes"
   }
 ]
-

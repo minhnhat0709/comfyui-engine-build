@@ -63,10 +63,14 @@ import threading
 from typing import Dict
 
 import modal
-from task_runner import run_task
+
 
 # comfyui_commit_sha = "1900e5119f70d6db0677fe91194050be3c4476c4"
-comfyui_commit_sha = "0d4e29f13fafb8fc003a213bb38d4ef4e4e6aa8a"
+comfyui_commit_sha = "094306b626e9cf505690c5d8b445032b3b8a36fa"
+
+# comfyui_image = modal.Image.from_registry(
+#     "minhnhatdo/eliai-comfy-engine:2.1.3"
+# ).entrypoint([])
 
 comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
     modal.Image.from_registry(  # start from basic Linux with Python
@@ -87,13 +91,13 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
         "cd /root && pip install  -r requirements.txt",
         force_build=False
     )
-    .run_commands(
-        "git-lfs install",
-        "git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA",
-        "mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder",
-        "mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors",
-        force_build=False
-    )
+    # .run_commands(
+    #     "git-lfs install",
+    #     "git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA",
+    #     "mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder",
+    #     "mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors",
+    #     force_build=False
+    # )
     .pip_install("httpx", "tqdm", "websocket-client", "boto3", "supabase", "flask", "cupy-cuda12x", "Pillow", "modal", force_build=False)  # add web dependencies
     .run_commands("rm -rf /root/models")
     .add_local_file(  # copy over the ComfyUI model definition JSON and helper Python module
@@ -111,17 +115,17 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
     .add_local_file(
         pathlib.Path(__file__).parent / "lora_manager.py", "/root/lora_manager.py", copy=True
     )
-    .add_local_file(  # copy over the ComfyUI model definition JSON and helper Python module
-        pathlib.Path(__file__).parent / "model.json", "/root/model.json", copy=True
-    )
-    .run_commands('cd /root && python -c "from comfyapp import download_files; download_files(filter=\'node\')"')
+    
+    # .run_commands('cd /root && python -c "from comfyapp import download_files; download_files(filter=\'node\')"')
     # .run_commands("cd /root && python /root/custom_nodes/ComfyUI-Impact-Pack/install.py")
 )
 
 comfyui_image = (
     comfyui_image
     .add_local_python_source("task_runner", "lora_manager", "helpers", "eliai", copy=True)
-    
+    .add_local_file(  # copy over the ComfyUI model definition JSON and helper Python module
+        pathlib.Path(__file__).parent / "model.json", remote_path="/root/model.json", copy=True
+    )
     .add_local_file(
         pathlib.Path(__file__).parent / "helpers.py", "/root/helpers.py", copy=True
     )
@@ -151,15 +155,21 @@ comfyui_image = (
     .add_local_file(
         pathlib.Path(__file__).parent / "engine_1.txt", "/engine_1.txt", copy=True
     )
+    .add_local_dir(pathlib.Path(__file__).parent / "workflows", "/root/workflows", copy=True)
+    .run_commands('cd /root && python -c "from comfyapp import download_files; download_files(filter=\'node\')"')
 )
-    
+
+
+with comfyui_image.imports():
+    from task_runner import run_task
+    from helpers import connect_to_local_server, download_to_comfyui, get_images
 
 app = modal.App(name="example-comfyui")
 
 # Some additional code for managing ComfyUI lives in `helpers.py`.
 # This includes functions like downloading checkpoints and plugins to the right directory on the ComfyUI server.
 # with comfyui_image.imports():
-from helpers import connect_to_local_server, download_to_comfyui, get_images
+
 
 def remove_all_files_and_dirs_in_folder(folder_path):
     # Get a list of all files and directories in the folder
@@ -189,6 +199,8 @@ def run_comfyui_server( port=8188):
 
 
 def download_files(filter="node, model", skip_list=[]):
+    # ls all file in /root and print result
+    os.system("ls /root")
     models = json.loads(
         (pathlib.Path(__file__).parent / "model.json").read_text()
     )
@@ -199,7 +211,7 @@ def download_files(filter="node, model", skip_list=[]):
             continue
         if not m["url"].endswith(".git") and "model" not in filter:
             continue
-        download_to_comfyui(m["url"], m["path"],git_sha=m.get("git_sha", None))
+        download_to_comfyui(m["url"], m["path"], fileName=m.get("filename", None), git_sha=m.get("git_sha", None))
 
 
 
@@ -231,9 +243,9 @@ def download_files_to_volume():
 # For more on how to run web services on Modal, check out [this guide](https://modal.com/docs/guide/webhooks).
 @app.cls(
     allow_concurrent_inputs=1,
-    gpu="a10g",
+    gpu="t4",
     image=comfyui_image,
-    timeout=300,
+    timeout=3600,
     scaledown_window=60,
     volumes={"/root/models": ckpts_vol},
     # mounts=[
@@ -292,6 +304,9 @@ class ComfyUI:
     @modal.enter()
     def prepare_comfyui(self):
         # runs on a different port as to not conflict with the UI instance
+        # os.makedirs("/root/models", exist_ok=True)
+        # os.makedirs("/root/models/ckpts", exist_ok=True)
+
         subprocess.run(["cp","-r", "/root/models/ckpts", "/root/custom_nodes/comfyui_controlnet_aux/"], check=True)
         run_comfyui_server(port=8189)
 
@@ -303,6 +318,18 @@ class ComfyUI:
     def run_task_eliai(self, item):
         run_task(item)
         
+
+    @modal.method()
+    def download_files_to_volume(self):
+        os.system("ls /root")
+        download_files(filter='model')
+        
+        # Commit changes to the volume
+        ckpts_vol.commit()
+        print(f"Committed files to models volume")
+        
+        return
+    
     @modal.method()
     def download_to_ckpts_volume(self, urls, destination_folder="/root/models"):
         """

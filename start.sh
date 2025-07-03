@@ -66,7 +66,7 @@ pkill -f "python.*queue_processing.py" || true
 rm -f "$QUEUE_PID_1" "$QUEUE_PID_2"
 
 # Download initial files
-python -c "from comfyapp import download_files; download_files(filter='model', skip_list=['https://huggingface.co/Kijai/flux-fp8/resolve/main/flux1-dev-fp8.safetensors', 'https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors']);"
+python -c "from comfyapp import download_files; download_files(filter='model')"
 # git-lfs install && git clone https://huggingface.co/QQGYLab/ELLA /root/ELLA 
 # mkdir /root/models/ella_encoder && cp -r /root/ELLA/models--google--flan-t5-xl--text_encoder /root/models/ella_encoder 
 # mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors 
@@ -87,7 +87,7 @@ while true; do
         # Check and start main server for the current port
         if ! lsof -i:$PORT -sTCP:LISTEN > /dev/null; then
             echo "[$(date)] Starting main server on port $PORT"
-            nohup python3 ./main.py --dont-print-server --highvram --listen --port $PORT > /engine_$i.txt 2>&1 &
+            nohup python3 ./main.py --dont-print-server --listen --port $PORT > /engine_$i.txt 2>&1 &
             sleep 15  # Give the server time to start
         fi
         
@@ -98,7 +98,8 @@ while true; do
     # Check and start utility server on port 5003
     if ! lsof -i:5003 -sTCP:LISTEN > /dev/null; then
         echo "[$(date)] Starting utility server on port 5003"
-        nohup python controlnet_preprocess_flask.py &
+        python main.py --dont-print-server --listen --port 8189 > /preprocessor.txt 2>&1 &
+        uvicorn controlnet_preprocess_flask:app --host 0.0.0.0 --port 5003 --workers 4 &
     fi
     
     find ./temp -type f -mmin +60 -delete
