@@ -102,7 +102,7 @@ while true; do
         uvicorn controlnet_preprocess_flask:app --host 0.0.0.0 --port 5003 --workers 4 &
     fi
     
-    find ./temp -type f -mmin +60 -delete
+    find /root/temp -type f -mmin +60 -delete
     sleep 5  # Wait before checking again
 done
 

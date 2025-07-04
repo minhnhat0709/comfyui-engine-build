@@ -80,7 +80,7 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
 
     print("inserting lora")
     if item.get("loras") is not None and len(item["loras"]) > 0:
-        # load_loras(item["loras"])
+        load_loras(item["loras"])
         print("lora_loaded")
         for index, lora in enumerate(item["loras"]):
             # download_to_comfyui(lora["download_url"], "models/loras", lora["name"])

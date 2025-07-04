@@ -243,7 +243,7 @@ def download_files_to_volume():
 # For more on how to run web services on Modal, check out [this guide](https://modal.com/docs/guide/webhooks).
 @app.cls(
     allow_concurrent_inputs=1,
-    gpu="t4",
+    gpu="A100-40GB",
     image=comfyui_image,
     timeout=3600,
     scaledown_window=60,
@@ -303,12 +303,23 @@ class ComfyUI:
 
     @modal.enter()
     def prepare_comfyui(self):
-        # runs on a different port as to not conflict with the UI instance
-        # os.makedirs("/root/models", exist_ok=True)
-        # os.makedirs("/root/models/ckpts", exist_ok=True)
+        import time
+        print(f"[LOG] prepare_comfyui: Starting at {time.strftime('%Y-%m-%d %H:%M:%S')}")
+        start_total = time.time()
 
+        # Step 1: Copy checkpoints
+        start_cp = time.time()
+        print("[LOG] Copying checkpoints...")
         subprocess.run(["cp","-r", "/root/models/ckpts", "/root/custom_nodes/comfyui_controlnet_aux/"], check=True)
+        print(f"[LOG] Copy checkpoints done in {time.time() - start_cp:.2f}s")
+
+        # Step 2: Start ComfyUI server
+        start_srv = time.time()
+        print("[LOG] Starting ComfyUI server...")
         run_comfyui_server(port=8189)
+        print(f"[LOG] ComfyUI server startup call returned in {time.time() - start_srv:.2f}s")
+
+        print(f"[LOG] prepare_comfyui: Finished at {time.strftime('%Y-%m-%d %H:%M:%S')}, total time: {time.time() - start_total:.2f}s")
 
     # @modal.web_server(8188, startup_timeout=30)
     # def ui(self):
