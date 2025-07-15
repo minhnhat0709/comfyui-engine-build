@@ -88,12 +88,13 @@ def create_sketch2img_workflow(item, is_edit = False, is_test = False):
             workflow_data["100"]["inputs"][f"strength_0{index+2}"] = lora["weight"]
             workflow_data["127"]["inputs"]["value"] += ", " + item.get("lora_triggers", "")
     
-    # if item.get("reference_image_url") is not None:
-    #     download_to_comfyui(item["reference_image_url"], "input")
-    #     workflow_data["395"]["inputs"]["image"] = item["reference_image_url"].split("/")[-1]
-    #     workflow_data["396"]["inputs"]["weight"] = item["reference_image_weight"]
-    # else:
-    #     workflow_data["396"]["inputs"]["weight"] = 0
+    if item.get("reference_image_url") is not None:
+        download_to_comfyui(item["reference_image_url"], "input")
+        workflow_data["176"]["inputs"]["image"] = item["reference_image_url"].split("/")[-1]
+        workflow_data["191"]["inputs"]["value"] = item["reference_image_weight"]
+        workflow_data["186"]["inputs"]["value"] = True
+    else:
+        workflow_data["186"]["inputs"]["value"] = False
     
     workflow_data["112"]["inputs"]["value"] = item["height"]
     workflow_data["111"]["inputs"]["value"] = item["width"]
@@ -169,12 +170,11 @@ def create_upscale_workflow(item, isFlux = False):
 def create_rerender_workflow(item):
     download_to_comfyui(item["input_image_url"], "input")
     workflow_data = json.loads(
-            (pathlib.Path(__file__).parent / "workflow_api_rerender.json").read_text()
+            (pathlib.Path(__file__).parent / "./workflows/flux_rerender_api.json").read_text()
         )
     
-    workflow_data["379"]["inputs"]["image"] = item["input_image_url"].split("/")[-1]
-    workflow_data["298"]["inputs"]["text_positive"] = item["prompt"]
-    workflow_data["387"]["inputs"]["weight_style"] = item["weight_style"]
+    workflow_data["59"]["inputs"]["image"] = item["input_image_url"].split("/")[-1]
+    workflow_data["150"]["inputs"]["value"] = item["is_strong_color"]
     return workflow_data
 
 def remove_temp_file(list_file_name):

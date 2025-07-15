@@ -132,7 +132,7 @@
   },
   "57": {
     "inputs": {
-      "seed": 333477489190881
+      "seed": 1041477213
     },
     "class_type": "Seed (rgthree)",
     "_meta": {
@@ -344,7 +344,7 @@
   },
   "90": {
     "inputs": {
-      "preprocessor": "CannyEdgePreprocessor",
+      "preprocessor": "M-LSDPreprocessor",
       "resolution": 768,
       "image": [
         "59",
@@ -376,9 +376,9 @@
         0
       ],
       "start_percent": 0,
-      "end_percent": 0.8000000000000002,
+      "end_percent": 0.8350000000000002,
       "positive": [
-        "83",
+        "185",
         0
       ],
       "negative": [
@@ -414,7 +414,7 @@
   "94": {
     "inputs": {
       "input_0": 1,
-      "input_1": 1,
+      "input_1": 1.1780000000000004,
       "input_2": 1,
       "input_3": 1,
       "input_4": 1,
@@ -508,8 +508,8 @@
   },
   "101": {
     "inputs": {
-      "base_multiplier": 1,
-      "uncond_multiplier": 0.8000000000000002
+      "base_multiplier": 0.9890000000000002,
+      "uncond_multiplier": 0
     },
     "class_type": "ACN_ScaledSoftControlNetWeights",
     "_meta": {
@@ -572,7 +572,7 @@
   },
   "112": {
     "inputs": {
-      "value": 768
+      "value": 796
     },
     "class_type": "PrimitiveInt",
     "_meta": {
@@ -581,7 +581,7 @@
   },
   "116": {
     "inputs": {
-      "black_level": 30,
+      "black_level": 25,
       "mid_level": 127.5,
       "white_level": 255,
       "image": [
@@ -628,7 +628,7 @@
         0
       ],
       "start_percent": 0,
-      "end_percent": 0.8000000000000002,
+      "end_percent": 0.8070000000000002,
       "positive": [
         "93",
         0
@@ -713,7 +713,7 @@
   },
   "127": {
     "inputs": {
-      "value": "Luxurious interior: The bedroom has a desk integrated with adjacent shelves, the bed of Queen size with the headboard with a cushion.  Lighting accents from modern chandeliers and table lights.  Marble floors and wallpaper with motifs create a delicate atmosphere.  Professional photography, visualization of architecture, detailed materials, perfect and surreal lighting."
+      "value": "a indochine living room with white wall and black wooden furnitures"
     },
     "class_type": "PrimitiveStringMultiline",
     "_meta": {
@@ -722,7 +722,7 @@
   },
   "128": {
     "inputs": {
-      "value": 0.8
+      "value": 0.6000000000000001
     },
     "class_type": "PrimitiveFloat",
     "_meta": {
@@ -802,7 +802,7 @@
         0
       ],
       "start_percent": 0,
-      "end_percent": 1,
+      "end_percent": 0.8000000000000002,
       "positive": [
         "121",
         0
@@ -824,7 +824,7 @@
         0
       ],
       "mask": [
-        "151",
+        "135",
         0
       ]
     },
@@ -863,7 +863,7 @@
       "blur_radius": 6,
       "lerp_alpha": 1,
       "decay_factor": 1,
-      "fill_holes": false,
+      "fill_holes": true,
       "mask": [
         "135",
         0
@@ -977,6 +977,177 @@
     "class_type": "ImageResizeKJv2",
     "_meta": {
       "title": "Resize Image v2"
+    }
+  },
+  "163": {
+    "inputs": {
+      "images": [
+        "139",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "170": {
+    "inputs": {
+      "unet_name": "flux1-fill-dev-Q8_0.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Unet Loader (GGUF)"
+    }
+  },
+  "171": {
+    "inputs": {
+      "value": "A serene and minimalist interior hallway featuring white walls and a clean, modern aesthetic. A large arched doorway with warm wooden double doors opens outward to reveal a lush courtyard garden with neatly arranged tropical plants and small trees. On either side of the hallway, large potted green plants add a natural touch. The floor has been updated with elegant wooden flooring in a warm, natural tone, replacing the original tile, adding a sense of warmth and coziness to the space. A floating wooden cabinet with a marble countertop is mounted to the right wall, complemented by a small potted succulent. The atmosphere is airy and inviting, with soft natural light streaming in through the open doors and side window, highlighting the textures of the wood and greenery."
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "prompt"
+    }
+  },
+  "176": {
+    "inputs": {
+      "image": "controlnet.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "ref_image"
+    }
+  },
+  "182": {
+    "inputs": {
+      "style_model_name": "flex1_redux_siglip2_512.safetensors"
+    },
+    "class_type": "StyleModelLoader",
+    "_meta": {
+      "title": "Load Style Model"
+    }
+  },
+  "183": {
+    "inputs": {
+      "clip_name": "siglip2-so400m-patch16-512.safetensors"
+    },
+    "class_type": "AdvancedVisionLoader",
+    "_meta": {
+      "title": "Load Advanced Vision Model"
+    }
+  },
+  "184": {
+    "inputs": {
+      "crop": "none",
+      "fusion_mode": "Multiply",
+      "style_strength": 2,
+      "color_strength": 1.0300000000000002,
+      "content_strength": 0.9500000000000002,
+      "structure_strength": 0.9900000000000002,
+      "texture_strength": 1.0000000000000002,
+      "prompt_strength": 1.0000000000000002,
+      "feature_noise": 0,
+      "feature_resolution": 16,
+      "SUPER_REDUX": false,
+      "conditioning": [
+        "83",
+        0
+      ],
+      "style_model": [
+        "182",
+        0
+      ],
+      "clip_vision": [
+        "183",
+        0
+      ],
+      "image": [
+        "176",
+        0
+      ]
+    },
+    "class_type": "ReduxFineTuneAdvanced",
+    "_meta": {
+      "title": "Flux Redux Style Fine Tune (Advanced)"
+    }
+  },
+  "185": {
+    "inputs": {
+      "conditioning_a": [
+        "188",
+        0
+      ],
+      "conditioning_b": [
+        "83",
+        0
+      ],
+      "boolean": [
+        "186",
+        0
+      ]
+    },
+    "class_type": "Conditioning Input Switch",
+    "_meta": {
+      "title": "Conditioning Input Switch"
+    }
+  },
+  "186": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "is_use_ref_image"
+    }
+  },
+  "187": {
+    "inputs": {
+      "clip_vision": "siglip-so400m-patch14-384.safetensors",
+      "style_model": "flux1-redux-dev.safetensors",
+      "crop_method": "none",
+      "image": [
+        "176",
+        0
+      ]
+    },
+    "class_type": "ClipVisionStyleLoader",
+    "_meta": {
+      "title": "CLIP Vision + Style Loader"
+    }
+  },
+  "188": {
+    "inputs": {
+      "fusion_mode": "Random",
+      "fusion_strength": [
+        "191",
+        0
+      ],
+      "SUPER_REDUX": false,
+      "conditioning": [
+        "83",
+        0
+      ],
+      "style_model": [
+        "187",
+        1
+      ],
+      "clip_vision_output": [
+        "187",
+        2
+      ]
+    },
+    "class_type": "ReduxFineTune",
+    "_meta": {
+      "title": "Flux Redux Style Fine Tune (Simple)"
+    }
+  },
+  "191": {
+    "inputs": {
+      "value": 0.4
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "ref_weight"
     }
   }
 }

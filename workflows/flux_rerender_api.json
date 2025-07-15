@@ -1,0 +1,440 @@
+{
+  "59": {
+    "inputs": {
+      "image": "controlnet.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "base_image"
+    }
+  },
+  "89": {
+    "inputs": {
+      "value": "a raw photo that is highly detailed with natural textures and intricate patterns, showcasing realistic lighting and deep shadows to give the scene a sense of depth. The focus should be clearly defined, making every object appear sharply focused with pin-sharp details. Colorful, realistic image"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "prompt"
+    }
+  },
+  "90": {
+    "inputs": {
+      "value": 0.4
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "creative_weight"
+    }
+  },
+  "91": {
+    "inputs": {
+      "conditioning": [
+        "107",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "ConditioningZeroOut"
+    }
+  },
+  "92": {
+    "inputs": {
+      "images": [
+        "100",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "94": {
+    "inputs": {
+      "pixels": [
+        "100",
+        0
+      ],
+      "vae": [
+        "98",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "96": {
+    "inputs": {
+      "direction": "right",
+      "match_image_size": true,
+      "spacing_width": 0,
+      "spacing_color": "white",
+      "image1": [
+        "59",
+        0
+      ]
+    },
+    "class_type": "ImageStitch",
+    "_meta": {
+      "title": "Image Stitch"
+    }
+  },
+  "97": {
+    "inputs": {
+      "conditioning": [
+        "149",
+        0
+      ],
+      "latent": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "ReferenceLatent",
+    "_meta": {
+      "title": "ReferenceLatent"
+    }
+  },
+  "98": {
+    "inputs": {
+      "vae_name": "flux_ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "99": {
+    "inputs": {
+      "unet_name": "flux1-dev-kontext_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "100": {
+    "inputs": {
+      "image": [
+        "96",
+        0
+      ]
+    },
+    "class_type": "FluxKontextImageScale",
+    "_meta": {
+      "title": "FluxKontextImageScale"
+    }
+  },
+  "101": {
+    "inputs": {
+      "unet_name": "flux1-kontext-dev-Q8_0.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Unet Loader (GGUF)"
+    }
+  },
+  "102": {
+    "inputs": {
+      "guidance": 2.5,
+      "conditioning": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "103": {
+    "inputs": {
+      "image": "controlnet.jpg",
+      "refresh": false
+    },
+    "class_type": "LoadImageOutput",
+    "_meta": {
+      "title": "Load Image (from Outputs)"
+    }
+  },
+  "104": {
+    "inputs": {
+      "value": "keep the material and color, change the lighting only"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "String (Multiline)"
+    }
+  },
+  "105": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "106",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "106": {
+    "inputs": {
+      "samples": [
+        "111",
+        0
+      ],
+      "vae": [
+        "98",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "107": {
+    "inputs": {
+      "text": "transform to realistic image.\nPlease keep the material and color of the furnitures, make the lighting natural",
+      "clip": [
+        "110",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "108": {
+    "inputs": {
+      "lora_name": "flux_turbo_alpha.safetensors",
+      "strength_model": 1.0000000000000002,
+      "model": [
+        "101",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "109": {
+    "inputs": {
+      "clip_name1": "clip_l.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "110": {
+    "inputs": {
+      "lora_name": "aidmaHyperrealism-FLUX-v0.3.safetensors",
+      "strength_model": 0.5000000000000001,
+      "strength_clip": 0.5000000000000001,
+      "model": [
+        "108",
+        0
+      ],
+      "clip": [
+        "109",
+        0
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "111": {
+    "inputs": {
+      "seed": 461734965490703,
+      "steps": 8,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "beta",
+      "denoise": 1,
+      "model": [
+        "110",
+        0
+      ],
+      "positive": [
+        "102",
+        0
+      ],
+      "negative": [
+        "91",
+        0
+      ],
+      "latent_image": [
+        "94",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "119": {
+    "inputs": {
+      "crop": "none",
+      "fusion_mode": "Residual",
+      "style_strength": 1.0100000000000002,
+      "color_strength": 0.10000000000000002,
+      "content_strength": 0,
+      "structure_strength": 0,
+      "texture_strength": 0.010000000000000002,
+      "prompt_strength": 1.0000000000000002,
+      "feature_noise": 0.15000000000000002,
+      "feature_resolution": 16,
+      "SUPER_REDUX": false,
+      "conditioning": [
+        "107",
+        0
+      ],
+      "style_model": [
+        "153",
+        0
+      ],
+      "clip_vision": [
+        "152",
+        0
+      ],
+      "image": [
+        "130",
+        0
+      ]
+    },
+    "class_type": "ReduxFineTuneAdvanced",
+    "_meta": {
+      "title": "Flux Redux Style Fine Tune (Advanced)"
+    }
+  },
+  "130": {
+    "inputs": {
+      "seed": 1068155554399619,
+      "strength": 0,
+      "image": [
+        "59",
+        0
+      ]
+    },
+    "class_type": "ImageAddNoise",
+    "_meta": {
+      "title": "ImageAddNoise"
+    }
+  },
+  "131": {
+    "inputs": {
+      "images": [
+        "130",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "134": {
+    "inputs": {
+      "value": "A photorealistic modern bedroom featuring a sleek desk and bed set. The desk and surrounding built-in shelves are crafted from glossy green laminate wood laminate wood, paired with a bed frame in the same green tone. The upholstered headboard is finished in light gray textured fabric headboard fabric. A blackened steel window frame blackened steel adds an industrial accent. Soft cotton pillows cotton and a smooth silk blanket silk complete the bedding. Emphasize realistic material surfaces, subtle natural lighting, and precise reflections. Maintain clean composition and design consistency"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "String (Multiline)"
+    }
+  },
+  "140": {
+    "inputs": {
+      "images": [
+        "59",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "143": {
+    "inputs": {
+      "value": "transform to realistic image.\nPlease keep the material and color of the furnitures, make the lighting natural"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "String (Multiline)"
+    }
+  },
+  "149": {
+    "inputs": {
+      "conditioning_a": [
+        "119",
+        0
+      ],
+      "conditioning_b": [
+        "107",
+        0
+      ],
+      "boolean": [
+        "150",
+        0
+      ]
+    },
+    "class_type": "Conditioning Input Switch",
+    "_meta": {
+      "title": "Conditioning Input Switch"
+    }
+  },
+  "150": {
+    "inputs": {
+      "value": true
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "is_strong_color"
+    }
+  },
+  "151": {
+    "inputs": {
+      "images": [
+        "106",
+        0
+      ]
+    },
+    "class_type": "SaveImageWebsocket",
+    "_meta": {
+      "title": "SaveImageWebsocket"
+    }
+  },
+  "152": {
+    "inputs": {
+      "clip_name": "siglip2-so400m-patch16-512.safetensors"
+    },
+    "class_type": "AdvancedVisionLoader",
+    "_meta": {
+      "title": "Load Advanced Vision Model"
+    }
+  },
+  "153": {
+    "inputs": {
+      "style_model_name": "flex1_redux_siglip2_512.safetensors"
+    },
+    "class_type": "StyleModelLoader",
+    "_meta": {
+      "title": "Load Style Model"
+    }
+  }
+}

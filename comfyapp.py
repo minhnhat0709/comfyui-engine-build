@@ -66,7 +66,7 @@ import modal
 
 
 # comfyui_commit_sha = "1900e5119f70d6db0677fe91194050be3c4476c4"
-comfyui_commit_sha = "094306b626e9cf505690c5d8b445032b3b8a36fa"
+comfyui_commit_sha = "c5de4955bb91a2b136027a698aaecb8d19e3d892"
 
 # comfyui_image = modal.Image.from_registry(
 #     "minhnhatdo/eliai-comfy-engine:2.1.3"
@@ -98,7 +98,7 @@ comfyui_image = (  # build up a Modal Image to run ComfyUI, step by step
     #     "mkdir /root/models/ella && cp /root/ELLA/ella-sd1.5-tsc-t5xl.safetensors /root/models/ella/ella-sd1.5-tsc-t5xl.safetensors",
     #     force_build=False
     # )
-    .pip_install("httpx", "tqdm", "websocket-client", "boto3", "supabase", "flask", "cupy-cuda12x", "Pillow", "modal", force_build=False)  # add web dependencies
+    .pip_install("httpx", "tqdm", "websocket-client", "boto3", "supabase", "flask", "cupy-cuda12x", "Pillow", "modal", "numpy==2.2", force_build=False)  # add web dependencies
     .run_commands("rm -rf /root/models")
     .add_local_file(  # copy over the ComfyUI model definition JSON and helper Python module
         pathlib.Path(__file__).parent / "comfyapp.py", "/root/comfyapp.py", copy=True

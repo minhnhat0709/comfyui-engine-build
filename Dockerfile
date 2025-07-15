@@ -5,7 +5,7 @@ RUN apt-get install git git-lfs -y
 
 RUN cd /root && git init . && \
     cd /root && git remote add --fetch origin https://github.com/comfyanonymous/ComfyUI && \
-    cd /root && git checkout 094306b626e9cf505690c5d8b445032b3b8a36fa && \
+    cd /root && git checkout c5de4955bb91a2b136027a698aaecb8d19e3d892 && \
     cd /root && pip install --no-cache-dir  -r requirements.txt
 
 # RUN rm -rf /root/models
@@ -16,7 +16,7 @@ RUN cd /root && git init . && \
 #     rm -rf /root/ELLA
 
 # ENV PATH="/venv/main/bin:$PATH"
-RUN pip install --upgrade --ignore-installed --no-cache-dir uvicorn modal==0.73.100 httpx tqdm websocket-client boto3==1.35.92 supabase flask redis Pillow waitress onnxruntime-gpu 
+RUN pip install --upgrade --ignore-installed --no-cache-dir uvicorn modal==0.73.100 httpx tqdm websocket-client boto3==1.35.92 numpy==2.2 supabase flask redis Pillow waitress onnxruntime-gpu 
 
 # COPY model.json /root/model.json
 # COPY helpers.py /root/helpers.py

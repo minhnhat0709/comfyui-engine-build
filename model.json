@@ -5,6 +5,31 @@
     "filename": "flux_ae.safetensors"
   },
   {
+    "url": "https://huggingface.co/minhnhatdo/colab-notebook/resolve/main/flux1-redux-dev.safetensors",
+    "path": "models/style_models",
+    "filename": "flux1-redux-dev.safetensors"
+  },
+  {
+    "url": "https://huggingface.co/ostris/Flex.1-alpha-Redux/resolve/main/flex1_redux_siglip2_512.safetensors",
+    "path": "models/style_models",
+    "filename": "flex1_redux_siglip2_512.safetensors"
+  },
+  {
+    "url": "https://huggingface.co/InstantX/FLUX.1-dev-IP-Adapter/resolve/main/ip-adapter.bin",
+    "path": "models/ipadapter-flux",
+    "filename": "ip-adapter.bin"
+  },
+  {
+    "url": "https://huggingface.co/google/siglip2-so400m-patch16-512/resolve/main/model.safetensors",
+    "path": "models/clip_vision",
+    "filename": "siglip2-so400m-patch16-512.safetensors"
+  },
+  {
+    "url": "https://huggingface.co/google/siglip-so400m-patch14-384/resolve/main/model.safetensors",
+    "path": "models/clip_vision",
+    "filename": "siglip-so400m-patch14-384.safetensors"
+  },
+  {
     "url": "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp8_e4m3fn.safetensors",
     "path": "models/clip",
     "filename": "t5xxl_fp8_e4m3fn.safetensors"
@@ -18,6 +43,11 @@
     "url": "https://huggingface.co/Kijai/flux-fp8/resolve/main/flux1-dev-fp8.safetensors",
     "path": "models/unet",
     "filename":"flux1-dev-fp8.safetensors"
+  },
+  {
+    "url": "https://huggingface.co/bullerwins/FLUX.1-Kontext-dev-GGUF/resolve/main/flux1-kontext-dev-Q8_0.gguf",
+    "path": "models/unet",
+    "filename":"flux1-kontext-dev-Q8_0.gguf"
   },
   {
     "url": "https://huggingface.co/Shakker-Labs/FLUX.1-dev-ControlNet-Union-Pro-2.0/resolve/main/diffusion_pytorch_model.safetensors",
@@ -70,6 +100,22 @@
   },
   {
     "url": "https://github.com/kijai/ComfyUI-KJNodes.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/Shakker-Labs/ComfyUI-IPAdapter-Flux.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/city96/ComfyUI-GGUF.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/ostris/ComfyUI-Advanced-Vision.git",
+    "path": "custom_nodes"
+  },
+  {
+    "url": "https://github.com/1038lab/ComfyUI-ReduxFineTune.git",
     "path": "custom_nodes"
   }
 ]
