@@ -55,12 +55,13 @@ def download_file_with_storage_management(url, file_name, storage_folder, max_me
                 # Check and manage memory capacity
           while calculate_folder_size(storage_folder) > max_memory_capacity:
               # Find the file with the oldest last usage and delete it
-              oldest_url = min(metadata, key=lambda x: metadata[x]["last_usage"])
-              oldest_file_path = metadata[oldest_url]["file_path"]
-
-              print(f"oldest_file_path {oldest_file_path}")
-              del metadata[oldest_url]
+              
               try:
+                oldest_url = min(metadata, key=lambda x: metadata[x]["last_usage"])
+                oldest_file_path = metadata[oldest_url]["file_path"]
+
+                print(f"oldest_file_path {oldest_file_path}")
+                del metadata[oldest_url]
                 os.remove(oldest_file_path)
               except:
                 pass
